@@ -22,3 +22,21 @@ for (let i = num - 1; i >= 1; i--) {
 }
 console.log(num);
 
+//      3
+const sheetsInReamPaper = 500;
+const consumptionPerWeek = 1200;
+const weeksAmount = 8;
+
+let reamPaperAmount = (weeksAmount * consumptionPerWeek) / sheetsInReamPaper;
+
+let check = reamPaperAmount % 1;
+let result = reamPaperAmount - check;
+
+if (check > 0) {
+  console.log(result + 1);
+}
+else{
+  console.log(result);
+}
+
+
