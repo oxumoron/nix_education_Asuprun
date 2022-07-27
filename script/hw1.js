@@ -39,4 +39,29 @@ else{
   console.log(result);
 }
 
+//      4
+const roomsOnFloor = 3;
+const floors = 9;
+const roomNumber = 456;
 
+const porch = 0;
+
+function floorAndPorch() {
+  let test = roomNumber / (roomsOnFloor * floors);
+  let check = test % 1;
+  let check2 = check * 10;
+  let check3 = check2 % 1;
+  let floor = check2 - check3;
+  let porch = test - check;
+
+  if (check > 0) {
+    porch += 1;
+  }
+  else{
+    porch = porch;
+  }
+
+  return console.log('Porch =',porch,', Floor = ',floor);
+}
+
+floorAndPorch();
