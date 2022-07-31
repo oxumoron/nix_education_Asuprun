@@ -34,3 +34,15 @@ function hw2(length) {
 
 hw2(99);
 
+
+//      3
+const namesOfDays = {
+  ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг' , 'Пятница' , 'Суббота' , 'Воскресенье'],
+  en: ['Monday', 'Tuesday', 'Wednesday', 'Thursday' , 'Friday' , 'Saturday' , 'Sunday'],
+}
+
+// console.log(namesOfDays['ru'][1]);
+function getDay (lang, day) {
+  return namesOfDays[lang][day - 1];
+}
+console.log(getDay('ru',2));
