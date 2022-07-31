@@ -14,3 +14,23 @@ for (var prop in citiesAndCountries) {
   result.push(prop + " - это " + citiesAndCountries[prop]);
 }
 console.log(result);
+
+//      2
+
+let result2 = [];
+
+function hw2(length) {
+
+  if (length % 3 === 0){
+    for(let i = 0; i < length; i += 3 ) {
+      result2.push([i + 1, i + 2, i + 3]);
+    }
+    return console.log(result2);
+  } else {
+    console.log('Число некратное 3');
+  }
+
+}
+
+hw2(99);
+
