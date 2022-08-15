@@ -60,6 +60,68 @@ console.log(arr1)
 /// [ {id: 4,name: 'Katya'}, {id: 1,name: 'Kolya'}, {id: 3, name: 'Vasya'}, {id: 2, name: 'Petya'} ]
 
 //      5
-class Condidate = 
-const condidate = new Condidate(condidateArr[0])
-condidate.state /// Colorado
+class Condidate{
+  constructor(condidateArr){
+    Object.assign(this,condidateArr)
+  }
+  get state(){
+    return console.log(this.address.split(', ')[2]);
+  }
+  //      6
+  getCompanyNames(){
+    return this.company;
+  }
+  getAllCompaniesNames(){
+    return console.log(getCompanyNamesArr);
+  }
+  //      7
+  getUsersByYear(year) {
+    return console.log(condidateConstructorArr
+      .filter(({registered}) => {
+        return year === new Date(registered).getFullYear();
+      })
+      .map(({_id}) => _id))
+  }
+  //       8
+  getCondidatesByUnreadMsg(msgCount){
+    return console.log(condidateConstructorArr.filter(({greeting}) => {
+      return greeting.match(new RegExp(` ${msgCount} `))
+    }))
+  }
+  //       9
+  getCondidatesByGender(sex){
+    return console.log(condidateConstructorArr.filter(({gender}) => {
+      return gender === sex;
+    }));
+  }
+}
+  const getCompanyNamesArr = [];
+  const condidateConstructorArr = condidateArr.map(cond => new Condidate(cond))   
+  condidateConstructorArr.forEach(condidate => getCompanyNamesArr.push(condidate.getCompanyNames()))
+  
+  const condidate = new Condidate(condidateArr[0]);
+  console.log(condidate);
+  condidate.state; /// Colorado
+  //      6
+condidate.getAllCompaniesNames(); /// [""EZENT, "JASPER" ... ]
+
+//        7
+condidate.getUsersByYear(2016)
+
+//        8
+condidate.getCondidatesByUnreadMsg(8)
+
+//        9
+condidate.getCondidatesByGender('male')
+
+//        10
+Array.prototype.map1 = function (func){
+  const result = [...this]
+  for (let i = 0; i < result.length; i++) {
+    result[i] = func(result[i]);
+  }
+  return console.log(result);
+}
+
+const arr10 = [1,2,3,4,5]
+arr10.map1(item => item*10)
