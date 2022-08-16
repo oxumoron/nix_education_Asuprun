@@ -1,3 +1,4 @@
+import { condidateArr } from './candidates.js';
 //        1
 const arr = ['Vasya', 'Petya', 'Alexey']
 console.log(arr) /// ['Vasya', 'Alexey']
@@ -125,3 +126,37 @@ Array.prototype.map1 = function (func){
 
 const arr10 = [1,2,3,4,5]
 arr10.map1(item => item*10)
+
+Array.prototype.reduce1 = function (callback, initialValue){
+  if (this == null) {
+    throw new Error('Cant iterate over undefined or null')
+  }
+  let result;
+  let i = 0;
+  let O = Object(this);
+  let len = O.length;
+  if (typeof callback !== 'function') {
+    throw new Error('Callback is not a function')
+  }
+  if (arguments.length >= 2) {
+    result = initialValue
+  } else {
+    if (len === 0) {
+    throw new Error('Reduce of empty array with no initial value')
+    }
+    result = O[i];
+    i++;
+  }
+  for (; i < this.length; i++) {
+    if (i in O) {
+      result = callback(result,O[i],i,O)
+    }
+  }
+  return result;
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+console.log([0].reduce1(add));
