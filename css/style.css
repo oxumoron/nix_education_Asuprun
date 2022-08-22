@@ -1,0 +1,163 @@
+html{
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after{
+  box-sizing: inherit;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+button{
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 0;
+}
+
+p{
+  margin: 0;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.17;
+  color: #767272;
+}
+
+.wrapper{
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+img{
+  max-width: 100%;
+  /* height: auto; */
+  vertical-align: top;
+}
+
+ul,
+ol{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.container{
+  max-width: 1054px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.header{
+  height: 55px;
+}
+
+.header__wrap{
+  display: flex;
+  justify-content: space-between;
+}
+
+.product__wrapper{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+@media (min-width: 450px){
+  .product__wrapper{
+    width: 50%;
+  }
+}
+
+@media (min-width: 768px){
+  .product__wrapper{
+    width: 33.333%;
+  }
+}
+
+.products{
+  list-style: none;
+  margin: 0 -20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product{
+  display: block;
+  position: relative;
+  background: #fff;
+  margin: 0 20px 20px 0;
+  text-decoration: none;
+  z-index: 0;
+  min-height: 480px;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.product__photo{
+  margin-top: 13px;
+  margin-bottom: 25px;
+}
+
+.product__name{
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.product__stock{
+  margin-bottom: 8px;
+}
+
+.product__price{
+  margin-bottom: 11px;
+}
+
+.product span{
+  font-weight: 700;
+}
+
+.product__btn{
+  font-size: 20px;
+  line-height: 1.172;
+  padding: 13px 25px;
+  color: #fff;
+  background: #0E49B5;
+  border-radius: 5px;
+  margin-bottom: 14px;
+}
+
+.product__footer{
+  background-color: #E0E0E0;
+  display: flex;
+  justify-content: space-between;
+  padding: 19px 23px 37px 44px;
+  border-radius: 0 0 10px 10px;
+}
+
+.product__reviews{
+  width: 160px;
+}
+
+.product__orders{
+  width: 65px;
+}

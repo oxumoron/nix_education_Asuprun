@@ -6,10 +6,58 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MacOutlet</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <script nomodule type="module" src="js/main.js"></script>
+  <div class="wrapper">
+    <header class="header">
+      <div class="container">
+        <div class="header__wrap">
+          <a href="#" class="logo">
+            <img src="img/logo.png" alt="logo">
+          </a>
+          <div class="cart">
+            <a href="#" class="cart-link">
+            <img src="img/cart.svg" alt="cart">
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="shop">
+      <div class="container">
+        <div class="shop__wrapper">
+          <ul id="products" class="products">
+            <li id="product__wrapper" class="product__wrapper">
+              <a href="#" class="product">
+                <div class="product__photo">
+                  <img id="product__photo" src="" height="200" width="200" alt="">
+                </div>
+                <div class="product__desc">
+                  <h3 id="product__name" class="product__name"></h3>
+                  <p class="product__stock"><span id="product__stock"></span> left in stock</p>
+                  <p class="product__price">Price: <span id="product__price"></span> $</p>
+                  <button class="product__btn">Add to cart</button>
+                </div>
+                <div class="product__footer">
+                  <div class="product__reviews"><span id="product__reviews"></span>% Positive reviews Above avarage</div>
+                  <div class="product__orders"><span id="product__orders"></span> orders</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+
+  </div>
+
+  <script nomodule type="module" src="js/main.js"></script>
 </body>
 </html>
 
