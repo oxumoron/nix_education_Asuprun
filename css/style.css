@@ -126,6 +126,7 @@ ol{
 
 .product__stock{
   margin-bottom: 8px;
+  position: relative;
 }
 
 .product__price{
@@ -156,8 +157,43 @@ ol{
 
 .product__reviews{
   width: 160px;
+  position: relative;
 }
 
 .product__orders{
   width: 65px;
 }
+
+#product__stock:before{
+  content: '';
+  background-image: url(/img/stock.svg);
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  left: 74px;
+  transform: translateY(-7%);
+}
+
+#product__stock.nostock:before{
+  content: '';
+  background-image: url(/img/nostock.svg);
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  left: 74px;
+  transform: translateY(-7%);
+}
+
+#product__reviews:before{
+  content: '';
+  background-image: url(/img/heart.svg);
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  left: -7px;
+  transform: translateY(-10%);
+}
+
