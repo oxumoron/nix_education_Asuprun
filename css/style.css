@@ -111,8 +111,21 @@ ol{
   border-radius: 10px;
 }
 
+#like{
+  fill:transparent; 
+  stroke:#000;
+  stroke-width: 10px;
+  margin-left: 250px;
+  margin-top: 10px;
+  cursor:pointer;
+  transition:fill .3s;
+}
+#like.filled{
+  fill:#f00;
+}
+
 .product__photo{
-  margin-top: 13px;
+  /* margin-top: 13px; */
   margin-bottom: 25px;
 }
 
@@ -196,4 +209,6 @@ ol{
   left: -7px;
   transform: translateY(-10%);
 }
+
+
 
