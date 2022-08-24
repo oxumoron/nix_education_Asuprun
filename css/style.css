@@ -72,6 +72,27 @@ ol{
   justify-content: space-between;
 }
 
+.shop-accord{
+  width: 316px;
+}
+
+.item-label{
+  display: block;
+  width: 100%;
+}
+
+.item-check{
+  /* opacity: 0; */
+}
+
+.products{
+  list-style: none;
+  margin: 0 -20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .product__wrapper{
   display: block;
   width: 100%;
@@ -90,13 +111,6 @@ ol{
   }
 }
 
-.products{
-  list-style: none;
-  margin: 0 -20px 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-}
 
 .product{
   display: block;

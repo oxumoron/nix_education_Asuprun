@@ -20,7 +20,7 @@ items.forEach((el) => {
   newImage.src = `./img/${el.imgUrl}`;
   newName.textContent = el.name;
   newStock.textContent = el.orderInfo.inStock;
-  if(el.orderInfo.inStock === 0){
+  if(+newStock.textContent === 0){
     newStock.classList.add('nostock')
   }
   newPrice.textContent = el.price;
@@ -29,8 +29,8 @@ items.forEach((el) => {
   newCard.innerHTML = productWrapper.innerHTML;
   products.appendChild(newCard);
 });
-// console.log(document.getElementById('like'));
 
+// console.log(newStock.textContent);
 
 // if (localStorage.prompt1) {
 //   document.getElementById('input').value = localStorage.prompt1;
