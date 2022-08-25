@@ -30,63 +30,61 @@
     <section class="shop">
       <div class="container">
         <div class="shop__wrapper">
-          <div class="shop-accord">
-            <div class="shop-accord__cat">
-              <h3 class="cat__name">Price</h3>
-              <div class="cat__content">
-                <ul class="cat__list">
-                  <li class="cat__list-item">
-                    <label class="item-label" for="item-check-price" id="item-label">123</label>
-                    <input class="item-check" type="checkbox" id="item-check-price">
+          <div class="accord">
+            <div class="cat">
+              <label class="cat__label" id="price" for="inputprice">Price</label>
+              <input class="cat__input" type="checkbox" id="inputprice">
+              <div class="cat__inner">
+                <ul id="price__inner-list" class="cat__inner-list">
+                  <li class="cat__item">
+                    <label class="item__label" for="price-from">From</label>
+                    <input class="item__check" type="text" id="price-from">
+                  </li>
+                  <li class="cat__item">
+                    <label class="item__label" for="price-to">To</label>
+                    <input class="item__check" type="text" id="price-to">
                   </li>
                 </ul>
               </div>
             </div>
-            <div class="shop-accord__cat">
-              <h3 class="cat__name">Color</h3>
-              <div class="cat__content">
-                <ul class="cat__list">
-                  <li class="cat__list-item">
-                    <label class="item-label" for="item-check-col" id="item-label"></label>
-                    <input class="item-check" type="checkbox" id="item-check-col">
-                  </li>
+            <div class="cat">
+              <label class="cat__label" id="color" for="inputcolor">Color</label>
+              <input class="cat__input" type="checkbox" id="inputcolor">
+              <div class="cat__inner">
+                <ul id="color-cat__list" class="cat__inner-list">
                 </ul>
               </div>
             </div>
-            <div class="shop-accord__cat">
-              <h3 class="cat__name">Memory</h3>
-              <div class="cat__content">
-                <ul class="cat__list">
-                  <li class="cat__list-item">
-                    <label class="item-label" for="item-check-mem" id="item-label"></label>
-                    <input class="item-check" type="checkbox" id="item-check-mem">
-                  </li>
+            <div class="cat">
+              <label class="cat__label" id="memory" for="inputmemory">Memory</label>
+              <input class="cat__input" type="checkbox" id="inputmemory">
+              <div class="cat__inner">
+                <ul id="memory-cat__list" class="cat__inner-list">
                 </ul>
               </div>
             </div>
-            <div class="shop-accord__cat">
-              <h3 class="cat__name">OS</h3>
-              <div class="cat__content">
-                <ul class="cat__list">
-                  <li class="cat__list-item">
-                    <label class="item-label" for="item-check-os" id="item-label"></label>
-                    <input class="item-check" type="checkbox" id="item-check-os">
-                  </li>
+            <div class="cat">
+              <label class="cat__label" id="os" for="inputos">Os</label>
+              <input class="cat__input" type="checkbox" id="inputos">
+              <div class="cat__inner">
+                <ul id="os-cat__list"  class="cat__inner-list">
                 </ul>
               </div>
             </div>
-            <div class="shop-accord__cat">
-              <h3 class="cat__name">Display</h3>
-              <div class="cat__content">
-                <ul class="cat__list">
-                  <li class="cat__list-item">
-                    <label class="item-label" for="item-check-dis" id="item-label"></label>
-                    <input class="item-check" type="checkbox" id="item-check-dis">
+            <!-- <div class="cat">
+              <label class="cat__label" id="display" for="inputdisplay">Display</label>
+              <input class="cat__input" type="checkbox" id="inputdisplay">
+              <div class="cat__inner">
+                <ul class="cat__inner-list">
+                  <li id="cat-item" class="cat__inner-item">
+                    <label id="cat-itemlabel" class="itemlabel" for="item-check-display">Test</label>
+                    <input class="item__check" type="checkbox" id="item-check-display">
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> -->
           </div>
+
           <ul id="products" class="products">
             <li id="product__wrapper" class="product__wrapper">
               <div class="product">
