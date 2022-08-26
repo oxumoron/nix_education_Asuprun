@@ -24,6 +24,7 @@ button{
 
 h1,h2,h3,h4,h5,h6{
   margin: 0;
+  font-weight: 400;
 }
 
 p{
@@ -91,6 +92,35 @@ ol{
   font-size: 14px;
   text-align: center;
   line-height: 1.17;
+}
+
+.banner{
+  margin-bottom: 15px;
+}
+
+.banner__inner{
+  position: relative;
+}
+
+.banner__desc{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  color: #fff;
+}
+
+.cart__btn{
+  padding: 15px 25px;
+  border-radius: 5px;
+  background: #0E49B5;
+  font-size: 20px;
+}
+
+.banner__title{
+  margin-bottom: 22px;
+  font-size: 72px;
 }
 
 .shop__wrapper{
