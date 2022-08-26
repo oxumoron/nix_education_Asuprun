@@ -83,6 +83,15 @@ osAll.map(elem => {
       osList.appendChild(newOs);
 });
 
+const accordBtn = document.querySelector('.accord__icon');
+const accord = document.querySelector('.accord');
+
+
+accordBtn.addEventListener('click', (event) => {
+  accord.classList.toggle('accord--active');
+  event.currentTarget.classList.toggle('active');
+});
+
 // console.log(colorAll);
 
 

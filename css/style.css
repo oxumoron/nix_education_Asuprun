@@ -86,7 +86,7 @@ ol{
 }
 
 .cart:before{
-  content: '1';
+  content: '3';
   position: absolute;
   top: 20px;
   left: -12.5px;
@@ -176,6 +176,11 @@ ol{
   padding-top: 7.5px;
 }
 
+.accord__icon.active{
+  background-color: #000;
+  transition: background .5s;
+}
+
 .setting__icon{
   position: absolute;
   top: 50%;
@@ -197,18 +202,49 @@ ol{
 
 .shop__wrapper{
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
+  justify-content: center;
+  padding: 0 10px;
 }
 
+
 .accord{
-  width: 300px;
+  display: none;
+  max-width: 285px;
+  width: 100%;
   margin-right: 10px;
   color: #000;
   border: 1px solid #E0E0E0;
   box-shadow: 0px 0px 25px rgb(0 0 0 / 15%);
   border-radius: 10px;
+  align-self: flex-start;
+  overflow: hidden;
 }
+
+@media (min-width: 1000px){
+  .accord {
+      justify-content: flex-start;
+      flex: 0 4 auto;
+      margin-right: 35px;
+    }
+  }
+
+.accord--active{
+  display: block;
+}
+
+.accord__inner{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* @media (min-width: 768px){
+  .accord__inner{
+  justify-content: flex-start;
+  margin-right: 35px;
+  flex: 0 4 auto;
+  }
+} */
 
 #price__inner-list .cat__item{
   width: 100%;
@@ -234,7 +270,7 @@ ol{
   text-align: left;
   padding: 17px 213px 9px 30px;
   font-size: 18px;
-  border-bottom: 0.5px solid var(--light-grey)DDD;
+  border-bottom: 0.5px solid var(--light-grey);
   position: relative;
 }
 
@@ -278,7 +314,7 @@ ol{
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 23px 18px 33px 30px;
-  border-bottom: 0.5px solid var(--light-grey)DDD;
+  border-bottom: 0.5px solid var(--light-grey);
 }
 
 .cat__item{
@@ -287,30 +323,39 @@ ol{
 }
 
 .products{
-  list-style: none;
   margin: 0 -20px 0 0;
   padding: 0;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
+  width: 50%;
 }
+
+@media (min-width: 1000px){
+  .products {
+    justify-content: space-between;
+    flex: 1 1.5 77%;
+    }
+  }
 
 .product__wrapper{
   display: block;
   width: 100%;
+  max-width: 320px;
   text-align: center;
 }
 
 @media (min-width: 450px){
   .product__wrapper{
-    width: 50%;
+    /* width: 50%; */
   }
 }
-
+/* 
 @media (min-width: 768px){
   .product__wrapper{
     width: 33.333%;
   }
-}
+} */
 
 
 .product{
