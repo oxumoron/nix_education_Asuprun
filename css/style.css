@@ -81,8 +81,23 @@ ol{
   border-radius: 10px;
 }
 
-.item__label{
-  
+#price__inner-list .cat__item{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#price__inner-list .item__check{
+  max-width: 188px;
+  width: 65%;
+  padding: 8px 10px;
+  border: 1px solid #E2E2E2;
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 1.17;
+  text-align: center;
+  color: #000;
 }
 
 .cat__label{
@@ -116,6 +131,13 @@ ol{
 }
 
 .cat__input:checked ~ .cat__label:after{
+  /* content: '';
+  background-image: url(../img/arrow-bottom.svg);
+  width: 27px;
+  height: 26px;
+  position: absolute;
+  top: 50%;
+  right: 10px; */
   transform: translateY(-50%) rotate(0deg);
 }
 
