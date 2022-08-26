@@ -1,16 +1,18 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MacOutlet</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MacOutlet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <div class="wrapper">
     <header class="header">
@@ -21,7 +23,7 @@
           </a>
           <div class="cart">
             <a href="#" class="cart-link">
-            <img src="img/cart.svg" alt="cart">
+              <img src="img/cart.svg" alt="cart">
             </a>
           </div>
         </div>
@@ -38,6 +40,24 @@
         </div>
       </div>
     </section>
+    <div class="search">
+      <div class="container">
+        <div class="search__inner">
+          <label for="search__input">
+            <div class="search__icon">
+              <img src="img/icons/search.svg" alt="search">
+            </div>
+            <input type="search" id="search__input" name="search" placeholder="Enter device name...">
+          </label>
+          <div class="accord__icon">
+            <img src="img/icons/filter.svg" alt="filter">
+          </div>
+          <div class="setting__icon">
+            <img src="img/icons/settings.svg" alt="setting">
+          </div>
+        </div>
+      </div>
+    </div>
     <section class="shop">
       <div class="container">
         <div class="shop__wrapper">
@@ -78,7 +98,7 @@
               <label class="cat__label" id="os" for="inputos">Os</label>
               <input class="cat__input" type="checkbox" id="inputos">
               <div class="cat__inner">
-                <ul id="os-cat__list"  class="cat__inner-list">
+                <ul id="os-cat__list" class="cat__inner-list">
                 </ul>
               </div>
             </div>
@@ -99,34 +119,35 @@
           <ul id="products" class="products">
             <li id="product__wrapper" class="product__wrapper">
               <div class="product">
-                <svg id="like" width="20" height="20" viewbox="0 0 640 480" xmlns="http://www.w3.org/2000/svg"><path d="m219.28949,21.827393c-66.240005,0 -119.999954,53.76001 -119.999954,120c0,134.755524 135.933151,170.08728 228.562454,303.308044c87.574219,-132.403381 228.5625,-172.854584 228.5625,-303.308044c0,-66.23999 -53.759888,-120 -120,-120c-48.047913,0 -89.401611,28.370422 -108.5625,69.1875c-19.160797,-40.817078 -60.514496,-69.1875 -108.5625,-69.1875z"/>
-                <div class="product__photo">
-                  <img id="product__photo" src="" height="200" width="200" alt="">
-                </div>
-                <div class="product__desc">
-                  <h3 id="product__name" class="product__name"></h3>
-                  <p class="product__stock"><span id="product__stock"></span> left in stock</p>
-                  <p class="product__price">Price: <span id="product__price"></span> $</p>
-                  <button class="product__btn">Add to cart</button>
-                </div>
-                <div class="product__footer">
-                  <div class="product__reviews"><span id="product__reviews"></span>% Positive reviews Above avarage</div>
-                  <div class="product__orders"><span id="product__orders"></span> orders</div>
-                </div>
-              </a>
+                <svg id="like" width="20" height="20" viewbox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="m219.28949,21.827393c-66.240005,0 -119.999954,53.76001 -119.999954,120c0,134.755524 135.933151,170.08728 228.562454,303.308044c87.574219,-132.403381 228.5625,-172.854584 228.5625,-303.308044c0,-66.23999 -53.759888,-120 -120,-120c-48.047913,0 -89.401611,28.370422 -108.5625,69.1875c-19.160797,-40.817078 -60.514496,-69.1875 -108.5625,-69.1875z" />
+                  <div class="product__photo">
+                    <img id="product__photo" src="" height="200" width="200" alt="">
+                  </div>
+                  <div class="product__desc">
+                    <h3 id="product__name" class="product__name"></h3>
+                    <p class="product__stock"><span id="product__stock"></span> left in stock</p>
+                    <p class="product__price">Price: <span id="product__price"></span> $</p>
+                    <button class="product__btn">Add to cart</button>
+                  </div>
+                  <div class="product__footer">
+                    <div class="product__reviews"><span id="product__reviews"></span>% Positive reviews Above avarage
+                    </div>
+                    <div class="product__orders"><span id="product__orders"></span> orders</div>
+                  </div>
+                  </a>
             </li>
           </ul>
         </div>
       </div>
     </section>
 
-<!-- <input type="text" id="input"> -->
+    <!-- <input type="text" id="input"> -->
 
   </div>
 
   <script nomodule type="module" src="js/main.js"></script>
 </body>
+
 </html>
-
-
-
