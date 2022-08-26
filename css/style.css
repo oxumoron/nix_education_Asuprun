@@ -72,9 +72,36 @@ ol{
   justify-content: space-between;
 }
 
+.cart{
+  position: relative;
+}
+
+.cart:before{
+  content: '1';
+  position: absolute;
+  top: 20px;
+  left: -12.5px;
+  padding-top: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #0E49B5;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.17;
+}
+
+.shop__wrapper{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
 .accord{
   width: 300px;
-  margin: 10px;
+  margin-right: 10px;
   color: #000;
   border: 1px solid #E0E0E0;
   box-shadow: 0px 0px 25px rgb(0 0 0 / 15%);
