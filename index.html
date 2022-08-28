@@ -119,9 +119,9 @@
           </div>
 
           <ul id="products" class="products">
-            <li id="product__wrapper" class="product__wrapper">
+            <li id="none" class="product__wrapper">
               <div class="product">
-                <svg id="like" width="20" height="20" viewbox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                <svg class="like" width="20" height="20" viewbox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="m219.28949,21.827393c-66.240005,0 -119.999954,53.76001 -119.999954,120c0,134.755524 135.933151,170.08728 228.562454,303.308044c87.574219,-132.403381 228.5625,-172.854584 228.5625,-303.308044c0,-66.23999 -53.759888,-120 -120,-120c-48.047913,0 -89.401611,28.370422 -108.5625,69.1875c-19.160797,-40.817078 -60.514496,-69.1875 -108.5625,-69.1875z" />
                   <div class="product__photo">
@@ -144,8 +144,37 @@
         </div>
       </div>
     </section>
-
-    <!-- <input type="text" id="input"> -->
+    <div class="product__modal" id="product__modal">
+      <div class="modal__inner">
+        <div class="modal__col">
+          <img id="popup-img" src="" alt="">
+        </div>
+        <div class="modal__col modal__col-middle">
+          <h3 class="col__title" id="col__title"></h3>
+          <div class="col__reviews">
+            <div class="col__reviews-inner">
+              <div class="col__review"><span id="col__review"></span>% Positive reviews Above avarage
+              </div>
+            </div>
+            <div class="col__orders"><span id="col__orders"></span> orders</div>
+          </div>
+          <ul class="col__list">
+            <li class="col__list-item">Color: <span id="col-color"></span></li>
+            <li class="col__list-item">Operating System: <span id="col-os"></span></li>
+            <li class="col__list-item">Chip: <span id="col-chip"></span></li>
+            <li class="col__list-item">Height: <span id="col-height"></span> <span>cm</span></li>
+            <li class="col__list-item">Width: <span id="col-width"></span> <span>cm</span></li>
+            <li class="col__list-item">Depth: <span id="col-depth"></span> <span>cm</span></li>
+            <li class="col__list-item">Weight: <span id="col-weight"></span> <span>g</span></li>
+        </ul>
+        </div>
+        <div class="modal__col">
+          <div class="col__price">$ <span id="col-price"></span></div>
+          <div class="col__stock">Stock: <span id="col-stock"></span> pcs.</div>
+          <button class="product__btn">Add to cart</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 
