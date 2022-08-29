@@ -29,11 +29,21 @@ items.forEach((el) => {
   products.appendChild(newCard);
 });
 
+const priceFrom = document.getElementById('price-from');
+const priceTo = document.getElementById('price-to');
+
+const allPrice = items.map(el => el.price);
+const minPrice = Math.min.apply(null,allPrice);
+const maxPrice = Math.max.apply(null,allPrice);
+
+priceFrom.value = minPrice;
+priceTo.value = maxPrice;
+
+
 
 const colList = document.getElementById('color-cat__list');
 const memList = document.getElementById('memory-cat__list');
 const osList = document.getElementById('os-cat__list');
-
 
 let colorAll = [];
 let memoryAll = [];
@@ -44,6 +54,7 @@ items.map(item => {
   memoryAll.push(item.storage);
   osAll.push(item.os)
 })
+
 
 colorAll = [... new Set(colorAll)];
 memoryAll = [... new Set(memoryAll)];
@@ -168,3 +179,39 @@ productWrappers.forEach((item) => {
       };
     }
 )})
+
+// const colList = document.getElementById('color-cat__list');
+// const memList = document.getElementById('memory-cat__list');
+// const osList = document.getElementById('os-cat__list');
+
+const inputCol = colList.querySelectorAll("input[type='checkbox']");
+// console.log(inputCol);
+// inputCol.forEach(el => el.id)
+
+for (let input of inputCol) {
+  input.addEventListener('click', (event) => {
+    filter(input);
+  })
+}
+
+function filter(el) {
+  if(el.checked){
+    items.find((e) =>{
+      // if(+el.id === +e.id) {
+      if(e.color.indexOf(el.id) != -1){
+        // e.classList('hidden')
+        document.getElementById(e.id).classList.add('display-none')
+        // console.log(document.getElementById(e.id)); 
+      }
+    // }
+      // console.log(e.color.indexOf(el.id));
+    })
+    // console.log('el checked');
+  } else {
+    console.log("el din't checked");
+  }
+}
+// $(".cities_list input[type='checkbox']").on('change', function() {
+//   console.log($(this).val());
+//   console.log($(this).attr('id'));
+// });

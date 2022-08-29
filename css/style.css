@@ -51,6 +51,10 @@ body{
   overflow: hidden;
 }
 
+.display-none{
+  display: none;
+}
+
 #none{
   display: none;
 }
