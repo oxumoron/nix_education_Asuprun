@@ -11,7 +11,19 @@ const newOrders = document.getElementById('product__orders');
 const newPrice = document.getElementById('product__price');
 const newReviews = document.getElementById('product__reviews');
 const newStock = document.getElementById('product__stock');
+const stockImg = document.getElementById('stock__img');
+const cardBtn = document.getElementById('card__btn');
 
+const like = document.getElementById('like');
+
+// like.addEventListener('click', (event) => {
+//   event.stopPropagation();
+//   like.classList.toggle('filled');
+// })
+
+like.onclick = function() {
+  like.classList.toggle('filled');
+}
 
 const createCards = function (card) {
   card.forEach((el) => {
@@ -22,9 +34,12 @@ const createCards = function (card) {
     newImage.src = `./img/${el.imgUrl}`;
     newName.textContent = el.name;
     newStock.textContent = el.orderInfo.inStock;
-
-    if (+newStock.textContent === 0) {
-      newStock.classList.add('nostock')
+// console.log(newStock.textContent > 0);
+    if (newStock.textContent > 0) {
+      stockImg.src = `./img/stock.svg`
+    } else{
+      stockImg.src = `./img/nostock.svg`;
+      // cardBtn.classList.add('disabled')
     }
     newPrice.textContent = el.price;
     newOrders.textContent = Math.floor(300 + 700 * Math.random());
