@@ -258,14 +258,14 @@ ol{
   }
 } */
 
-#price__inner-list .cat__item{
+#price__cat-list .cat__item{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#price__inner-list .item__check{
+#price__cat-list .item__check{
   max-width: 188px;
   width: 65%;
   padding: 8px 10px;
