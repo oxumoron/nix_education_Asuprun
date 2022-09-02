@@ -154,6 +154,7 @@ const popup = document.getElementById('product__modal');
 const productWrappers = document.querySelectorAll('li.product__wrapper');
 const tagBody = document.querySelector('body')
 
+function popupFunc(array){
 productWrappers.forEach((item) => {
   item.addEventListener('click', () => {
     popup.classList.add('modal__active')
@@ -173,7 +174,7 @@ productWrappers.forEach((item) => {
     const popupPrice = document.getElementById('col-price');
     const popupStock = document.getElementById('col-stock');
 
-    items.find((el) => {
+    array.find((el) => {
       if (+el.id === +item.id) {
         popupImg.src = `./img/${el.imgUrl}`;
         popupReview.textContent = el.orderInfo.reviews;
@@ -202,7 +203,8 @@ productWrappers.forEach((item) => {
     };
   })
 })
-
+}
+popupFunc(items);
 // $(".cities_list input[type='checkbox']").on('change', function() {
 //   console.log($(this).val());
 //   console.log($(this).attr('id'));
@@ -220,12 +222,13 @@ const removeChildren = function (item) {
 }
 
 const updateChildren = function (item, children) {
-  let childreArr = [];
+  let childrenArr = [];
   removeChildren(item);
   for (let i = 0; i < children.length; i++) {
-    childreArr.push(children[i]);
+    childrenArr.push(children[i]);
   }
-  createCards(childreArr)
+  createCards(childrenArr);
+  popupFunc(childrenArr);
 }
 
 // const products = document.getElementById('products');
@@ -382,7 +385,6 @@ function filterPrice() {
       if(priceFrom.value <= e.price && e.price <= priceTo.value) {
         filteredPrice.push(e);
         updateChildren(products, filteredPrice);
-        console.log(priceFrom.value,e.price,priceTo.value);
       }
     })
   }
