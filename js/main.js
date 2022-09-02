@@ -21,9 +21,11 @@ const like = document.getElementById('like');
 //   like.classList.toggle('filled');
 // })
 
-like.onclick = function() {
+like.addEventListener('click', (event) => {
+  // event.preventDefault();
+  console.log('123');
   like.classList.toggle('filled');
-}
+})
 
 const createCards = function (card) {
   card.forEach((el) => {
