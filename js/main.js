@@ -164,11 +164,8 @@ function cartPopupFunc(array) {
     item.addEventListener('click', () => {
       cartPopup.classList.add('active')
       tagBody.classList.add('hidden');
-      // const cartPopupImg = document.getElementById('item__img');
-      // const cartPopupName = document.getElementById('item__title');
-      // const cartPopupPrice = document.getElementById('item__price');
       const cartPopupParent = document.querySelector('.cart__items')
-
+      
       arrayCartItem.push(item);
       arrayCartItem.map((e)=> {
         array.forEach((el) => {
@@ -186,20 +183,56 @@ function cartPopupFunc(array) {
               </div>
               <div class="item__buttons">
                 <button class="btn__less"><</button>
-                <span id="item__count" class="item__count">2</span>
+                <span class="item__count">1</span>
                 <button class="btn__more">></button>
                 <button class="btn__del">X</button>
-              </div>
+                </div>
             `;
             cartPopupParent.appendChild(newCartItem);
+                
             const cartBtnDel = document.querySelectorAll('.btn__del');
             cartBtnDel.forEach((btn) => {
               btn.addEventListener('click', (event) => {
                 btn.parentElement.parentElement.remove();
               })
             })
+
+            const cartBtnMore = document.querySelectorAll('.btn__more'),
+                  cartBtnLess = document.querySelectorAll('.btn__less'),
+                  cartCounters = document.querySelectorAll('.item__count');
+            
+            cartBtnMore.forEach((btn) => {
+              btn.addEventListener('click', (event) => {
+                cartCounters.forEach(count => {
+                  count.innerHTML++;
+                    if(+count.innerHTML >= 4){
+                      btn.disabled = true;
+                    }
+                  })  
+              })
+            })
+
+            cartBtnLess.forEach((btn) => {
+              btn.disabled = true;
+              btn.addEventListener('click', (event) => {
+                cartCounters.forEach(count => {
+                  count.innerHTML--;
+                  if (+count.innerHTML === 1){
+                    btn.disabled = true;
+                  }
+                })
+              })
+            })
+            
+            let amount = document.getElementById('cart__amount');
+
+            let x = 0;
+            let arra = [];
+            cartCounters.forEach(c=>arra.push(+c.outerText))
+            amount.innerHTML = arra.map(i=>x+=i, x=0).reverse()[0];
           }
         })
+        
       });
 
       cartPopup.onmousedown = function (e) {
@@ -211,10 +244,6 @@ function cartPopupFunc(array) {
         }
         arrayCartItem = [];
       };
-
-      
-
-
     })
   })
 }
@@ -273,7 +302,7 @@ function popupFunc(array) {
     })
   })
 }
-// popupFunc(items);
+popupFunc(items);
 
 
 // $(".cities_list input[type='checkbox']").on('change', function() {
