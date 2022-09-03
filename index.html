@@ -21,7 +21,7 @@
           <a href="#" class="logo">
             <img src="img/logo.png" alt="logo">
           </a>
-          <div class="cart">
+          <div class="cart btn">
             <a href="#" class="cart-link">
               <img src="img/cart.svg" alt="cart">
             </a>
@@ -146,7 +146,7 @@
                     <h3 id="product__name" class="product__name"></h3>
                     <p class="product__stock"><img id="stock__img" src="" alt=""><span id="product__stock"></span> left in stock</p>
                     <p class="product__price">Price: <span id="product__price"></span> $</p>
-                    <button id="card__btn" class="product__btn">Add to cart</button>
+                    <button class="btn product__btn">Add to cart</button>
                   </div>
                   <div class="product__footer">
                     <div class="product__reviews"><span id="product__reviews"></span>% Positive reviews Above avarage
@@ -159,6 +159,36 @@
         </div>
       </div>
     </section>
+    <div id="cart-modal" class="cart-modal">
+      <div class="cart__inner">
+        <div class="cart__header">
+          <h4 class="cart__title">Shopping Cart</h4>
+          <p>Checkout is almost done!</p>
+        </div>
+        <ul class="cart__items">
+          <!-- <li class="cart__item">
+            <img id="item__img" class="item__img" src="" height="100" width="100" alt="">
+            <div class="item__desc">
+              <h5 id="item__title" class="item__title"></h5>
+              <span id="item__price" class="item__price"></span>
+            </div>
+            <div class="item__buttons">
+              <button class="btn__less"><</button>
+              <span id="item__count" class="item__count">2</span>
+              <button class="btn__more">></button>
+              <button class="btn__del">X</button>
+            </div>
+          </li> -->
+        </ul>
+        <div class="cart__total">
+          <p>Total amount: <span id="cart__amount" class="cart__amount">3</span> ptc.</p>
+          <p>Total price: <span id="cart__price" class="cart__price">1699</span>$</p>
+        </div>
+        <div class="cart__buy">
+          <button class="btn buy__btn">Buy</button>
+        </div>
+      </div>
+    </div>
     <div class="product__modal" id="product__modal">
       <div class="modal__inner">
         <div class="modal__col">
@@ -186,7 +216,7 @@
         <div class="modal__col">
           <div class="col__price">$ <span id="col-price"></span></div>
           <div class="col__stock">Stock: <span id="col-stock"></span> pcs.</div>
-          <button class="product__btn">Add to cart</button>
+          <button class="product__btn btn">Add to cart</button>
         </div>
       </div>
     </div>

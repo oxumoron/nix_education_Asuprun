@@ -12,8 +12,7 @@ const newPrice = document.getElementById('product__price');
 const newReviews = document.getElementById('product__reviews');
 const newStock = document.getElementById('product__stock');
 const stockImg = document.getElementById('stock__img');
-const cardBtn = document.getElementById('card__btn');
-
+const cardBtn = document.querySelector('.product__btn');
 const like = document.getElementById('like');
 
 // like.addEventListener('click', (event) => {
@@ -22,8 +21,7 @@ const like = document.getElementById('like');
 // })
 
 like.addEventListener('click', (event) => {
-  // event.preventDefault();
-  console.log('123');
+  event.stopPropagation();
   like.classList.toggle('filled');
 })
 
@@ -36,15 +34,15 @@ const createCards = function (card) {
     newImage.src = `./img/${el.imgUrl}`;
     newName.textContent = el.name;
     newStock.textContent = el.orderInfo.inStock;
-// console.log(newStock.textContent > 0);
     if (newStock.textContent > 0) {
       stockImg.src = `./img/stock.svg`
-    } else{
+    } else {
+      // cardBtn.disabled = true;
       stockImg.src = `./img/nostock.svg`;
-      // cardBtn.classList.add('disabled')
     }
     newPrice.textContent = el.price;
     newOrders.textContent = Math.floor(300 + 700 * Math.random());
+    cardBtn.id = `${id}`;
     newReviews.textContent = el.orderInfo.reviews;
     newCard.innerHTML = productWrapper.innerHTML;
     products.appendChild(newCard);
@@ -156,57 +154,128 @@ const popup = document.getElementById('product__modal');
 const productWrappers = document.querySelectorAll('li.product__wrapper');
 const tagBody = document.querySelector('body')
 
-function popupFunc(array){
-productWrappers.forEach((item) => {
-  item.addEventListener('click', () => {
-    popup.classList.add('modal__active')
-    tagBody.classList.add('hidden');
+const cartPopup = document.getElementById('cart-modal');
+const arrBtnToAddCart = document.querySelectorAll('.btn');
 
-    const popupImg = document.getElementById('popup-img');
-    const popupReview = document.getElementById('col__review');
-    const popupOrders = document.getElementById('col__orders');
-    const popupName = document.getElementById('col__title');
-    const popupColor = document.getElementById('col-color');
-    const popupOs = document.getElementById('col-os');
-    const popupChip = document.getElementById('col-chip');
-    const popupHeight = document.getElementById('col-height');
-    const popupWidth = document.getElementById('col-width');
-    const popupDepth = document.getElementById('col-depth');
-    const popupWeight = document.getElementById('col-weight');
-    const popupPrice = document.getElementById('col-price');
-    const popupStock = document.getElementById('col-stock');
+let arrayCartItem = [];
 
-    array.find((el) => {
-      if (+el.id === +item.id) {
-        popupImg.src = `./img/${el.imgUrl}`;
-        popupReview.textContent = el.orderInfo.reviews;
-        popupOrders.textContent = el.orderInfo.inStock;
-        popupName.textContent = el.name;
-        popupColor.textContent = el.color;
-        popupOs.textContent = el.os;
-        popupChip.textContent = el.chip.name;
-        popupHeight.textContent = el.size.height;
-        popupWidth.textContent = el.size.width;
-        popupDepth.textContent = el.size.depth;
-        popupWeight.textContent = el.size.weight;
-        popupPrice.textContent = el.price;
-        popupStock.textContent = el.orderInfo.inStock;
-      }
-    });
+function cartPopupFunc(array) {
+  arrBtnToAddCart.forEach((item) => {
+    item.addEventListener('click', () => {
+      cartPopup.classList.add('active')
+      tagBody.classList.add('hidden');
+      // const cartPopupImg = document.getElementById('item__img');
+      // const cartPopupName = document.getElementById('item__title');
+      // const cartPopupPrice = document.getElementById('item__price');
+      const cartPopupParent = document.querySelector('.cart__items')
+
+      arrayCartItem.push(item);
+      arrayCartItem.map((e)=> {
+        array.forEach((el) => {
+          if (+el.id === +e.id) {
+            let cartPopupImg = `./img/${el.imgUrl}`,
+            cartPopupName = el.name,
+            cartPopupPrice = `$` + el.price,
+            newCartItem = document.createElement('li');
+            newCartItem.classList.add('cart__item');
+            newCartItem.innerHTML = `
+              <img id="item__img" class="item__img" src="${cartPopupImg}" height="100" width="100" alt="">
+              <div class="item__desc">
+                <h5 id="item__title" class="item__title">${cartPopupName}</h5>
+                <span id="item__price" class="item__price">${cartPopupPrice}</span>
+              </div>
+              <div class="item__buttons">
+                <button class="btn__less"><</button>
+                <span id="item__count" class="item__count">2</span>
+                <button class="btn__more">></button>
+                <button class="btn__del">X</button>
+              </div>
+            `;
+            cartPopupParent.appendChild(newCartItem);
+            const cartBtnDel = document.querySelectorAll('.btn__del');
+            cartBtnDel.forEach((btn) => {
+              btn.addEventListener('click', (event) => {
+                btn.parentElement.parentElement.remove();
+              })
+            })
+          }
+        })
+      });
+
+      cartPopup.onmousedown = function (e) {
+        let target = e.target;
+        let modalContent = cartPopup.getElementsByClassName('cart__inner')[0];
+        if (e.target.closest('.' + modalContent.className) === null) {
+          this.classList.remove('active');
+          tagBody.classList.remove('hidden');
+        }
+        arrayCartItem = [];
+      };
+
+      
 
 
-    popup.onmousedown = function (e) {
-      let target = e.target;
-      let modalContent = popup.getElementsByClassName('modal__inner')[0];
-      if (e.target.closest('.' + modalContent.className) === null) {
-        this.classList.remove('modal__active');
-        tagBody.classList.remove('hidden');
-      }
-    };
+    })
   })
-})
 }
-popupFunc(items);
+cartPopupFunc(items);
+
+
+
+
+function popupFunc(array) {
+  productWrappers.forEach((item) => {
+    item.addEventListener('click', () => {
+      popup.classList.add('modal__active')
+      tagBody.classList.add('hidden');
+
+      const popupImg = document.getElementById('popup-img');
+      const popupReview = document.getElementById('col__review');
+      const popupOrders = document.getElementById('col__orders');
+      const popupName = document.getElementById('col__title');
+      const popupColor = document.getElementById('col-color');
+      const popupOs = document.getElementById('col-os');
+      const popupChip = document.getElementById('col-chip');
+      const popupHeight = document.getElementById('col-height');
+      const popupWidth = document.getElementById('col-width');
+      const popupDepth = document.getElementById('col-depth');
+      const popupWeight = document.getElementById('col-weight');
+      const popupPrice = document.getElementById('col-price');
+      const popupStock = document.getElementById('col-stock');
+
+      array.find((el) => {
+        if (+el.id === +item.id) {
+          popupImg.src = `./img/${el.imgUrl}`;
+          popupReview.textContent = el.orderInfo.reviews;
+          popupOrders.textContent = el.orderInfo.inStock;
+          popupName.textContent = el.name;
+          popupColor.textContent = el.color;
+          popupOs.textContent = el.os;
+          popupChip.textContent = el.chip.name;
+          popupHeight.textContent = el.size.height;
+          popupWidth.textContent = el.size.width;
+          popupDepth.textContent = el.size.depth;
+          popupWeight.textContent = el.size.weight;
+          popupPrice.textContent = el.price;
+          popupStock.textContent = el.orderInfo.inStock;
+        }
+      });
+
+
+      popup.onmousedown = function (e) {
+        let target = e.target;
+        let modalContent = popup.getElementsByClassName('modal__inner')[0];
+        if (e.target.closest('.' + modalContent.className) === null) {
+          this.classList.remove('modal__active');
+          tagBody.classList.remove('hidden');
+        }
+      };
+    })
+  })
+}
+// popupFunc(items);
+
+
 // $(".cities_list input[type='checkbox']").on('change', function() {
 //   console.log($(this).val());
 //   console.log($(this).attr('id'));
@@ -251,7 +320,7 @@ for (let input of inputCol) {
 
 for (let input of inputPrice) {
   input.addEventListener('keyup', (event) => {
-    if( event.code === 'Enter' ) {
+    if (event.code === 'Enter') {
       filterPrice(input);
     }
   })
@@ -278,10 +347,10 @@ for (let input of inputDisplay) {
 function filterCol(el) {
   let filteredColor = [];
   if (el.checked) {
-    items.filter((e) => {     
-        if (e.color.indexOf(el.id) > -1) {
-          filteredColor.push(e)
-        }
+    items.filter((e) => {
+      if (e.color.indexOf(el.id) > -1) {
+        filteredColor.push(e)
+      }
       updateChildren(products, filteredColor);
     })
   } else {
@@ -292,10 +361,10 @@ function filterCol(el) {
 function filterMem(el) {
   let filteredMem = [];
   if (el.checked) {
-    items.filter((e) => { 
-        if (e.storage === +el.id) {
-          filteredMem.push(e)
-        }
+    items.filter((e) => {
+      if (e.storage === +el.id) {
+        filteredMem.push(e)
+      }
       updateChildren(products, filteredMem);
     })
   } else {
@@ -306,9 +375,9 @@ function filterMem(el) {
 function filterOs(el) {
   let filteredOs = [];
   if (el.checked) {
-    items.filter((e) => {     
-        if (e.os === el.id) {
-          filteredOs.push(e)
+    items.filter((e) => {
+      if (e.os === el.id) {
+        filteredOs.push(e)
       }
       updateChildren(products, filteredOs);
     })
@@ -320,32 +389,32 @@ function filterOs(el) {
 function filterDis(el) {
   let filteredDis = [];
   if (el.checked) {
-    items.filter((e) => {     
-        if (el.id === `inch2_5`) {
-          if(e.display >= 2 && e.display < 5){
-            filteredDis.push(e)
-          }
+    items.filter((e) => {
+      if (el.id === `inch2_5`) {
+        if (e.display >= 2 && e.display < 5) {
+          filteredDis.push(e)
         }
-        if (el.id === `inch_7`) {
-          if(e.display >= 5 && e.display < 7){
-            filteredDis.push(e)
-          }
+      }
+      if (el.id === `inch_7`) {
+        if (e.display >= 5 && e.display < 7) {
+          filteredDis.push(e)
         }
-        if (el.id === `inch7_12`) {
-          if(e.display >= 7 && e.display < 12){
-            filteredDis.push(e)
-          }
+      }
+      if (el.id === `inch7_12`) {
+        if (e.display >= 7 && e.display < 12) {
+          filteredDis.push(e)
         }
-        if (el.id === `inch12_16`) {
-          if(e.display >= 12 && e.display < 16){
-            filteredDis.push(e)
-          }
+      }
+      if (el.id === `inch12_16`) {
+        if (e.display >= 12 && e.display < 16) {
+          filteredDis.push(e)
         }
-        if (el.id === `more16`) {
-          if(e.display > 16){
-            filteredDis.push(e)
-          }
+      }
+      if (el.id === `more16`) {
+        if (e.display > 16) {
+          filteredDis.push(e)
         }
+      }
       updateChildren(products, filteredDis);
     })
   } else {
@@ -355,13 +424,14 @@ function filterDis(el) {
 
 let priceArr = [];
 items.forEach(elem => {
-    priceArr.push(elem)
-  });
-  priceArr = priceArr.sort((a, b) => {
-    return a - b
-  });
+  priceArr.push(elem)
+});
+priceArr = priceArr.sort((a, b) => {
+  return a - b
+});
 
 let itemsSortByPrice = [];
+
 function sortArrByPrice() {
   return items.sort((prev, next) => {
     let prevB = prev.price;
@@ -375,16 +445,13 @@ function filterPrice() {
   let filteredPrice = [];
   if (priceFrom.value < minPrice) {
     alert('Price value less min value = ' + minPrice)
-  }
-  else if(priceTo > maxPrice){
+  } else if (priceTo > maxPrice) {
     alert('Price value more max value =' + maxPrice)
-  }
-  else if(priceTo < priceFrom){
+  } else if (priceTo < priceFrom) {
     alert('Incorrect data')
-  }
-  else{
-    itemsSortByPrice.filter((e) => {    
-      if(priceFrom.value <= e.price && e.price <= priceTo.value) {
+  } else {
+    itemsSortByPrice.filter((e) => {
+      if (priceFrom.value <= e.price && e.price <= priceTo.value) {
         filteredPrice.push(e);
         updateChildren(products, filteredPrice);
       }
@@ -401,6 +468,5 @@ filRes.addEventListener('click', (event) => {
   });
   updateChildren(products, items);
 });
-  //   updateChildren(products, items);
-  // console.log(priceArr);
-
+//   updateChildren(products, items);
+// console.log(priceArr);
