@@ -5,25 +5,21 @@ import {
 const products = document.getElementById('products');
 const productWrapper = document.querySelector('li.product__wrapper');
 
-const newName = document.getElementById('product__name');
-const newImage = document.getElementById('product__photo');
-const newOrders = document.getElementById('product__orders');
-const newPrice = document.getElementById('product__price');
-const newReviews = document.getElementById('product__reviews');
-const newStock = document.getElementById('product__stock');
-const stockImg = document.getElementById('stock__img');
+// const newName = document.getElementById('product__name');
+// const newImage = document.getElementById('product__photo');
+// const newOrders = document.getElementById('product__orders');
+// const newPrice = document.getElementById('product__price');
+// const newReviews = document.getElementById('product__reviews');
+// const newStock = document.getElementById('product__stock');
+// const stockImg = document.getElementById('stock__img');
+// const cardBtn = document.querySelector('.product__btn');
+let newName,newImage,newOrders,newPrice,newReviews,newStock,stockImg;
 const cardBtn = document.querySelector('.product__btn');
-const like = document.getElementById('like');
 
-// like.addEventListener('click', (event) => {
-//   event.stopPropagation();
-//   like.classList.toggle('filled');
-// })
+// const like = document.getElementById('like');
 
-like.addEventListener('click', (event) => {
-  event.stopPropagation();
-  like.classList.toggle('filled');
-})
+
+
 
 const createCards = function (card) {
   card.forEach((el) => {
@@ -31,24 +27,54 @@ const createCards = function (card) {
     let id = el.id;
     newCard.classList = "product__wrapper";
     newCard.id = `${id}`;
-    newImage.src = `./img/${el.imgUrl}`;
-    newName.textContent = el.name;
-    newStock.textContent = el.orderInfo.inStock;
-    if (newStock.textContent > 0) {
-      stockImg.src = `./img/stock.svg`
+    newImage = `./img/${el.imgUrl}`;
+    newName = el.name;
+    newStock = el.orderInfo.inStock;
+    if (newStock > 0) {
+      // cardBtn.disabled = false;
+      stockImg = `./img/stock.svg`
     } else {
       // cardBtn.disabled = true;
-      stockImg.src = `./img/nostock.svg`;
+      stockImg = `./img/nostock.svg`;
     }
-    newPrice.textContent = el.price;
-    newOrders.textContent = Math.floor(300 + 700 * Math.random());
+    newPrice = el.price;
+    newOrders = Math.floor(300 + 700 * Math.random());
     cardBtn.id = `${id}`;
-    newReviews.textContent = el.orderInfo.reviews;
-    newCard.innerHTML = productWrapper.innerHTML;
+    newReviews = el.orderInfo.reviews;
+    
+    newCard.innerHTML = `
+              <div class="product">
+                  <img id="like" src="./img/icons/like_empty.svg" alt="" class="like" onclick="${test()}">
+                  <div class="product__photo">
+                    <img id="product__photo" src="${newImage}" height="200" width="200" alt="">
+                  </div>
+                  <div class="product__desc">
+                    <h3 id="product__name" class="product__name">${newName}</h3>
+                    <p class="product__stock"><img id="stock__img" src="${stockImg}" alt=""><span id="product__stock">${newStock}</span> left in stock</p>
+                    <p class="product__price">Price: <span id="product__price">${newPrice}</span> $</p>
+                    <button id="${cardBtn.id}" class="btn product__btn">Add to cart</button>
+                  </div>
+                  <div class="product__footer">
+                    <div class="product__reviews"><span id="product__reviews">${newReviews}</span>% Positive reviews Above avarage
+                    </div>
+                    <div class="product__orders"><span id="product__orders">${newOrders}</span> orders</div>
+                  </div>
+                </div>
+    `;
+    // if(newStock === 0){
+    //   cardBtn.disabled = true;
+    // }
+    // console.log(newStock === 0);
+    function test(){
+      console.log(123);
+    }
     products.appendChild(newCard);
+
   });
 }
-createCards(items)
+
+createCards(items);
+
 
 const priceFrom = document.getElementById('price-from');
 const priceTo = document.getElementById('price-to');
@@ -125,6 +151,15 @@ accordBtn.addEventListener('click', (event) => {
   event.currentTarget.classList.toggle('active');
 });
 
+// like.addEventListener('click', (event) => {
+//   // event.stopPropagation();
+//   console.log(123);
+//   event.currentTarget.classList.toggle('active');
+
+//   // like.classList.toggle('filled');
+// })
+
+
 
 
 // console.log(newStock.textContent);
@@ -151,103 +186,149 @@ accordBtn.addEventListener('click', (event) => {
 //     .finally(() => console.log('JavaScript Promise finished'));
 
 const popup = document.getElementById('product__modal');
-const productWrappers = document.querySelectorAll('li.product__wrapper');
+// const productWrappers = document.querySelectorAll('li.product__wrapper');
 const tagBody = document.querySelector('body')
 
-const cartPopup = document.getElementById('cart-modal');
+// const cartPopup = document.getElementById('cart-modal');
 const arrBtnToAddCart = document.querySelectorAll('.btn');
+////////////new cart
+const itemBox = document.querySelectorAll('li.product__wrapper');
+const cartCont = document.getElementById('cart-modal');
 
-let arrayCartItem = [];
-
-function cartPopupFunc(array) {
-  arrBtnToAddCart.forEach((item) => {
-    item.addEventListener('click', () => {
-      cartPopup.classList.add('active')
-      tagBody.classList.add('hidden');
-      const cartPopupParent = document.querySelector('.cart__items')
-      
-      arrayCartItem.push(item);
-      arrayCartItem.map((e)=> {
-        array.forEach((el) => {
-          if (+el.id === +e.id) {
-            let cartPopupImg = `./img/${el.imgUrl}`,
-            cartPopupName = el.name,
-            cartPopupPrice = `$` + el.price,
-            newCartItem = document.createElement('li');
-            newCartItem.classList.add('cart__item');
-            newCartItem.innerHTML = `
-              <img id="item__img" class="item__img" src="${cartPopupImg}" height="100" width="100" alt="">
-              <div class="item__desc">
-                <h5 id="item__title" class="item__title">${cartPopupName}</h5>
-                <span id="item__price" class="item__price">${cartPopupPrice}</span>
-              </div>
-              <div class="item__buttons">
-                <button class="btn__less"><</button>
-                <span class="item__count">1</span>
-                <button class="btn__more">></button>
-                <button class="btn__del">X</button>
-                </div>
-            `;
-            cartPopupParent.appendChild(newCartItem);
-                
-            const cartBtnDel = document.querySelectorAll('.btn__del');
-            cartBtnDel.forEach((btn) => {
-              btn.addEventListener('click', (event) => {
-                btn.parentElement.parentElement.remove();
-              })
-            })
-
-            const cartBtnMore = document.querySelectorAll('.btn__more'),
-                  cartBtnLess = document.querySelectorAll('.btn__less'),
-                  cartCounters = document.querySelectorAll('.item__count');
-            
-            cartBtnMore.forEach((btn) => {
-              btn.addEventListener('click', (event) => {
-                cartCounters.forEach(count => {
-                  count.innerHTML++;
-                    if(+count.innerHTML >= 4){
-                      btn.disabled = true;
-                    }
-                  })  
-              })
-            })
-
-            cartBtnLess.forEach((btn) => {
-              btn.disabled = true;
-              btn.addEventListener('click', (event) => {
-                cartCounters.forEach(count => {
-                  count.innerHTML--;
-                  if (+count.innerHTML === 1){
-                    btn.disabled = true;
-                  }
-                })
-              })
-            })
-            
-            let amount = document.getElementById('cart__amount');
-
-            let x = 0;
-            let arra = [];
-            cartCounters.forEach(c=>arra.push(+c.outerText))
-            amount.innerHTML = arra.map(i=>x+=i, x=0).reverse()[0];
-          }
-        })
-        
-      });
-
-      cartPopup.onmousedown = function (e) {
-        let target = e.target;
-        let modalContent = cartPopup.getElementsByClassName('cart__inner')[0];
-        if (e.target.closest('.' + modalContent.className) === null) {
-          this.classList.remove('active');
-          tagBody.classList.remove('hidden');
-        }
-        arrayCartItem = [];
-      };
-    })
-  })
+function addToCart(e){
+	this.disabled = true; // блокируем кнопку на время операции с корзиной
+	var cartData = getCartData() || {}, // получаем данные корзины или создаём новый объект, если данных еще нет
+			parentBox = this.parentNode, // родительский элемент кнопки &quot;Добавить в корзину&quot;
+			itemId = this.getAttribute('data-id'), // ID товара
+			itemTitle = parentBox.querySelector('.item_title').innerHTML, // название товара
+			itemPrice = parentBox.querySelector('.item_price').innerHTML; // стоимость товара
+      console.log(parentBox);
+	if(cartData.hasOwnProperty(itemId)){ // если такой товар уже в корзине, то добавляем +1 к его количеству
+		cartData[itemId][2] += 1;
+	} else { // если товара в корзине еще нет, то добавляем в объект
+		cartData[itemId] = [itemTitle, itemPrice, 1];
+	}
+	// Обновляем данные в LocalStorage
+	if(!setCartData(cartData)){ 
+		this.disabled = false; // разблокируем кнопку после обновления LS
+		cartCont.innerHTML = 'Товар добавлен в корзину.';
+		setTimeout(function(){
+			cartCont.innerHTML = 'Продолжить покупки...';
+		}, 1000);
+	}
+	return false;
 }
-cartPopupFunc(items);
+
+// /////new cart
+let arrayCartItem = [];
+let arrayY = [];
+
+function getCartData(){
+	return JSON.parse(localStorage.getItem('cart'));
+}
+// Записываем данные в LocalStorage
+function setCartData(o){
+	localStorage.setItem('cart', JSON.stringify(o));
+	return false;
+}
+
+
+
+// function cartPopupFunc(array) {
+//   arrBtnToAddCart.forEach((item) => {
+//     item.addEventListener('click', () => {
+//       cartPopup.classList.add('active')
+//       tagBody.classList.add('hidden');
+//       const cartPopupParent = document.querySelector('.cart__items')
+      
+//       arrayCartItem.push(item);
+//       arrayCartItem.map((e)=> {
+//         array.forEach((el) => {
+//           if (+el.id === +e.id) {
+//             let cartPopupImg = `./img/${el.imgUrl}`,
+//             cartPopupName = el.name,
+//             cartPopupPrice = `$` + el.price,
+//             newCartItem = document.createElement('li');
+//             newCartItem.classList.add('cart__item');
+//             newCartItem.innerHTML = `
+//               <img id="item__img" class="item__img" src="${cartPopupImg}" height="100" width="100" alt="">
+//               <div class="item__desc">
+//                 <h5 id="item__title" class="item__title">${cartPopupName}</h5>
+//                 <span id="item__price" class="item__price">${cartPopupPrice}</span>
+//               </div>
+//               <div class="item__buttons">
+//                 <button class="btn__less"><</button>
+//                 <span class="item__count">1</span>
+//                 <button class="btn__more">></button>
+//                 <button class="btn__del">X</button>
+//                 </div>
+//             `;
+//             cartPopupParent.appendChild(newCartItem);
+                
+//             const cartBtnDel = document.querySelectorAll('.btn__del');
+//             cartBtnDel.forEach((btn) => {
+//               btn.addEventListener('click', (event) => {
+//                 btn.parentElement.parentElement.remove();
+//               })
+//             })
+
+//             const cartBtnMore = document.querySelectorAll('.btn__more'),
+//                   cartBtnLess = document.querySelectorAll('.btn__less'),
+//                   cartCounters = document.querySelectorAll('.item__count');
+            
+//             cartBtnMore.forEach((btn) => {
+//               btn.addEventListener('click', (event) => {
+//                 cartCounters.forEach(count => {
+//                   count.innerHTML++;
+//                     if(+count.innerHTML >= 4){
+//                       btn.disabled = true;
+//                     }
+//                   })  
+//               })
+//             })
+
+//             cartBtnLess.forEach((btn) => {
+//               btn.disabled = true;
+//               btn.addEventListener('click', (event) => {
+//                 cartCounters.forEach(count => {
+//                   count.innerHTML--;
+//                   if (+count.innerHTML === 1){
+//                     btn.disabled = true;
+//                   }
+//                 })
+//               })
+//             })
+            
+//             let amount = document.getElementById('cart__amount');
+
+//             let x = 0;
+//             let arrayX = [];
+//             cartCounters.forEach(c=>arrayX.push(+c.outerText))
+//             amount.innerHTML = arrayX.map(i=>x+=i, x=0).reverse()[0];
+
+//             let amountPrice = document.getElementById('cart__price');
+
+//             let y = 0;
+//             arrayY.push(+el.price);
+//             amountPrice.innerHTML = arrayY.map(i=>y+=i, x=0).reverse()[0];
+//           }
+//         })
+        
+//       });
+
+//       cartPopup.onmousedown = function (e) {
+//         let target = e.target;
+//         let modalContent = cartPopup.getElementsByClassName('cart__inner')[0];
+//         if (e.target.closest('.' + modalContent.className) === null) {
+//           this.classList.remove('active');
+//           tagBody.classList.remove('hidden');
+//         }
+//         arrayCartItem = [];
+//       };
+//     })
+//   })
+// }
+// cartPopupFunc(items);
 
 
 
@@ -302,7 +383,7 @@ function popupFunc(array) {
     })
   })
 }
-popupFunc(items);
+// popupFunc(items);
 
 
 // $(".cities_list input[type='checkbox']").on('change', function() {

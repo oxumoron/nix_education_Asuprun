@@ -400,7 +400,7 @@ ol{
   cursor:pointer;
   transition:fill .3s;
 }
-.like.filled{
+#like.filled{
   background-color: #aaa;
 }
 
