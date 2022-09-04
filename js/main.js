@@ -13,7 +13,7 @@ const productWrapper = document.querySelector('li.product__wrapper');
 // const newStock = document.getElementById('product__stock');
 // const stockImg = document.getElementById('stock__img');
 // const cardBtn = document.querySelector('.product__btn');
-let newName,newImage,newOrders,newPrice,newReviews,newStock,stockImg;
+let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
 const cardBtn = document.querySelector('.product__btn');
 
 // const like = document.getElementById('like');
@@ -41,21 +41,21 @@ const createCards = function (card) {
     newOrders = Math.floor(300 + 700 * Math.random());
     cardBtn.id = `${id}`;
     newReviews = el.orderInfo.reviews;
-    
+
     newCard.innerHTML = `
               <div class="product">
-                  <img id="like" src="./img/icons/like_empty.svg" alt="" class="like" onclick="${test()}">
+                  <img id="like" src="./img/icons/like_empty.svg" alt="" class="like">
                   <div class="product__photo">
-                    <img id="product__photo" src="${newImage}" height="200" width="200" alt="">
+                    <img class="product__img" id="product__photo" src="${newImage}" height="200" width="200" alt="">
                   </div>
                   <div class="product__desc">
                     <h3 id="product__name" class="product__name">${newName}</h3>
                     <p class="product__stock"><img id="stock__img" src="${stockImg}" alt=""><span id="product__stock">${newStock}</span> left in stock</p>
-                    <p class="product__price">Price: <span id="product__price">${newPrice}</span> $</p>
-                    <button id="${cardBtn.id}" class="btn product__btn">Add to cart</button>
+                    <p class="product__price">Price: <span class="price" id="product__price">${newPrice}</span> $</p>
+                    <button data-id="${cardBtn.id}" class="btn product__btn">Add to cart</button>
                   </div>
                   <div class="product__footer">
-                    <div class="product__reviews"><span id="product__reviews">${newReviews}</span>% Positive reviews Above avarage
+                    <div class="product__reviews"><span id="product__reviews">${newReviews}</span>% Positive reviews Above aletage
                     </div>
                     <div class="product__orders"><span id="product__orders">${newOrders}</span> orders</div>
                   </div>
@@ -65,9 +65,7 @@ const createCards = function (card) {
     //   cardBtn.disabled = true;
     // }
     // console.log(newStock === 0);
-    function test(){
-      console.log(123);
-    }
+
     products.appendChild(newCard);
 
   });
@@ -151,42 +149,8 @@ accordBtn.addEventListener('click', (event) => {
   event.currentTarget.classList.toggle('active');
 });
 
-// like.addEventListener('click', (event) => {
-//   // event.stopPropagation();
-//   console.log(123);
-//   event.currentTarget.classList.toggle('active');
-
-//   // like.classList.toggle('filled');
-// })
-
-
-
-
-// console.log(newStock.textContent);
-
-// if (localStorage.prompt1) {
-//   document.getElementById('input').value = localStorage.prompt1;
-// }else{
-//   localStorage.prompt1
-// }
-// localStorage.prompt1 = prompt('Enter user name')
-
-// let result = new Promise((resolve, reject) => {
-
-//   setTimeout(() => {
-//        resolve(value);
-//      else
-//        reject(value);
-//    }, 1000);
-//   });
-
-//   result
-//     .then(result => console.log('Success: ', result))
-//     .catch(error => console.log('Error: ', error))
-//     .finally(() => console.log('JavaScript Promise finished'));
-
 const popup = document.getElementById('product__modal');
-// const productWrappers = document.querySelectorAll('li.product__wrapper');
+const productWrappers = document.querySelectorAll('li.product__wrapper');
 const tagBody = document.querySelector('body')
 
 // const cartPopup = document.getElementById('cart-modal');
@@ -195,143 +159,125 @@ const arrBtnToAddCart = document.querySelectorAll('.btn');
 const itemBox = document.querySelectorAll('li.product__wrapper');
 const cartCont = document.getElementById('cart-modal');
 
-function addToCart(e){
-	this.disabled = true; // блокируем кнопку на время операции с корзиной
-	var cartData = getCartData() || {}, // получаем данные корзины или создаём новый объект, если данных еще нет
-			parentBox = this.parentNode, // родительский элемент кнопки &quot;Добавить в корзину&quot;
-			itemId = this.getAttribute('data-id'), // ID товара
-			itemTitle = parentBox.querySelector('.item_title').innerHTML, // название товара
-			itemPrice = parentBox.querySelector('.item_price').innerHTML; // стоимость товара
-      console.log(parentBox);
-	if(cartData.hasOwnProperty(itemId)){ // если такой товар уже в корзине, то добавляем +1 к его количеству
-		cartData[itemId][2] += 1;
-	} else { // если товара в корзине еще нет, то добавляем в объект
-		cartData[itemId] = [itemTitle, itemPrice, 1];
-	}
-	// Обновляем данные в LocalStorage
-	if(!setCartData(cartData)){ 
-		this.disabled = false; // разблокируем кнопку после обновления LS
-		cartCont.innerHTML = 'Товар добавлен в корзину.';
-		setTimeout(function(){
-			cartCont.innerHTML = 'Продолжить покупки...';
-		}, 1000);
-	}
-	return false;
+function addToCart(e) {
+  this.disabled = true;
+  let cartData = getCartData() || {},
+    parentBox = this.parentNode.parentNode.parentNode,
+    itemId = this.getAttribute('data-id'),
+    itemTitle = parentBox.querySelector('.product__name').innerHTML,
+    itemPrice = parentBox.querySelector('.price').innerHTML,
+    itemImg = parentBox.querySelector('.product__img').src;
+  if (cartData.hasOwnProperty(itemId)) { 
+    cartData[itemId][3] += 1;
+  } else { 
+    cartData[itemId] = [itemTitle, itemPrice, itemImg.slice(21), 1];
+  }
+  
+  if (!setCartData(cartData)) {
+    this.disabled = false;
+  }
+  return false;
 }
+for (let i = 0; i < itemBox.length; i++) {
+  itemBox[i].querySelector('.btn').addEventListener('click', addToCart)
+}
+
+function openCart(e) {
+
+  let cartData = getCartData(),
+    totalItems = '';
+  if (cartData !== null) {
+   
+    let newCartArray = Object.values(cartData);
+    totalItems = `
+            <div class="cart__inner">
+              <div class="cart__header">
+                <h4 class="cart__title">Shopping Cart</h4>
+                <p>Checkout is almost done!</p>
+              </div>
+              <ul class="cart__items">
+              `;
+    newCartArray.forEach(ar => {
+      console.log(ar);
+      totalItems += `
+                  <li class="cart__item">
+                    <img id="item__img" class="item__img" src="${ar[2]}" height="100" width="100" alt="">
+                    <div class="item__desc">
+                      <h5 id="item__title" class="item__title">${ar[0]}</h5>
+                      <span id="item__price" class="item__price">${ar[1]}</span>
+                    </div>
+                    <div class="item__buttons">
+                      <button class="btn__less">
+                        <</button> <span class="item__count">${ar[3]}</span>
+                          <button class="btn__more">></button>
+                          <button class="btn__del">X</button>
+                    </div>
+                  </li>
+                  
+                      `;
+
+    })
+    totalItems += `
+        <div class="cart__total">
+          <p>Total amount: <span id="cart__amount" class="cart__amount"></span> ptc.</p>
+          <p>Total price: <span id="cart__price" class="cart__price"></span>$</p>
+        </div>
+        <div class="cart__buy">
+          <button class="btn buy__btn">Buy</button>
+        </div>`;
+
+    cartCont.innerHTML = totalItems;
+    
+  } else {
+    // если в корзине пусто, то сигнализируем об этом
+    cartCont.innerHTML = `
+    <div class="cart__inner">
+      <div class="cart__header">
+        <h4 class="cart__title">Shopping Cart</h4>
+        <p>Checkout is almost done!</p>
+      </div>
+      <ul class="cart__items">
+      <p style="font-size: 32px">В корзине пусто</p>
+    `;
+  }
+
+  return false;
+}
+
+document.getElementById('cart').addEventListener('click', (openCart));
+document.getElementById('cart').addEventListener('click', (active));
+
+// addEvent(d.getElementById('clear_cart'), 'click', function(e){
+// 	localStorage.removeItem('cart');
+// 	cartCont.innerHTML = 'Корзина очишена.';	
+// });
 
 // /////new cart
 let arrayCartItem = [];
 let arrayY = [];
 
-function getCartData(){
-	return JSON.parse(localStorage.getItem('cart'));
+function getCartData() {
+  return JSON.parse(localStorage.getItem('cart'));
 }
 // Записываем данные в LocalStorage
-function setCartData(o){
-	localStorage.setItem('cart', JSON.stringify(o));
-	return false;
+function setCartData(o) {
+  localStorage.setItem('cart', JSON.stringify(o));
+  return false;
 }
 
+function active() {
+  cartCont.classList.add('active');
+  tagBody.classList.add('hidden');
+}
 
-
-// function cartPopupFunc(array) {
-//   arrBtnToAddCart.forEach((item) => {
-//     item.addEventListener('click', () => {
-//       cartPopup.classList.add('active')
-//       tagBody.classList.add('hidden');
-//       const cartPopupParent = document.querySelector('.cart__items')
-      
-//       arrayCartItem.push(item);
-//       arrayCartItem.map((e)=> {
-//         array.forEach((el) => {
-//           if (+el.id === +e.id) {
-//             let cartPopupImg = `./img/${el.imgUrl}`,
-//             cartPopupName = el.name,
-//             cartPopupPrice = `$` + el.price,
-//             newCartItem = document.createElement('li');
-//             newCartItem.classList.add('cart__item');
-//             newCartItem.innerHTML = `
-//               <img id="item__img" class="item__img" src="${cartPopupImg}" height="100" width="100" alt="">
-//               <div class="item__desc">
-//                 <h5 id="item__title" class="item__title">${cartPopupName}</h5>
-//                 <span id="item__price" class="item__price">${cartPopupPrice}</span>
-//               </div>
-//               <div class="item__buttons">
-//                 <button class="btn__less"><</button>
-//                 <span class="item__count">1</span>
-//                 <button class="btn__more">></button>
-//                 <button class="btn__del">X</button>
-//                 </div>
-//             `;
-//             cartPopupParent.appendChild(newCartItem);
-                
-//             const cartBtnDel = document.querySelectorAll('.btn__del');
-//             cartBtnDel.forEach((btn) => {
-//               btn.addEventListener('click', (event) => {
-//                 btn.parentElement.parentElement.remove();
-//               })
-//             })
-
-//             const cartBtnMore = document.querySelectorAll('.btn__more'),
-//                   cartBtnLess = document.querySelectorAll('.btn__less'),
-//                   cartCounters = document.querySelectorAll('.item__count');
-            
-//             cartBtnMore.forEach((btn) => {
-//               btn.addEventListener('click', (event) => {
-//                 cartCounters.forEach(count => {
-//                   count.innerHTML++;
-//                     if(+count.innerHTML >= 4){
-//                       btn.disabled = true;
-//                     }
-//                   })  
-//               })
-//             })
-
-//             cartBtnLess.forEach((btn) => {
-//               btn.disabled = true;
-//               btn.addEventListener('click', (event) => {
-//                 cartCounters.forEach(count => {
-//                   count.innerHTML--;
-//                   if (+count.innerHTML === 1){
-//                     btn.disabled = true;
-//                   }
-//                 })
-//               })
-//             })
-            
-//             let amount = document.getElementById('cart__amount');
-
-//             let x = 0;
-//             let arrayX = [];
-//             cartCounters.forEach(c=>arrayX.push(+c.outerText))
-//             amount.innerHTML = arrayX.map(i=>x+=i, x=0).reverse()[0];
-
-//             let amountPrice = document.getElementById('cart__price');
-
-//             let y = 0;
-//             arrayY.push(+el.price);
-//             amountPrice.innerHTML = arrayY.map(i=>y+=i, x=0).reverse()[0];
-//           }
-//         })
-        
-//       });
-
-//       cartPopup.onmousedown = function (e) {
-//         let target = e.target;
-//         let modalContent = cartPopup.getElementsByClassName('cart__inner')[0];
-//         if (e.target.closest('.' + modalContent.className) === null) {
-//           this.classList.remove('active');
-//           tagBody.classList.remove('hidden');
-//         }
-//         arrayCartItem = [];
-//       };
-//     })
-//   })
-// }
-// cartPopupFunc(items);
-
-
-
+cartCont.onmousedown = function (e) {
+  let target = e.target;
+  let modalContent = cartCont.getElementsByClassName('cart__inner')[0];
+  if (e.target.closest('.' + modalContent.className) === null) {
+    this.classList.remove('active');
+    tagBody.classList.remove('hidden');
+  }
+};
 
 function popupFunc(array) {
   productWrappers.forEach((item) => {
@@ -383,13 +329,7 @@ function popupFunc(array) {
     })
   })
 }
-// popupFunc(items);
-
-
-// $(".cities_list input[type='checkbox']").on('change', function() {
-//   console.log($(this).val());
-//   console.log($(this).attr('id'));
-// });
+popupFunc(items);
 
 
 // const colList = document.getElementById('color-cat__list');

@@ -110,7 +110,7 @@ ol{
   color: transparent;
 }
 
-.cart:before{
+/* .cart:before{
   content: '3';
   position: absolute;
   top: 20px;
@@ -124,7 +124,7 @@ ol{
   font-weight: 700;
   font-size: 14px;
   text-align: center;
-}
+} */
 
 .banner{
   margin-bottom: 15px;
