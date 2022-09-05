@@ -391,17 +391,15 @@ ol{
   border-radius: 10px;
 }
 
-.like{
-  fill:transparent; 
-  stroke:#000;
+.like svg{
   stroke-width: 10px;
   margin-left: 250px;
   margin-top: 10px;
   cursor:pointer;
   transition:fill .3s;
 }
-#like.filled{
-  background-color: #aaa;
+.like.filled svg{
+  fill: red;
 }
 
 .product__photo{
