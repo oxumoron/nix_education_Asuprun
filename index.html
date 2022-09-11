@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
   <main class="main">
     <div id="day" class="content">
@@ -67,8 +69,32 @@
         </li>
       </ul>
     </div>
+    <div id="form__wrapper" class="form__wrapper">
+      <div class="form">
+        <form>
+          <div class="form__title">
+            <label for="event-title">Event title</label>
+            <input type="text" id="event-title">
+          </div>
+          <div class="form__time">
+            <div class="form__time-start">
+              <label for="time-start">time-start</label>
+              <input type="text" id="time-start">
+            </div>
+            <div class="form__time-end">
+              <label for="time-end">time-end</label>
+              <input type="text" id="time-end">
+            </div>
+          </div>
+          <div class="form__btn">
+            <input type="submit" value="Create">
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 
   <script nomodule type="module" src="./js/main.js"></script>
 </body>
+
 </html>

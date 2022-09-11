@@ -11,6 +11,7 @@ body{
   font-size: 14px;
   text-align: center;
   line-height: 1;
+  margin: 0;
 }
 
 ul{
@@ -67,4 +68,73 @@ ul{
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.form__wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .4);
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.form__wrapper.show {
+  display: block;
+}
+
+.form {
+  background-color: white;
+  font-size: 16px;
+  width: 40%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 30px;
+  border-radius: 30px;
+}
+
+.form__title,
+.form__time,
+.form__btn{
+  margin-bottom: 40px;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.form input:not(input[type='submit']) {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid grey;
+  outline: none;
+  border-radius: 2px;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.form__time{
+  display: flex;
+  gap: 10px;
+}
+
+.form__btn{
+  display: flex;
+  justify-content: center;
+}
+
+.form__btn input[type='submit'] {
+  background-color: blue;
+  color: white;
+  border: 1px solid blue;
+  transition: all .3s ease;
+  padding: 10px 20px 8px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
 }
