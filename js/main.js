@@ -1,10 +1,12 @@
 import { workDay } from './myObj.js';
 
-let day = [...workDay];
+let day = [...workDay],
+    newColor = '';
 
 const timeList = document.getElementById('day'),
       tasks = timeList.querySelectorAll('.tasks__box'),
       popup = document.getElementById('form__wrapper'),
+      color = document.getElementById('event-color'),
       start = document.getElementById('time-start');
 
 let min = [...tasks].map((task) => {
@@ -54,3 +56,9 @@ function popupHidden() {
     }
   });
 }
+
+
+color.addEventListener('change', (event) => {
+  newColor = color.value;
+  console.log(newColor);
+})
