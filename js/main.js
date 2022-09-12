@@ -58,7 +58,22 @@ function popupHidden() {
 }
 
 
+
+
+function getCartData() {
+  return JSON.parse(localStorage.getItem('event'));
+}
+
+function setCartData(o) {
+  localStorage.setItem('event', JSON.stringify(o));
+  return false;
+}
+
+// let arrData = getCartData() || {};
+
 color.addEventListener('change', (event) => {
   newColor = color.value;
-  console.log(newColor);
+  setCartData(newColor);
 })
+
+console.log(getCartData());
