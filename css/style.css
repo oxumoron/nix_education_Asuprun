@@ -134,7 +134,7 @@ ul{
   justify-content: center;
 }
 
-.form__btn input[type='submit'] {
+#event-create {
   background-color: blue;
   color: white;
   border: 1px solid blue;

@@ -1,13 +1,18 @@
 import { workDay } from './myObj.js';
 
 let day = [...workDay],
-    newColor = '';
+    newColor,newTitle,newStart,newEnd,
+    newArrEvent = [];
 
 const timeList = document.getElementById('day'),
       tasks = timeList.querySelectorAll('.tasks__box'),
       popup = document.getElementById('form__wrapper'),
       color = document.getElementById('event-color'),
-      start = document.getElementById('time-start');
+      title = document.getElementById('event-title'),
+      start = document.getElementById('time-start'),
+      end = document.getElementById('time-end'),
+      crt = document.querySelector('.form__btn input'),
+      createBtn = document.getElementById('event-create');
 
 let min = [...tasks].map((task) => {
   return { id: task.id, from: task.id.split('-')[0], to: task.id.split('-')[1] };
@@ -57,23 +62,23 @@ function popupHidden() {
   });
 }
 
-
-
-
 function getCartData() {
   return JSON.parse(localStorage.getItem('event'));
 }
-
+// Записываем данные в LocalStorage
 function setCartData(o) {
   localStorage.setItem('event', JSON.stringify(o));
   return false;
 }
 
-// let arrData = getCartData() || {};
-
-color.addEventListener('change', (event) => {
+createBtn.addEventListener('click', (event) => {
+  let newEvent = [];
   newColor = color.value;
-  setCartData(newColor);
+  newTitle = title.value;
+  newStart = start.value;
+  newEnd = end.value;
+  newEvent = [newStart,newEnd,newTitle,newColor];
+  newArrEvent.push(newEvent);
+  setCartData(newArrEvent);
 })
-
 console.log(getCartData());
