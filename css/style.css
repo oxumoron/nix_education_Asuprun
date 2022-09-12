@@ -118,8 +118,14 @@ ul{
   text-align: center;
 }
 
+.form__color{
+  width: 50%;
+  margin: 0 auto 40px;
+}
+
 .form__time{
   display: flex;
+  justify-content: center;
   gap: 10px;
 }
 
