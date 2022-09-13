@@ -1,8 +1,7 @@
 import { workDay } from './myObj.js';
 
 let day = [...workDay],
-    newColor,newTitle,newStart,newEnd,
-    newArrEvent = [];
+    arr = [];
 
 const timeList = document.getElementById('day'),
       tasks = timeList.querySelectorAll('.tasks__box'),
@@ -62,23 +61,21 @@ function popupHidden() {
   });
 }
 
-function getCartData() {
+function getEventData() {
   return JSON.parse(localStorage.getItem('event'));
 }
 // Записываем данные в LocalStorage
-function setCartData(o) {
+function setEventData(o) {
   localStorage.setItem('event', JSON.stringify(o));
   return false;
 }
 
 createBtn.addEventListener('click', (event) => {
-  let newEvent = [];
-  newColor = color.value;
-  newTitle = title.value;
-  newStart = start.value;
-  newEnd = end.value;
-  newEvent = [newStart,newEnd,newTitle,newColor];
-  newArrEvent.push(newEvent);
-  setCartData(newArrEvent);
+  let newEvent = getEventData() || [],
+      newArrEvent = [];
+  newArrEvent.push(start.value,end.value,title.value,color.value);
+  newEvent.push(newArrEvent);
+  arr.push(newEvent);
+  setEventData(arr);
+  console.log(getEventData());
 })
-console.log(getCartData());
