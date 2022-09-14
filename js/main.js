@@ -1,7 +1,6 @@
 import { workDay } from './myObj.js';
 
-let day = [...workDay],
-    arr = [];
+let day = [...workDay];
 
 const timeList = document.getElementById('day'),
       tasks = timeList.querySelectorAll('.tasks__box'),
@@ -10,7 +9,7 @@ const timeList = document.getElementById('day'),
       title = document.getElementById('event-title'),
       start = document.getElementById('time-start'),
       end = document.getElementById('time-end'),
-      crt = document.querySelector('.form__btn input'),
+      crt = document.querySelector('.form__btn button'),
       createBtn = document.getElementById('event-create');
 
 let min = [...tasks].map((task) => {
@@ -32,17 +31,31 @@ day.forEach((item) => {
   task.appendChild(newTask);
 });
 
-function getTimeFromMins(dayStart, mins) {
+function getTimeFromMins(mins) {
   let hours = Math.trunc(mins/60);
   let minutes = mins % 60;
-  return (hours+dayStart) + ':' + minutes;
+  return (hours + 8) + ':' + minutes;// 8 morning
 };
+
+function getMinutesFromTime(time){
+  let hourS = +time.split(':')[0] - 8;// 8 morning
+  let minS = +time.split(':')[1];
+  return hourS  * 60 + minS;
+}
+
+const hexToRgb = hex =>
+  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) =>
+   '#' + r + r + g + g + b + b)
+    .substring(1).match(/.{2}/g)
+    .map(x => parseInt(x, 16));
+
+
 
 timeList.addEventListener('click', (event) => {
   // console.log(event.currentTarget, getTimeFromMins(event.clientY));
   popup.classList.add('show');
   
-  start.value = getTimeFromMins(8, event.clientY);
+  start.value = getTimeFromMins(event.clientY);
   
   popupHidden()
 })
@@ -64,7 +77,7 @@ function popupHidden() {
 function getEventData() {
   return JSON.parse(localStorage.getItem('event'));
 }
-// Записываем данные в LocalStorage
+
 function setEventData(o) {
   localStorage.setItem('event', JSON.stringify(o));
   return false;
@@ -75,7 +88,91 @@ createBtn.addEventListener('click', (event) => {
       newArrEvent = [];
   newArrEvent.push(start.value,end.value,title.value,color.value);
   newEvent.push(newArrEvent);
-  arr.push(newEvent);
-  setEventData(arr);
-  console.log(getEventData());
+  setEventData(newEvent);
 })
+
+getEventData().forEach((item) => {
+  let start = getMinutesFromTime(item[0]);
+  let end = getMinutesFromTime(item[1]);
+  let duration = end - start;
+  let a = .5,b = 0;
+  let rgba = hexToRgb(item[3]);
+
+  let findMin = min.findIndex((i) => {
+    return i.from <= start && i.to > start;
+  });
+
+  let task = document.getElementById(`${min[findMin].id}`),
+      newTask = document.createElement('div');
+  newTask.classList.add('task');
+  newTask.innerText = item[2];
+  newTask.style.height = `${duration}px`;
+  newTask.style.backgroundColor = "rgba(" + rgba.concat(a).join(',') +")";
+  newTask.style.borderColor = "rgba(" + rgba.concat(b).join(',') +")";
+  // console.log(newTask.style.backgroundColor);
+  newTask.style.top = `${start - min[findMin].from}px`;
+  task.appendChild(newTask);
+});
+
+// function validateTime(obj)
+// {
+//     var timeValue = obj.value;
+//     if(timeValue == "" || timeValue.indexOf(":")<0)
+//     {
+//         alert("Invalid Time format");
+//         return false;
+//     }
+//     else
+//     {
+//         var sHours = timeValue.split(':')[0];
+//         var sMinutes = timeValue.split(':')[1];
+
+//         if(sHours == "" || isNaN(sHours) || parseInt(sHours)>23)
+//         {
+//             alert("Invalid Time format");
+//             return false;
+//         }
+//         else if(parseInt(sHours) == 0)
+//             sHours = "00";
+//         else if (sHours <10)
+//             sHours = "0"+sHours;
+
+//         if(sMinutes == "" || isNaN(sMinutes) || parseInt(sMinutes)>59)
+//         {
+//             alert("Invalid Time format");
+//             return false;
+//         }
+//         else if(parseInt(sMinutes) == 0)
+//             sMinutes = "00";
+//         else if (sMinutes <10)
+//             sMinutes = "0"+sMinutes;    
+
+//         obj.value = sHours + ":" + sMinutes;        
+//     }
+
+//     return true;    
+// }
+
+
+function validTime(inputStr) {
+  if (!inputStr || inputStr.length<1) {return false;}
+  let time = inputStr.split(':');
+  return time.length === 2 
+         && parseInt(time[0],10)>=8 
+         && parseInt(time[0],10)<=16 
+         && parseInt(time[1],10)>=0 
+         && parseInt(time[1],10)<=59;
+}
+
+end.addEventListener('input', (event) =>{
+  // const end = document.getElementById('time-end').value;
+  if (!validTime(end.value)){
+    end.style.backgroundColor = 'red';
+    crt.setAttribute('disabled',true);
+  } else{
+    console.log(true);
+  }
+})
+
+// end.addEventListener('change', validateTime(this))
+// console.log(getEventData());
