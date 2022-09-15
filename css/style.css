@@ -141,7 +141,7 @@ button{
   justify-content: center;
 }
 
-button[disabled=true]{
+#event-create[disabled=true]{
   background-color: grey;
   cursor:default;
 }
