@@ -10,7 +10,9 @@ const timeList = document.getElementById('day'),
       start = document.getElementById('time-start'),
       end = document.getElementById('time-end'),
       crt = document.querySelector('.form__btn button'),
-      createBtn = document.getElementById('event-create');
+      events = document.querySelectorAll('.task'),
+      createBtn = document.getElementById('event-create'),
+      deleteBtn = document.getElementById('event-delete');
 
 let min = [...tasks].map((task) => {
   return { id: task.id, from: task.id.split('-')[0], to: task.id.split('-')[1] };
@@ -24,6 +26,7 @@ day.forEach((item) => {
   let task = document.getElementById(`${min[findMin].id}`),
       newTask = document.createElement('div');
 
+  newTask.id = 'task-' + item.title;
   newTask.classList.add('task');
   newTask.innerText = item.title;
   newTask.style.height = `${item.duration}px`;
@@ -43,20 +46,20 @@ function getMinutesFromTime(time){
   return hourS  * 60 + minS;
 }
 
-const hexToRgb = hex =>
-  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) =>
+const hexToRgb = hex => 
+  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) => 
    '#' + r + r + g + g + b + b)
     .substring(1).match(/.{2}/g)
     .map(x => parseInt(x, 16));
 
 
-
 timeList.addEventListener('click', (event) => {
-  // console.log(event.currentTarget, getTimeFromMins(event.clientY));
   popup.classList.add('show');
-  
+  deleteBtn.classList.remove('show');
+  title.value = null;
+  color.value = '#E2ECF5';
   start.value = getTimeFromMins(event.clientY);
-  
+  end.value = null;
   popupHidden()
 })
 
@@ -86,73 +89,48 @@ function setEventData(o) {
 createBtn.addEventListener('click', (event) => {
   let newEvent = getEventData() || [],
       newArrEvent = [];
-  newArrEvent.push(start.value,end.value,title.value,color.value);
-  newEvent.push(newArrEvent);
+  newArrEvent.push(start.value,end.value,title.value,color.value,`task-`+title.value);
+  if (newEvent.length != 0){
+    newEvent.forEach(event => {
+      const isEqual = event.toString() === newArrEvent.toString();
+      if (!isEqual){
+        newEvent.push(newArrEvent);
+      } else {
+        newArrEvent = null;
+      }
+    })
+  } else {
+    newEvent.push(newArrEvent);
+  }
   setEventData(newEvent);
 })
 
-getEventData().forEach((item) => {
-  let start = getMinutesFromTime(item[0]);
-  let end = getMinutesFromTime(item[1]);
-  let duration = end - start;
-  let a = .5,b = 0;
-  let rgba = hexToRgb(item[3]);
-
-  let findMin = min.findIndex((i) => {
-    return i.from <= start && i.to > start;
-  });
-
-  let task = document.getElementById(`${min[findMin].id}`),
-      newTask = document.createElement('div');
-  newTask.classList.add('task');
-  newTask.innerText = item[2];
-  newTask.style.height = `${duration}px`;
-  newTask.style.backgroundColor = "rgba(" + rgba.concat(a).join(',') +")";
-  newTask.style.borderColor = "rgba(" + rgba.concat(b).join(',') +")";
-  // console.log(newTask.style.backgroundColor);
-  newTask.style.top = `${start - min[findMin].from}px`;
-  task.appendChild(newTask);
-});
-
-// function validateTime(obj)
-// {
-//     var timeValue = obj.value;
-//     if(timeValue == "" || timeValue.indexOf(":")<0)
-//     {
-//         alert("Invalid Time format");
-//         return false;
-//     }
-//     else
-//     {
-//         var sHours = timeValue.split(':')[0];
-//         var sMinutes = timeValue.split(':')[1];
-
-//         if(sHours == "" || isNaN(sHours) || parseInt(sHours)>23)
-//         {
-//             alert("Invalid Time format");
-//             return false;
-//         }
-//         else if(parseInt(sHours) == 0)
-//             sHours = "00";
-//         else if (sHours <10)
-//             sHours = "0"+sHours;
-
-//         if(sMinutes == "" || isNaN(sMinutes) || parseInt(sMinutes)>59)
-//         {
-//             alert("Invalid Time format");
-//             return false;
-//         }
-//         else if(parseInt(sMinutes) == 0)
-//             sMinutes = "00";
-//         else if (sMinutes <10)
-//             sMinutes = "0"+sMinutes;    
-
-//         obj.value = sHours + ":" + sMinutes;        
-//     }
-
-//     return true;    
-// }
-
+function createAllEvents(array) {
+  if (array) {
+    array.forEach((item) => {
+      let start = getMinutesFromTime(item[0]);
+      let end = getMinutesFromTime(item[1]);
+      let duration = end - start;
+      let a = .5,b = 0;
+      let rgba = hexToRgb(item[3]);
+      let findMin = min.findIndex((i) => {
+        return i.from <= start && i.to > start;
+      });
+    
+      let task = document.getElementById(`${min[findMin].id}`),
+          newTask = document.createElement('div');
+      newTask.classList.add('task');
+      newTask.id = 'task-' + item[2];
+      newTask.innerText = item[2];
+      newTask.style.height = `${duration}px`;
+      newTask.style.backgroundColor = "rgba(" + rgba.concat(a).join(',') +")";
+      newTask.style.borderColor = "rgba(" + rgba.concat(b).join(',') +")";
+      newTask.style.top = `${start - min[findMin].from}px`;
+      task.appendChild(newTask);
+    });
+  }
+}
+createAllEvents(getEventData());
 
 function validTime(inputStr) {
   if (!inputStr || inputStr.length<1) {return false;}
@@ -164,15 +142,46 @@ function validTime(inputStr) {
          && parseInt(time[1],10)<=59;
 }
 
-end.addEventListener('input', (event) =>{
-  // const end = document.getElementById('time-end').value;
-  if (!validTime(end.value)){
-    end.style.backgroundColor = 'red';
-    crt.setAttribute('disabled',true);
-  } else{
-    console.log(true);
+// end.addEventListener('input', (event) =>{
+//   if (!validTime(end.value)){
+//     end.style.backgroundColor = 'red';
+//     crt.setAttribute('disabled',true);
+//   } else{
+//     console.log(true);
+//   }
+// })
+
+
+timeList.addEventListener('click', (event) => {
+  const {target} = event;
+  if (target.className === 'task') {
+    getEventData().map(e => {
+      if(e.indexOf(target.id) != -1){
+        popup.classList.add('show');
+        deleteBtn.classList.add('show');
+        start.value = e[0];
+        end.value = e[1];
+        title.value = e[2];
+        color.value = e[3];
+        popupHidden();
+
+        deleteBtn.addEventListener('click', (event) => {
+          // event.preventDefault();
+
+          for (let i = 0; i < getEventData().length; i++) {
+            if( e.toString() === getEventData()[i].toString()){
+              setEventData(getEventData()[i] = null);
+              break;
+            }
+          }
+          createAllEvents(getEventData());
+          title.value = null;
+          color.value = '#E2ECF5';
+          start.value = null;
+          end.value = null;
+          console.log(getEventData());
+        })
+      }
+    })
   }
 })
-
-// end.addEventListener('change', validateTime(this))
-// console.log(getEventData());
