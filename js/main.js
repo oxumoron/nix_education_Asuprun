@@ -9,6 +9,8 @@ const timeList = document.getElementById('day'),
       title = document.getElementById('event-title'),
       start = document.getElementById('time-start'),
       end = document.getElementById('time-end'),
+      clear = document.getElementById('clear'),
+      defBgColor = '#E2ECF5',
       crt = document.querySelector('.form__btn button'),
       events = document.querySelectorAll('.task'),
       createBtn = document.getElementById('event-create'),
@@ -19,7 +21,7 @@ let min = [...tasks].map((task) => {
 });
 
 
-// if(!getEventData()){
+if(!getEventData()){
   day.forEach((item) => {
     let findMin = min.findIndex((i) => {
       return i.from <= item.start && i.to > item.start;
@@ -35,7 +37,7 @@ let min = [...tasks].map((task) => {
     newTask.style.top = `${item.start - min[findMin].from}px`;
     task.appendChild(newTask);
   });
-// }
+}
 
 function getTimeFromMins(mins) {
   let hours = Math.trunc(mins/60);
@@ -60,7 +62,7 @@ timeList.addEventListener('click', (event) => {
   popup.classList.add('show');
   deleteBtn.classList.remove('show');
   title.value = null;
-  color.value = '#E2ECF5';
+  color.value = defBgColor;
   start.value = getTimeFromMins(event.clientY);
   end.value = null;
   popupHidden()
@@ -91,16 +93,15 @@ function convertDay(array) {
     newArr.push(getTimeFromMins(ar.start));
     newArr.push(getTimeFromMins(ar.start + ar.duration));
     newArr.push(ar.title.replace(/ /g, '-'));
+    newArr.push(defBgColor);
     newArr.push(`task-` + ar.title.replace(/ /g, '-'));
     arr.push(newArr);
   })
   return arr;
 }
 
-// const newData = convertDay(day);
-// setEventData(newData);
-// console.log(getEventData());
-  // convertDay(day).forEach(el => setEventData().push(el))
+const newData = convertDay(day);
+
 
 
 function setEventData(o) {
@@ -124,7 +125,7 @@ createBtn.addEventListener('click', (event) => {
   } else {
     newEvent.push(newArrEvent);
   }
-  setEventData(newEvent);
+  setEventData(newData.concat(newEvent));
 })
 
 function createAllEvents(array) {
@@ -206,4 +207,10 @@ timeList.addEventListener('click', (event) => {
       }
     })
   }
+})
+
+clear.addEventListener('click', (event) => {
+  let nullArr = null;
+  setEventData(nullArr);
+  location.reload();
 })

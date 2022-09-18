@@ -156,7 +156,8 @@ button{
 }
 
 #event-create,
-#event-delete {
+#event-delete,
+#clear {
   background-color: blue;
   color: white;
   border: 1px solid blue;
@@ -165,4 +166,10 @@ button{
   border-radius: 5px;
   text-transform: uppercase;
   /* cursor: pointer; */
+}
+
+#clear{
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
