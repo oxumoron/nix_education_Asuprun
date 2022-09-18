@@ -18,21 +18,24 @@ let min = [...tasks].map((task) => {
   return { id: task.id, from: task.id.split('-')[0], to: task.id.split('-')[1] };
 });
 
-day.forEach((item) => {
-  let findMin = min.findIndex((i) => {
-    return i.from <= item.start && i.to > item.start;
+
+// if(!getEventData()){
+  day.forEach((item) => {
+    let findMin = min.findIndex((i) => {
+      return i.from <= item.start && i.to > item.start;
+    });
+  
+    let task = document.getElementById(`${min[findMin].id}`),
+        newTask = document.createElement('div');
+  
+    newTask.id = 'task-' + item.title;
+    newTask.classList.add('task');
+    newTask.innerText = item.title;
+    newTask.style.height = `${item.duration}px`;
+    newTask.style.top = `${item.start - min[findMin].from}px`;
+    task.appendChild(newTask);
   });
-
-  let task = document.getElementById(`${min[findMin].id}`),
-      newTask = document.createElement('div');
-
-  newTask.id = 'task-' + item.title;
-  newTask.classList.add('task');
-  newTask.innerText = item.title;
-  newTask.style.height = `${item.duration}px`;
-  newTask.style.top = `${item.start - min[findMin].from}px`;
-  task.appendChild(newTask);
-});
+// }
 
 function getTimeFromMins(mins) {
   let hours = Math.trunc(mins/60);
@@ -81,6 +84,25 @@ function getEventData() {
   return JSON.parse(localStorage.getItem('event'));
 }
 
+function convertDay(array) {
+  let arr = [];
+  array.forEach(ar => {
+    let newArr = [];
+    newArr.push(getTimeFromMins(ar.start));
+    newArr.push(getTimeFromMins(ar.start + ar.duration));
+    newArr.push(ar.title.replace(/ /g, '-'));
+    newArr.push(`task-` + ar.title.replace(/ /g, '-'));
+    arr.push(newArr);
+  })
+  return arr;
+}
+
+// const newData = convertDay(day);
+// setEventData(newData);
+// console.log(getEventData());
+  // convertDay(day).forEach(el => setEventData().push(el))
+
+
 function setEventData(o) {
   localStorage.setItem('event', JSON.stringify(o));
   return false;
@@ -89,7 +111,7 @@ function setEventData(o) {
 createBtn.addEventListener('click', (event) => {
   let newEvent = getEventData() || [],
       newArrEvent = [];
-  newArrEvent.push(start.value,end.value,title.value,color.value,`task-`+title.value);
+  newArrEvent.push(start.value,end.value,title.value,color.value,`task-`+ title.value.replace(/ /g, '-'));
   if (newEvent.length != 0){
     newEvent.forEach(event => {
       const isEqual = event.toString() === newArrEvent.toString();
