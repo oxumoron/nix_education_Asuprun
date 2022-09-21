@@ -10,7 +10,7 @@ const timeList = document.getElementById('day'),
       start = document.getElementById('time-start'),
       end = document.getElementById('time-end'),
       clear = document.getElementById('clear'),
-      defBgColor = '#E2ECF5',
+      defBgColor = '#e2ecf5',
       crt = document.querySelector('.form__btn button'),
       events = document.querySelectorAll('.task'),
       createBtn = document.getElementById('event-create'),
@@ -21,23 +21,25 @@ let min = [...tasks].map((task) => {
 });
 
 
-if(!getEventData()){
-  day.forEach((item) => {
-    let findMin = min.findIndex((i) => {
-      return i.from <= item.start && i.to > item.start;
-    });
+// if(!getEventData()){
+//   console.log(newData);
+//   createAllEvents(newData);
+//   // day.forEach((item) => {
+//   //   let findMin = min.findIndex((i) => {
+//   //     return i.from <= item.start && i.to > item.start;
+//   //   });
   
-    let task = document.getElementById(`${min[findMin].id}`),
-        newTask = document.createElement('div');
+//   //   let task = document.getElementById(`${min[findMin].id}`),
+//   //       newTask = document.createElement('div');
   
-    newTask.id = 'task-' + item.title;
-    newTask.classList.add('task');
-    newTask.innerText = item.title;
-    newTask.style.height = `${item.duration}px`;
-    newTask.style.top = `${item.start - min[findMin].from}px`;
-    task.appendChild(newTask);
-  });
-}
+//   //   newTask.id = 'task-' + item.title;
+//   //   newTask.classList.add('task');
+//   //   newTask.innerText = item.title;
+//   //   newTask.style.height = `${item.duration}px`;
+//   //   newTask.style.top = `${item.start - min[findMin].from}px`;
+//   //   task.appendChild(newTask);
+//   // });
+// }
 
 function getTimeFromMins(mins) {
   let hours = Math.trunc(mins/60);
@@ -101,7 +103,9 @@ function convertDay(array) {
 }
 
 const newData = convertDay(day);
-
+if(!getEventData()){
+  setEventData(newData);
+}
 
 
 function setEventData(o) {
@@ -110,22 +114,23 @@ function setEventData(o) {
 }
 
 createBtn.addEventListener('click', (event) => {
-  let newEvent = getEventData() || [],
-      newArrEvent = [];
+  let newEvent = getEventData();
+  let newArrEvent = [];
   newArrEvent.push(start.value,end.value,title.value,color.value,`task-`+ title.value.replace(/ /g, '-'));
   if (newEvent.length != 0){
     newEvent.forEach(event => {
       const isEqual = event.toString() === newArrEvent.toString();
       if (!isEqual){
-        newEvent.push(newArrEvent);
+        newArrEvent;
       } else {
         newArrEvent = null;
       }
     })
+    newEvent.push(newArrEvent);
   } else {
     newEvent.push(newArrEvent);
   }
-  setEventData(newData.concat(newEvent));
+  setEventData(newEvent);
 })
 
 function createAllEvents(array) {
@@ -178,39 +183,68 @@ function validTime(inputStr) {
 timeList.addEventListener('click', (event) => {
   const {target} = event;
   if (target.className === 'task') {
-    getEventData().map(e => {
-      if(e.indexOf(target.id) != -1){
+    getEventData().map(arr => {
+      if(arr.indexOf(target.id) != -1){
         popup.classList.add('show');
         deleteBtn.classList.add('show');
-        start.value = e[0];
-        end.value = e[1];
-        title.value = e[2];
-        color.value = e[3];
+        start.value = arr[0];
+        end.value = arr[1];
+        title.value = arr[2];
+        color.value = arr[3];
         popupHidden();
-
-        deleteBtn.addEventListener('click', (event) => {
-          // event.preventDefault();
-
-          for (let i = 0; i < getEventData().length; i++) {
-            if( e.toString() === getEventData()[i].toString()){
-              setEventData(getEventData()[i] = null);
-              break;
-            }
-          }
-          createAllEvents(getEventData());
-          title.value = null;
-          color.value = '#E2ECF5';
-          start.value = null;
-          end.value = null;
-          console.log(getEventData());
-        })
       }
     })
+    deleteBtn.addEventListener('click', (event) => {
+      console.log(getEventData().find(arr => arr[4] === target.id))
+        //  {
+        //   if(arr[4] === target.id){
+        //     console.log(arr);
+            debugger
+      // })
+
+      
+      // event.preventDefault();
+      // let newArr = [];
+      // console.log(getEventData());
+
+      // getEventData().filter(array => {
+      //   // console.log(array.indexOf(target.id))
+      //   // debugger
+      //   for (let i = 0; i < getEventData().length; i++) {
+      //       if(array.toString() === getEventData()[i].toString()){
+      //         // setEventData(getEventData()[i] = null);
+
+      //         console.log(array.toString(),getEventData()[i].toString());
+      //         debugger
+      //       }
+      //     }
+      //   if (array.indexOf(target.id) != -1) {
+      //     i = getEventData().indexOf(array);
+      //     // console.log(array.indexOf(target.id))
+      //     // setEventData(getEventData().splice(array.indexOf(target.id),1));
+      //   }
+      // newArr = getEventData().splice(i,1);
+      // debugger
+      // for (let i = 0; i < getEventData().length; i++) {
+        //   if( arr.toString() === getEventData()[i].toString()){
+          //     setEventData(getEventData()[i] = null);
+          //     break;
+          //   }
+          // }
+          createAllEvents(getEventData());
+          title.value = null;
+          color.value = defBgColor;
+          start.value = null;
+          end.value = null;
+        })
+    }
   }
-})
+)
+
 
 clear.addEventListener('click', (event) => {
-  let nullArr = null;
-  setEventData(nullArr);
+  localStorage.removeItem('event');
+  // let nullArr = null;
+  // setEventData(nullArr);
   location.reload();
 })
