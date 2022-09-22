@@ -16,6 +16,7 @@ const timeList = document.getElementById('day'),
   crt = document.querySelector('.form__btn button'),
   events = document.querySelectorAll('.task'),
   createBtn = document.getElementById('event-create'),
+  changeBtn = document.getElementById('event-change'),
   deleteBtn = document.getElementById('event-delete');
 
 let min = [...tasks].map((task) => {
@@ -60,7 +61,7 @@ function getMinutesFromTime(time) {
 }
 
 const hexToRgb = hex =>
-  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) =>
+  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (r, g, b) =>
     '#' + r + r + g + g + b + b)
   .substring(1).match(/.{2}/g)
   .map(x => parseInt(x, 16));
@@ -80,6 +81,8 @@ function popupHidden() {
   popup.addEventListener('click', (event) => {
     if (event.target.className == popup.className) {
       popup.classList.remove('show');
+      changeBtn.classList.remove('show');
+      createBtn.classList.remove('hidden');
     }
   });
 
@@ -195,10 +198,13 @@ timeList.addEventListener('click', (event) => {
     target
   } = event;
   if (target.className === 'task') {
+    // show
     getEventData().map(arr => {
       if (arr.indexOf(target.id) != -1) {
         popup.classList.add('show');
         deleteBtn.classList.add('show');
+        createBtn.classList.add('hidden');
+        changeBtn.classList.add('show');
         start.value = arr[0];
         end.value = arr[1];
         title.value = arr[2];
@@ -206,6 +212,23 @@ timeList.addEventListener('click', (event) => {
         popupHidden();
       }
     })
+
+    // change
+    changeBtn.addEventListener('click', (event) => {
+      let newArrEvent = [];
+      let newDataArr = [];
+      getEventData().map(arr => {
+        if (arr.indexOf(target.id) != -1) {
+          newArrEvent.push(start.value, end.value, title.value, color.value, `task-` + title.value.replace(/ /g, '-'));
+          arr = [...newArrEvent];
+          newDataArr.push(arr);
+        } else {
+          newDataArr.push(arr);
+        }
+      })
+      setEventData(newDataArr);
+    })
+    //  delete
     deleteBtn.addEventListener('click', (event) => {
       getEventData().map(arr => {
         if (arr.indexOf(target.id) === -1) {

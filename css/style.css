@@ -146,8 +146,17 @@ button{
   cursor:default;
 }
 
-#event-delete{
+.hidden{
   display: none;
+}
+
+#event-delete,
+#event-change{
+  display: none;
+}
+
+#event-change.show{
+  display: block;
 }
 
 #event-delete.show{
@@ -157,6 +166,7 @@ button{
 
 #event-create,
 #event-delete,
+#event-change,
 #clear {
   background-color: blue;
   color: white;
