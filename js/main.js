@@ -1,23 +1,29 @@
-import { workDay } from './myObj.js';
+import {
+  workDay
+} from './myObj.js';
 
 let day = [...workDay];
 
 const timeList = document.getElementById('day'),
-      tasks = timeList.querySelectorAll('.tasks__box'),
-      popup = document.getElementById('form__wrapper'),
-      color = document.getElementById('event-color'),
-      title = document.getElementById('event-title'),
-      start = document.getElementById('time-start'),
-      end = document.getElementById('time-end'),
-      clear = document.getElementById('clear'),
-      defBgColor = '#e2ecf5',
-      crt = document.querySelector('.form__btn button'),
-      events = document.querySelectorAll('.task'),
-      createBtn = document.getElementById('event-create'),
-      deleteBtn = document.getElementById('event-delete');
+  tasks = timeList.querySelectorAll('.tasks__box'),
+  popup = document.getElementById('form__wrapper'),
+  color = document.getElementById('event-color'),
+  title = document.getElementById('event-title'),
+  start = document.getElementById('time-start'),
+  end = document.getElementById('time-end'),
+  clear = document.getElementById('clear'),
+  defBgColor = '#e2ecf5',
+  crt = document.querySelector('.form__btn button'),
+  events = document.querySelectorAll('.task'),
+  createBtn = document.getElementById('event-create'),
+  deleteBtn = document.getElementById('event-delete');
 
 let min = [...tasks].map((task) => {
-  return { id: task.id, from: task.id.split('-')[0], to: task.id.split('-')[1] };
+  return {
+    id: task.id,
+    from: task.id.split('-')[0],
+    to: task.id.split('-')[1]
+  };
 });
 
 
@@ -28,10 +34,10 @@ let min = [...tasks].map((task) => {
 //   //   let findMin = min.findIndex((i) => {
 //   //     return i.from <= item.start && i.to > item.start;
 //   //   });
-  
+
 //   //   let task = document.getElementById(`${min[findMin].id}`),
 //   //       newTask = document.createElement('div');
-  
+
 //   //   newTask.id = 'task-' + item.title;
 //   //   newTask.classList.add('task');
 //   //   newTask.innerText = item.title;
@@ -42,22 +48,22 @@ let min = [...tasks].map((task) => {
 // }
 
 function getTimeFromMins(mins) {
-  let hours = Math.trunc(mins/60);
+  let hours = Math.trunc(mins / 60);
   let minutes = mins % 60;
-  return (hours + 8) + ':' + minutes;// 8 morning
+  return (hours + 8) + ':' + minutes; // 8 morning
 };
 
-function getMinutesFromTime(time){
-  let hourS = +time.split(':')[0] - 8;// 8 morning
+function getMinutesFromTime(time) {
+  let hourS = +time.split(':')[0] - 8; // 8 morning
   let minS = +time.split(':')[1];
-  return hourS  * 60 + minS;
+  return hourS * 60 + minS;
 }
 
-const hexToRgb = hex => 
-  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) => 
-   '#' + r + r + g + g + b + b)
-    .substring(1).match(/.{2}/g)
-    .map(x => parseInt(x, 16));
+const hexToRgb = hex =>
+  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) =>
+    '#' + r + r + g + g + b + b)
+  .substring(1).match(/.{2}/g)
+  .map(x => parseInt(x, 16));
 
 
 timeList.addEventListener('click', (event) => {
@@ -72,13 +78,13 @@ timeList.addEventListener('click', (event) => {
 
 function popupHidden() {
   popup.addEventListener('click', (event) => {
-    if(event.target.className == popup.className) {
+    if (event.target.className == popup.className) {
       popup.classList.remove('show');
     }
   });
 
   document.addEventListener('keydown', function (e) {
-    if(e.keyCode === 27) {
+    if (e.keyCode === 27) {
       popup.classList.remove('show');
     }
   });
@@ -103,7 +109,7 @@ function convertDay(array) {
 }
 
 const newData = convertDay(day);
-if(!getEventData()){
+if (!getEventData()) {
   setEventData(newData);
 }
 
@@ -116,11 +122,11 @@ function setEventData(o) {
 createBtn.addEventListener('click', (event) => {
   let newEvent = getEventData();
   let newArrEvent = [];
-  newArrEvent.push(start.value,end.value,title.value,color.value,`task-`+ title.value.replace(/ /g, '-'));
-  if (newEvent.length != 0){
+  newArrEvent.push(start.value, end.value, title.value, color.value, `task-` + title.value.replace(/ /g, '-'));
+  if (newEvent.length != 0) {
     newEvent.forEach(event => {
       const isEqual = event.toString() === newArrEvent.toString();
-      if (!isEqual){
+      if (!isEqual) {
         newArrEvent;
       } else {
         newArrEvent = null;
@@ -139,20 +145,21 @@ function createAllEvents(array) {
       let start = getMinutesFromTime(item[0]);
       let end = getMinutesFromTime(item[1]);
       let duration = end - start;
-      let a = .5,b = 0;
+      let a = .5,
+        b = 0;
       let rgba = hexToRgb(item[3]);
       let findMin = min.findIndex((i) => {
         return i.from <= start && i.to > start;
       });
-    
+
       let task = document.getElementById(`${min[findMin].id}`),
-          newTask = document.createElement('div');
+        newTask = document.createElement('div');
       newTask.classList.add('task');
       newTask.id = 'task-' + item[2];
       newTask.innerText = item[2];
       newTask.style.height = `${duration}px`;
-      newTask.style.backgroundColor = "rgba(" + rgba.concat(a).join(',') +")";
-      newTask.style.borderColor = "rgba(" + rgba.concat(b).join(',') +")";
+      newTask.style.backgroundColor = "rgba(" + rgba.concat(a).join(',') + ")";
+      newTask.style.borderColor = "rgba(" + rgba.concat(b).join(',') + ")";
       newTask.style.top = `${start - min[findMin].from}px`;
       task.appendChild(newTask);
     });
@@ -161,13 +168,15 @@ function createAllEvents(array) {
 createAllEvents(getEventData());
 
 function validTime(inputStr) {
-  if (!inputStr || inputStr.length<1) {return false;}
+  if (!inputStr || inputStr.length < 1) {
+    return false;
+  }
   let time = inputStr.split(':');
-  return time.length === 2 
-         && parseInt(time[0],10)>=8 
-         && parseInt(time[0],10)<=16 
-         && parseInt(time[1],10)>=0 
-         && parseInt(time[1],10)<=59;
+  return time.length === 2 &&
+    parseInt(time[0], 10) >= 8 &&
+    parseInt(time[0], 10) <= 16 &&
+    parseInt(time[1], 10) >= 0 &&
+    parseInt(time[1], 10) <= 59;
 }
 
 // end.addEventListener('input', (event) =>{
@@ -181,10 +190,13 @@ function validTime(inputStr) {
 
 
 timeList.addEventListener('click', (event) => {
-  const {target} = event;
+  let newDataArr = [];
+  const {
+    target
+  } = event;
   if (target.className === 'task') {
     getEventData().map(arr => {
-      if(arr.indexOf(target.id) != -1){
+      if (arr.indexOf(target.id) != -1) {
         popup.classList.add('show');
         deleteBtn.classList.add('show');
         start.value = arr[0];
@@ -195,51 +207,22 @@ timeList.addEventListener('click', (event) => {
       }
     })
     deleteBtn.addEventListener('click', (event) => {
-      console.log(getEventData().find(arr => arr[4] === target.id))
-        //  {
-        //   if(arr[4] === target.id){
-        //     console.log(arr);
-            debugger
-      // })
+      getEventData().map(arr => {
+        if (arr.indexOf(target.id) === -1) {
+          newDataArr.push(arr)
+        }
+      })
+      setEventData(newDataArr);
 
-      
-      // event.preventDefault();
-      // let newArr = [];
-      // console.log(getEventData());
 
-      // getEventData().filter(array => {
-      //   // console.log(array.indexOf(target.id))
-      //   // debugger
-      //   for (let i = 0; i < getEventData().length; i++) {
-      //       if(array.toString() === getEventData()[i].toString()){
-      //         // setEventData(getEventData()[i] = null);
-
-      //         console.log(array.toString(),getEventData()[i].toString());
-      //         debugger
-      //       }
-      //     }
-      //   if (array.indexOf(target.id) != -1) {
-      //     i = getEventData().indexOf(array);
-      //     // console.log(array.indexOf(target.id))
-      //     // setEventData(getEventData().splice(array.indexOf(target.id),1));
-      //   }
-      // newArr = getEventData().splice(i,1);
-      // debugger
-      // for (let i = 0; i < getEventData().length; i++) {
-        //   if( arr.toString() === getEventData()[i].toString()){
-          //     setEventData(getEventData()[i] = null);
-          //     break;
-          //   }
-          // }
-          createAllEvents(getEventData());
-          title.value = null;
-          color.value = defBgColor;
-          start.value = null;
-          end.value = null;
-        })
-    }
+      createAllEvents(getEventData());
+      title.value = null;
+      color.value = defBgColor;
+      start.value = null;
+      end.value = null;
+    })
   }
-)
+})
 
 
 clear.addEventListener('click', (event) => {
