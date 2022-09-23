@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/clocklet/css/clocklet.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/clocklet"></script>
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -84,11 +86,11 @@
           <div class="form__time">
             <div class="form__time-start">
               <label for="time-start">time-start</label>
-              <input type="text" id="time-start">
+              <input type="text" id="time-start" data-clocklet readonly  min="08:00" max="17:00">
             </div>
             <div class="form__time-end">
               <label for="time-end">time-end</label>
-              <input type="text" id="time-end">
+              <input type="text" id="time-end" data-clocklet readonly min="08:00" max="17:00">
             </div>
           </div>
           <div class="form__btn">
@@ -101,6 +103,7 @@
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/clocklet"></script>
   <script nomodule type="module" src="./js/main.js"></script>
 </body>
 

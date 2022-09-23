@@ -205,7 +205,6 @@ timeList.addEventListener('click', (event) => {
         start.value = arr[0];
         end.value = arr[1];
         title.value = arr[2];
-        console.log(title.value);
         color.value = arr[3];
         popupHidden();
       }
