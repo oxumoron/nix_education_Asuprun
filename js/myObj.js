@@ -1,7 +1,7 @@
 let workDay = [
-  { start: 0, duration: 15, title: 'Exercise' },
-  { start: 25, duration: 30, title: 'Travel to work' },
-  { start: 30, duration: 30, title: 'Plan day' },
+  { start: 0, duration: 115, title: 'Exercise' },
+  { start: 25, duration: 300, title: 'Travel to work' },
+  { start: 30, duration: 300, title: 'Plan day' },
   { start: 60, duration: 15, title: "Review yesterday's commits" },
   { start: 100, duration: 15, title: 'Code review' },
   { start: 180, duration: 90, title: 'Have lunch with John' },

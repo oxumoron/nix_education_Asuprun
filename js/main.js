@@ -1,6 +1,4 @@
-import {
-  workDay
-} from './myObj.js';
+import {workDay} from './myObj.js';
 
 let day = [...workDay];
 
@@ -66,7 +64,7 @@ const hexToRgb = hex =>
   .substring(1).match(/.{2}/g)
   .map(x => parseInt(x, 16));
 
-
+// show popup
 timeList.addEventListener('click', (event) => {
   popup.classList.add('show');
   deleteBtn.classList.remove('show');
@@ -74,7 +72,7 @@ timeList.addEventListener('click', (event) => {
   color.value = defBgColor;
   start.value = getTimeFromMins(event.clientY);
   end.value = null;
-  popupHidden()
+  popupHidden();
 })
 
 function popupHidden() {
@@ -194,10 +192,9 @@ function validTime(inputStr) {
 
 timeList.addEventListener('click', (event) => {
   let newDataArr = [];
-  const {
-    target
-  } = event;
+  const {target} = event;
   if (target.className === 'task') {
+
     // show
     getEventData().map(arr => {
       if (arr.indexOf(target.id) != -1) {
@@ -207,7 +204,8 @@ timeList.addEventListener('click', (event) => {
         changeBtn.classList.add('show');
         start.value = arr[0];
         end.value = arr[1];
-        title.value = arr[2];
+        title.value = arr[2].replace(/ /g, '-');
+        console.log(title.value);
         color.value = arr[3];
         popupHidden();
       }
@@ -228,6 +226,7 @@ timeList.addEventListener('click', (event) => {
       })
       setEventData(newDataArr);
     })
+
     //  delete
     deleteBtn.addEventListener('click', (event) => {
       getEventData().map(arr => {
@@ -236,8 +235,6 @@ timeList.addEventListener('click', (event) => {
         }
       })
       setEventData(newDataArr);
-
-
       createAllEvents(getEventData());
       title.value = null;
       color.value = defBgColor;
