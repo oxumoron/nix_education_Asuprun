@@ -101,7 +101,7 @@ function convertDay(array) {
     let newArr = [];
     newArr.push(getTimeFromMins(ar.start));
     newArr.push(getTimeFromMins(ar.start + ar.duration));
-    newArr.push(ar.title.replace(/ /g, '-'));
+    newArr.push(ar.title);
     newArr.push(defBgColor);
     newArr.push(`task-` + ar.title.replace(/ /g, '-'));
     arr.push(newArr);
@@ -156,7 +156,7 @@ function createAllEvents(array) {
       let task = document.getElementById(`${min[findMin].id}`),
         newTask = document.createElement('div');
       newTask.classList.add('task');
-      newTask.id = 'task-' + item[2];
+      newTask.id = 'task-' + item[2].replace(/ /g, '-');
       newTask.innerText = item[2];
       newTask.style.height = `${duration}px`;
       newTask.style.backgroundColor = "rgba(" + rgba.concat(a).join(',') + ")";
@@ -204,7 +204,7 @@ timeList.addEventListener('click', (event) => {
         changeBtn.classList.add('show');
         start.value = arr[0];
         end.value = arr[1];
-        title.value = arr[2].replace(/ /g, '-');
+        title.value = arr[2];
         console.log(title.value);
         color.value = arr[3];
         popupHidden();
