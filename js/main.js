@@ -54,7 +54,7 @@ const createCards = function (card) {
                     <h3 id="product__name" class="product__name">${newName}</h3>
                     <p class="product__stock"><img id="stock__img" src="${stockImg}" alt=""><span id="product__stock">${newStock}</span> left in stock</p>
                     <p class="product__price">Price: <span class="price" id="product__price">${newPrice}</span> $</p>
-                    <button data-id="${cardBtn.id}" class="btn product__btn">Add to cart</button>
+                    <button class="btn product__btn">Add to cart</button>
                   </div>
                   <div class="product__footer">
                     <div class="product__reviews"><span id="product__reviews">${newReviews}</span>% Positive reviews Above aletage
@@ -69,7 +69,7 @@ const createCards = function (card) {
     // console.log(newStock === 0);
 
     products.appendChild(newCard);
-    
+
   });
 }
 
@@ -157,10 +157,13 @@ const popup = document.getElementById('product__modal');
 const productWrappers = document.querySelectorAll('li.product__wrapper');
 const tagBody = document.querySelector('body')
 
+// like
 productWrappers.forEach((item) => {
   item.addEventListener('click', (event) => {
-    const {target} = event;
-    if (target.parentElement.className === "like"){
+    const {
+      target
+    } = event;
+    if (target.parentElement.className === "like") {
       const like = document.querySelectorAll('.like');
       like.forEach(el => {
         el.addEventListener('click', (event) => {
@@ -175,37 +178,72 @@ productWrappers.forEach((item) => {
 // const cartPopup = document.getElementById('cart-modal');
 const arrBtnToAddCart = document.querySelectorAll('.btn');
 ////////////new cart
-const itemBox = document.querySelectorAll('li.product__wrapper');
 const cartCont = document.getElementById('cart-modal');
 
-function addToCart(e) {
+function addToCart() {
   // this.disabled = true;
   let cartData = getCartData() || {},
     parentBox = this.parentNode.parentNode.parentNode,
     itemId = this.getAttribute('data-id'),
-    itemTitle = parentBox.querySelector('.product__name').innerHTML,
+  itemTitle = parentBox.querySelector('.product__name').innerHTML,
     itemPrice = parentBox.querySelector('.price').innerHTML,
     itemImg = parentBox.querySelector('.product__img').src;
-  if (cartData.hasOwnProperty(itemId)) { 
+  if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
-  } else { 
+  } else {
     cartData[itemId] = [itemTitle, itemPrice, itemImg.slice(21), 1];
   }
-  
+
   if (!setCartData(cartData)) {
     // this.disabled = false;
   }
 }
-for (let i = 0; i < itemBox.length; i++) {
-  itemBox[i].querySelector('.btn').addEventListener('click', addToCart)
+
+const allBtn = document.querySelectorAll('.product__btn')
+for (let i = 0; i < allBtn.length; i++) {
+  allBtn[i].addEventListener('click', event => {
+    event.stopPropagation();
+  });
+  allBtn[i].addEventListener('click', addToCart)
 }
 
-function openCart(e) {
+// function addToCart() {
+//   // this.disabled = true;
+//   let cartData = getCartData() || {},
+//     parentBox = this.parentNode.parentNode.parentNode,
+//     itemId = this.getAttribute('data-id');
+//   itemTitle = parentBox.querySelector('.product__name').innerHTML,
+//     itemPrice = parentBox.querySelector('.price').innerHTML,
+//     itemImg = parentBox.querySelector('.product__img').src;
+//   if (cartData.hasOwnProperty(itemId)) {
+//     cartData[itemId][3] += 1;
+//   } else {
+//     cartData[itemId] = [itemTitle, itemPrice, itemImg.slice(21), 1];
+//   }
+
+//   if (!setCartData(cartData)) {
+//     // this.disabled = false;
+//   }
+// }
+
+const btnInPopup = document.querySelector('.popup__btn')
+btnInPopup.addEventListener('click', event => {
+  console.log(123); //need fix
+})
+
+// for (let i = 0; i < allBtn.length; i++) {
+//   allBtn[i].addEventListener('click', event => {
+//     event.stopPropagation();
+//   });
+//   allBtn[i].addEventListener('click', addToCart)
+// }
+// console.log(btnInPopup);
+function openCart() {
 
   let cartData = getCartData(),
     totalItems = '';
   if (cartData !== null) {
-   
+
     let newCartArray = Object.values(cartData);
     totalItems = `
             <div class="cart__inner">
@@ -245,7 +283,7 @@ function openCart(e) {
         </div>`;
 
     cartCont.innerHTML = totalItems;
-    
+
   } else {
     // если в корзине пусто, то сигнализируем об этом
     cartCont.innerHTML = `
