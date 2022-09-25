@@ -187,7 +187,7 @@ function addToCart() {
   let cartData = getCartData() || {},
     parentBox = this.parentNode.parentNode.parentNode,
     itemId = this.getAttribute('data-id'),
-  itemTitle = parentBox.querySelector('.product__name').innerHTML,
+    itemTitle = parentBox.querySelector('.product__name').innerHTML,
     itemPrice = parentBox.querySelector('.price').innerHTML,
     itemImg = parentBox.querySelector('.product__img').src;
   if (cartData.hasOwnProperty(itemId)) {
@@ -294,10 +294,7 @@ function openCart() {
 document.getElementById('cart').addEventListener('click', (openCart));
 document.getElementById('cart').addEventListener('click', (active));
 
-// addEvent(d.getElementById('clear_cart'), 'click', function(e){
-// 	localStorage.removeItem('cart');
-// 	cartCont.innerHTML = 'Корзина очишена.';	
-// });
+
 
 // /////new cart
 let arrayCartItem = [];
@@ -382,10 +379,6 @@ function popupFunc(array) {
 popupFunc(items);
 
 
-// const colList = document.getElementById('color-cat__list');
-// const memList = document.getElementById('memory-cat__list');
-// const osList = document.getElementById('os-cat__list');
-
 const removeChildren = function (item) {
   while (item.firstChild) {
     item.removeChild(item.firstChild)
@@ -402,171 +395,190 @@ const updateChildren = function (item, children) {
   popupFunc(childrenArr);
 }
 
-// const products = document.getElementById('products');
-// const productsWrapper = document.querySelectorAll('li.product__wrapper');
 const inputCol = colList.querySelectorAll("input");
 const inputMem = memList.querySelectorAll("input");
 const inputOs = osList.querySelectorAll("input");
 const inputDisplay = disList.querySelectorAll("input");
 const inputPrice = priceList.querySelectorAll("input");
 
-let cardsArr = [];
+const accordInner = document.querySelector('.accord__inner');
+const allInputInAccord = accordInner.querySelectorAll("input");
 
-for (let input of inputCol) {
-  input.addEventListener('click', (event) => {
-    filterCol(input);
-  })
-}
-
-for (let input of inputPrice) {
-  input.addEventListener('keyup', (event) => {
-    if (event.code === 'Enter') {
-      filterPrice(input);
+for (let input of allInputInAccord) {
+  input.addEventListener('input', (event) => {
+      let cardsArr = [];
+        let filteredOs = [];
+        if (input.checked) {
+          items.filter((e) => {
+            if (e.os === input.id) {
+              filteredOs.push(e) && cardsArr.push(filteredOs);
+            }
+            // updateChildren(products, filteredOs);
+            // console.log(e);
+          })
+        } else {
+          // updateChildren(products, items);
+          // cardsArr.push(filterPrice(inp))
+        }
+        // cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input));
+        // updateChildren(products, cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input)));
+        // console.log(cardsArr);
+        console.log(cardsArr);
+      })
     }
-  })
-}
 
-for (let input of inputMem) {
-  input.addEventListener('click', (event) => {
-    filterMem(input);
-  })
-}
+  // for (let input of inputCol) {
+  //   input.addEventListener('click', (event) => {
+  //     filterCol(input);
+  //   })
+  // }
 
-for (let input of inputOs) {
-  input.addEventListener('click', (event) => {
-    filterOs(input);
-  })
-}
+  // for (let input of inputPrice) {
+  //   input.addEventListener('keyup', (event) => {
+  //     if (event.code === 'Enter') {
+  //       filterPrice(input);
+  //     }
+  //   })
+  // }
 
-for (let input of inputDisplay) {
-  input.addEventListener('click', (event) => {
-    filterDis(input);
-  })
-}
+  // for (let input of inputMem) {
+  //   input.addEventListener('click', (event) => {
+  //     filterMem(input);
+  //   })
+  // }
 
-function filterCol(el) {
-  let filteredColor = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (e.color.indexOf(el.id) > -1) {
-        filteredColor.push(e)
-      }
-      updateChildren(products, filteredColor);
+  // for (let input of inputOs) {
+  //   input.addEventListener('click', (event) => {
+  //     filterOs(input);
+  //   })
+  // }
+
+  // for (let input of inputDisplay) {
+  //   input.addEventListener('click', (event) => {
+  //     filterDis(input);
+  //   })
+  // }
+
+  function filterCol(el) {
+    let filteredColor = [];
+    if (el.checked) {
+      items.filter((e) => {
+        if (e.color.indexOf(el.id) > -1) {
+          filteredColor.push(e)
+        }
+        updateChildren(products, filteredColor);
+      })
+    } else {
+      updateChildren(products, items);
+    }
+    return filteredColor;
+  }
+
+  function filterMem(el) {
+    let filteredMem = [];
+    if (el.checked) {
+      items.filter((e) => {
+        if (e.storage === +el.id) {
+          filteredMem.push(e)
+        }
+        updateChildren(products, filteredMem);
+      })
+    } else {
+      updateChildren(products, items);
+    }
+    return filterMem;
+  }
+
+  function filterOs(el) {
+    let filteredOs = [];
+    if (el.checked) {
+      items.filter((e) => {
+        if (e.os === el.id) {
+          filteredOs.push(e)
+        }
+        updateChildren(products, filteredOs);
+      })
+    } else {
+      updateChildren(products, items);
+    }
+    return filterOs;
+  }
+
+  function filterDis(el) {
+    let filteredDis = [];
+    if (el.checked) {
+      items.filter((e) => {
+        if (el.id === `inch2_5`) {
+          if (e.display >= 2 && e.display < 5) {
+            filteredDis.push(e)
+          }
+        }
+        if (el.id === `inch_7`) {
+          if (e.display >= 5 && e.display < 7) {
+            filteredDis.push(e)
+          }
+        }
+        if (el.id === `inch7_12`) {
+          if (e.display >= 7 && e.display < 12) {
+            filteredDis.push(e)
+          }
+        }
+        if (el.id === `inch12_16`) {
+          if (e.display >= 12 && e.display < 16) {
+            filteredDis.push(e)
+          }
+        }
+        if (el.id === `more16`) {
+          if (e.display > 16) {
+            filteredDis.push(e)
+          }
+        }
+        updateChildren(products, filteredDis);
+      })
+    } else {
+      updateChildren(products, items);
+    }
+    return filteredDis;
+  }
+
+  let itemsSortByPrice = [];
+
+  function sortArrByPrice() {
+    return items.sort((prev, next) => {
+      let prevB = prev.price;
+      let nextB = next.price;
+      return prevB - nextB;
     })
-  } else {
+  }
+  itemsSortByPrice = [...sortArrByPrice()];
+
+  function filterPrice() {
+    let filteredPrice = [];
+    if (priceFrom.value < minPrice) {
+      // alert('Price value less min value = ' + minPrice)
+    } else if (priceTo > maxPrice) {
+      // alert('Price value more max value =' + maxPrice)
+    } else if (priceTo < priceFrom) {
+      // alert('Incorrect data')
+    } else {
+      itemsSortByPrice.filter((e) => {
+        if (priceFrom.value <= e.price && e.price <= priceTo.value) {
+          filteredPrice.push(e);
+          updateChildren(products, filteredPrice);
+        }
+      })
+    }
+    return filteredPrice;
+  }
+
+  const filRes = document.getElementById('filter-off');
+
+  filRes.addEventListener('click', (event) => {
+    accord.querySelectorAll('input').forEach((input) => {
+      input.checked = false;
+      input.value = null;
+    });
     updateChildren(products, items);
-  }
-}
-
-function filterMem(el) {
-  let filteredMem = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (e.storage === +el.id) {
-        filteredMem.push(e)
-      }
-      updateChildren(products, filteredMem);
-    })
-  } else {
-    updateChildren(products, items);
-  }
-}
-
-function filterOs(el) {
-  let filteredOs = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (e.os === el.id) {
-        filteredOs.push(e)
-      }
-      updateChildren(products, filteredOs);
-    })
-  } else {
-    updateChildren(products, items);
-  }
-}
-
-function filterDis(el) {
-  let filteredDis = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (el.id === `inch2_5`) {
-        if (e.display >= 2 && e.display < 5) {
-          filteredDis.push(e)
-        }
-      }
-      if (el.id === `inch_7`) {
-        if (e.display >= 5 && e.display < 7) {
-          filteredDis.push(e)
-        }
-      }
-      if (el.id === `inch7_12`) {
-        if (e.display >= 7 && e.display < 12) {
-          filteredDis.push(e)
-        }
-      }
-      if (el.id === `inch12_16`) {
-        if (e.display >= 12 && e.display < 16) {
-          filteredDis.push(e)
-        }
-      }
-      if (el.id === `more16`) {
-        if (e.display > 16) {
-          filteredDis.push(e)
-        }
-      }
-      updateChildren(products, filteredDis);
-    })
-  } else {
-    updateChildren(products, items);
-  }
-}
-
-let priceArr = [];
-items.forEach(elem => {
-  priceArr.push(elem)
-});
-priceArr = priceArr.sort((a, b) => {
-  return a - b
-});
-
-let itemsSortByPrice = [];
-
-function sortArrByPrice() {
-  return items.sort((prev, next) => {
-    let prevB = prev.price;
-    let nextB = next.price;
-    return prevB - nextB;
-  })
-}
-itemsSortByPrice = [...sortArrByPrice()];
-// console.log(itemsSortByPrice);
-function filterPrice() {
-  let filteredPrice = [];
-  if (priceFrom.value < minPrice) {
-    alert('Price value less min value = ' + minPrice)
-  } else if (priceTo > maxPrice) {
-    alert('Price value more max value =' + maxPrice)
-  } else if (priceTo < priceFrom) {
-    alert('Incorrect data')
-  } else {
-    itemsSortByPrice.filter((e) => {
-      if (priceFrom.value <= e.price && e.price <= priceTo.value) {
-        filteredPrice.push(e);
-        updateChildren(products, filteredPrice);
-      }
-    })
-  }
-}
-
-const filRes = document.getElementById('filter-off');
-
-filRes.addEventListener('click', (event) => {
-  accord.querySelectorAll('input').forEach((input) => {
-    input.checked = false;
-    input.value = null;
   });
-  updateChildren(products, items);
-});
-//   updateChildren(products, items);
-// console.log(priceArr);
+  //   updateChildren(products, items);
+  // console.log(priceArr);
