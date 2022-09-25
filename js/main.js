@@ -15,6 +15,8 @@ const productWrapper = document.querySelector('li.product__wrapper');
 // const cardBtn = document.querySelector('.product__btn');
 let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
 const cardBtn = document.querySelector('.product__btn');
+const popupInner = document.querySelector('.modal__inner');
+
 
 // const like = document.getElementById('like');
 
@@ -39,7 +41,7 @@ const createCards = function (card) {
     }
     newPrice = el.price;
     newOrders = Math.floor(300 + 700 * Math.random());
-    cardBtn.id = `${id}`;
+    // cardBtn.id = `${id}`;
     newReviews = el.orderInfo.reviews;
 
     newCard.innerHTML = `
@@ -54,7 +56,7 @@ const createCards = function (card) {
                     <h3 id="product__name" class="product__name">${newName}</h3>
                     <p class="product__stock"><img id="stock__img" src="${stockImg}" alt=""><span id="product__stock">${newStock}</span> left in stock</p>
                     <p class="product__price">Price: <span class="price" id="product__price">${newPrice}</span> $</p>
-                    <button class="btn product__btn">Add to cart</button>
+                    <button id="${newCard.id}" class="btn product__btn">Add to cart</button>
                   </div>
                   <div class="product__footer">
                     <div class="product__reviews"><span id="product__reviews">${newReviews}</span>% Positive reviews Above aletage
@@ -207,37 +209,27 @@ for (let i = 0; i < allBtn.length; i++) {
   allBtn[i].addEventListener('click', addToCart)
 }
 
-// function addToCart() {
-//   // this.disabled = true;
-//   let cartData = getCartData() || {},
-//     parentBox = this.parentNode.parentNode.parentNode,
-//     itemId = this.getAttribute('data-id');
-//   itemTitle = parentBox.querySelector('.product__name').innerHTML,
-//     itemPrice = parentBox.querySelector('.price').innerHTML,
-//     itemImg = parentBox.querySelector('.product__img').src;
-//   if (cartData.hasOwnProperty(itemId)) {
-//     cartData[itemId][3] += 1;
-//   } else {
-//     cartData[itemId] = [itemTitle, itemPrice, itemImg.slice(21), 1];
-//   }
-
-//   if (!setCartData(cartData)) {
-//     // this.disabled = false;
-//   }
-// }
-
 const btnInPopup = document.querySelector('.popup__btn')
-btnInPopup.addEventListener('click', event => {
-  console.log(123); //need fix
-})
+btnInPopup.addEventListener('click', addToCartPopup);
 
-// for (let i = 0; i < allBtn.length; i++) {
-//   allBtn[i].addEventListener('click', event => {
-//     event.stopPropagation();
-//   });
-//   allBtn[i].addEventListener('click', addToCart)
-// }
-// console.log(btnInPopup);
+function addToCartPopup() {
+  let cartData = getCartData() || {},
+    parentBox = this.parentNode.parentNode,
+    itemId = popupInner.getAttribute('id'),
+    itemTitle = parentBox.querySelector('.col__title').innerHTML,
+    itemPrice = document.getElementById('col-price').innerHTML,
+    itemImg = parentBox.querySelector('.popup-img').src;
+  if (cartData.hasOwnProperty(itemId)) {
+    cartData[itemId][3] += 1;
+  } else {
+    cartData[itemId] = [itemTitle, itemPrice, itemImg.slice(21), 1];
+  }
+
+  if (!setCartData(cartData)) {
+    // this.disabled = false;
+  }
+}
+
 function openCart() {
 
   let cartData = getCartData(),
@@ -337,7 +329,8 @@ cartCont.onmousedown = function (e) {
 function popupFunc(array) {
   productWrappers.forEach((item) => {
     item.addEventListener('click', () => {
-      popup.classList.add('modal__active')
+      popupInner.id = item.id;
+      popup.classList.add('modal__active');
       tagBody.classList.add('hidden');
 
       const popupImg = document.getElementById('popup-img');
@@ -356,6 +349,7 @@ function popupFunc(array) {
 
       array.find((el) => {
         if (+el.id === +item.id) {
+          // console.log(item);
           popupImg.src = `./img/${el.imgUrl}`;
           popupReview.textContent = el.orderInfo.reviews;
           popupOrders.textContent = el.orderInfo.inStock;

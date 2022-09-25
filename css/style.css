@@ -433,7 +433,8 @@ ol{
   font-weight: 700;
 }
 
-.product__btn{
+.product__btn,
+.popup__btn{
   margin-bottom: 14px;
 }
 
