@@ -162,9 +162,7 @@ const tagBody = document.querySelector('body')
 // like
 productWrappers.forEach((item) => {
   item.addEventListener('click', (event) => {
-    const {
-      target
-    } = event;
+    const {target} = event;
     if (target.parentElement.className === "like") {
       const like = document.querySelectorAll('.like');
       like.forEach(el => {
@@ -186,10 +184,11 @@ function addToCart() {
   // this.disabled = true;
   let cartData = getCartData() || {},
     parentBox = this.parentNode.parentNode.parentNode,
-    itemId = this.getAttribute('data-id'),
+    itemId = this.getAttribute('id'),
     itemTitle = parentBox.querySelector('.product__name').innerHTML,
     itemPrice = parentBox.querySelector('.price').innerHTML,
     itemImg = parentBox.querySelector('.product__img').src;
+    console.log(itemId);
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
@@ -206,7 +205,7 @@ for (let i = 0; i < allBtn.length; i++) {
   allBtn[i].addEventListener('click', event => {
     event.stopPropagation();
   });
-  allBtn[i].addEventListener('click', addToCart)
+  allBtn[i].addEventListener('click', addToCart);
 }
 
 const btnInPopup = document.querySelector('.popup__btn')
@@ -266,6 +265,7 @@ function openCart() {
 
     })
     totalItems += `
+    </ul>
         <div class="cart__total">
           <p>Total amount: <span id="cart__amount" class="cart__amount"></span> ptc.</p>
           <p>Total price: <span id="cart__price" class="cart__price"></span>$</p>
@@ -322,6 +322,26 @@ cartCont.onmousedown = function (e) {
     tagBody.classList.remove('hidden');
   }
 };
+
+// document.querySelector('body').addEventListener('click', event => {
+//   const {target} = event;
+//     if (hasClassedParent(target, 'product__wrapper')) {
+//       popupFunc(items);
+//     }
+//   })
+
+
+// function hasClassedParent(el, cssClass) {
+//   if(el.parentNode && el.parentNode.tagName !== 'BODY') {
+//     if(el.parentNode.classList.contains(cssClass)) {
+//       return el.parentNode;
+//     } else {
+//       return hasClassedParent(el.parentNode, cssClass);
+//     }
+//   } else {
+//     return null;
+//   }
+// }
 
 function popupFunc(array) {
   productWrappers.forEach((item) => {
@@ -392,7 +412,6 @@ const updateChildren = function (item, children) {
     childrenArr.push(children[i]);
   }
   createCards(childrenArr);
-  popupFunc(childrenArr);
 }
 
 const inputCol = colList.querySelectorAll("input");
@@ -404,60 +423,60 @@ const inputPrice = priceList.querySelectorAll("input");
 const accordInner = document.querySelector('.accord__inner');
 const allInputInAccord = accordInner.querySelectorAll("input");
 
-for (let input of allInputInAccord) {
-  input.addEventListener('input', (event) => {
-      let cardsArr = [];
-        let filteredOs = [];
-        if (input.checked) {
-          items.filter((e) => {
-            if (e.os === input.id) {
-              filteredOs.push(e) && cardsArr.push(filteredOs);
-            }
-            // updateChildren(products, filteredOs);
-            // console.log(e);
-          })
-        } else {
-          // updateChildren(products, items);
-          // cardsArr.push(filterPrice(inp))
-        }
-        // cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input));
-        // updateChildren(products, cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input)));
-        // console.log(cardsArr);
-        console.log(cardsArr);
-      })
-    }
+// for (let input of allInputInAccord) {
+//   input.addEventListener('input', (event) => {
+//       let cardsArr = [];
+//         let filteredOs = [];
+//         if (input.checked) {
+//           items.filter((e) => {
+//             if (e.os === input.id) {
+//               filteredOs.push(e) && cardsArr.push(filteredOs);
+//             }
+//             // updateChildren(products, filteredOs);
+//             // console.log(e);
+//           })
+//         } else {
+//           // updateChildren(products, items);
+//           // cardsArr.push(filterPrice(inp))
+//         }
+//         // cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input));
+//         // updateChildren(products, cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input)));
+//         // console.log(cardsArr);
+//         // console.log(cardsArr);
+//       })
+//     }
 
-  // for (let input of inputCol) {
-  //   input.addEventListener('click', (event) => {
-  //     filterCol(input);
-  //   })
-  // }
+  for (let input of inputCol) {
+    input.addEventListener('click', (event) => {
+      filterCol(input);
+    })
+  }
 
-  // for (let input of inputPrice) {
-  //   input.addEventListener('keyup', (event) => {
-  //     if (event.code === 'Enter') {
-  //       filterPrice(input);
-  //     }
-  //   })
-  // }
+  for (let input of inputPrice) {
+    input.addEventListener('keyup', (event) => {
+      if (event.code === 'Enter') {
+        filterPrice(input);
+      }
+    })
+  }
 
-  // for (let input of inputMem) {
-  //   input.addEventListener('click', (event) => {
-  //     filterMem(input);
-  //   })
-  // }
+  for (let input of inputMem) {
+    input.addEventListener('click', (event) => {
+      filterMem(input);
+    })
+  }
 
-  // for (let input of inputOs) {
-  //   input.addEventListener('click', (event) => {
-  //     filterOs(input);
-  //   })
-  // }
+  for (let input of inputOs) {
+    input.addEventListener('click', (event) => {
+      filterOs(input);
+    })
+  }
 
-  // for (let input of inputDisplay) {
-  //   input.addEventListener('click', (event) => {
-  //     filterDis(input);
-  //   })
-  // }
+  for (let input of inputDisplay) {
+    input.addEventListener('click', (event) => {
+      filterDis(input);
+    })
+  }
 
   function filterCol(el) {
     let filteredColor = [];
