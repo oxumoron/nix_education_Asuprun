@@ -1,41 +1,57 @@
 import * as http from "http";
-import {readFile} from 'node:fs';
+import {
+    readFile
+} from 'node:fs';
 
 const host = 'localhost';
 const port = 8000;
 
 let indexFile;
 
-const books = JSON.stringify([
-    {title: "The Alchemist", author: "Paulo Coelho", year: 1988},
-    {title: "The Prophet", author: "Kahlil Gibran", year: 1923}
+const books = JSON.stringify([{
+        title: "The Alchemist",
+        author: "Paulo Coelho",
+        year: 1988
+    },
+    {
+        title: "The Prophet",
+        author: "Kahlil Gibran",
+        year: 1923
+    }
 ]);
 
 const users = [];
 
-const authors = JSON.stringify([
-    {name: "Paulo Coelho", countryOfBirth: "Brazil", yearOfBirth: 1947},
-    {name: "Kahlil Gibran", countryOfBirth: "Lebanon", yearOfBirth: 1883}
+const authors = JSON.stringify([{
+        name: "Paulo Coelho",
+        countryOfBirth: "Brazil",
+        yearOfBirth: 1947
+    },
+    {
+        name: "Kahlil Gibran",
+        countryOfBirth: "Lebanon",
+        yearOfBirth: 1883
+    }
 ]);
 
 const requestListener = function (req, res) {
     try {
         switch (req.url) {
             case "/books":
-                library(req,res);
+                library(req, res);
                 break
             case "/users":
-                usersController(req,res)
+                usersController(req, res)
                 break
-            // case "/" :
-            //     res.setHeader("Content-Type", "text/html");
-            //     res.writeHead(200);
-            //     res.end(indexFile);
-            //     break
-            // default:
-            //     res.setHeader("Content-Type", "application/json");
-            //     res.writeHead(404);
-            //     res.end(`{code: 404, message: "Resource not found"}`);
+                // case "/" :
+                //     res.setHeader("Content-Type", "text/html");
+                //     res.writeHead(200);
+                //     res.end(indexFile);
+                //     break
+                // default:
+                //     res.setHeader("Content-Type", "application/json");
+                //     res.writeHead(404);
+                //     res.end(`{code: 404, message: "Resource not found"}`);
         }
     } catch (e) {
         res.setHeader("Content-Type", "application/json");
@@ -44,10 +60,12 @@ const requestListener = function (req, res) {
     }
 }
 
-function library(req, res){
+function library(req, res) {
     switch (req.method) {
         case "POST":
-            readData(req, (body) => {books.push(JSON.parse(body))})
+            readData(req, (body) => {
+                books.push(JSON.parse(body))
+            })
             res.setHeader("Content-Type", "application/json");
             res.writeHead(200);
             res.end(`{message: "saved"}`);
@@ -64,27 +82,78 @@ function library(req, res){
     }
 }
 
-function usersController(req, res){
-    switch (req.method) {
+function usersController(req, res) {
+    const url = req.url;
+    const userControllerPath = url.split('/');
+    let path = '';
+    if (userControllerPath.length === 3) {
+        path = userControllerPath.pop()
+    }
+    if (path === 'createWithArray') {
+        readData(req, (body) => {
+            const parseDataObj = JSON.parse(body)
+            users = [...users, ...parseDataObj]
+        })
+        res.writeHead(200);
+        console.log(JSON.stringify(users));
+        res.end(`{message: "saved"}`);
+
+        return
+    }
+    if (path) {
+        switch (req.method) {
+            case "PUT":
+                readData(req, (body) => {
+                    const parseDataObj = JSON.parse(body)
+                    const indexUser = users.findIndex(user => user.name === path)
+                    users[indexUser] = parseDataObj
+                })
+                res.setHeader("Content-Type", "application/json");
+                res.writeHead(200);
+                console.log('full user', users);
+                // res.end(JSON.stringify(users));
+                break;
+
+            case "GET":
+                res.setHeader("Content-Type", "application/json");
+                res.writeHead(200);
+                res.end(JSON.stringify(users));
+                break;
+
+            default:
+                res.setHeader("Content-Type", "application/json");
+                res.writeHead(404);
+                res.end(`{code: 404, message: "Resource not found"}`);
+        }
+
+        return
+    }
+    switch (req.method){
         case "POST":
-            readData(req, (body) => {users.push(JSON.parse(body))})
+            readData(req, (body) => {
+                const parseDataObj = JSON.parse(body)
+                users.push(parseDataObj)
+            })
             res.setHeader("Content-Type", "application/json");
             res.writeHead(200);
             res.end(`{message: "saved"}`);
             break;
+
         case "GET":
             res.setHeader("Content-Type", "application/json");
             res.writeHead(200);
             res.end(JSON.stringify(users));
+            break;
+
         default:
             res.setHeader("Content-Type", "application/json");
             res.writeHead(404);
             res.end(`{code: 404, message: "Resource not found"}`);
-            break;
     }
 }
 
 let body;
+
 function readData(req, func) {
     body = [];
     req.on('data', (chunk) => {
@@ -110,3 +179,5 @@ readFile(process.cwd() + "/src/resource/index.html", 'utf8', ((err, data) => {
         console.log(`Server is running on http://${host}:${port}`);
     });
 }));
+
+
