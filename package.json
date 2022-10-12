@@ -1,5 +1,5 @@
 {
-  "type": "commonjs",
+  "type": "module",
   "name": "l1",
   "version": "1.0.0",
   "description": "",
