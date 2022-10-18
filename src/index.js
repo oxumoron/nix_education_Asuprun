@@ -1,36 +1,18 @@
 import * as http from "http";
-import { readFile } from "node:fs";
-import csv from "csvtojson";
+import fs from 'fs'
+
 const host = "localhost";
 const port = 8000;
-const csvFilePath = process.cwd() + "/src/resource/device.csv";
+const filePath = process.cwd() + "/src/resource/contacts.json";
 
 const requestListener = function (req, res) {
-  csv()
-    .fromFile(csvFilePath)
-    .then(
-      (jsonObj) => {
-        sendFile(jsonObj, res);
-      },
-      (err) => {
-        if (err) {
-          res.setHeader("Content-type", "application/json");
-          res.writeHead(500);
-          console.log(err);
-          res.end(JSON.stringify(err));
-          return;
-        }
-      }
-    );
+  let rawData = fs.readFileSync(filePath);
+  let contacts = JSON.parse(rawData);
+  res.end(JSON.stringify(contacts));
+
+  // console.log(student);
 };
 
-function sendFile(contents, res) {
-  console.log(contents);
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "localhost");
-  res.writeHead(200);
-  res.end(JSON.stringify(contents));
-}
 
 const server = http.createServer(requestListener);
 
