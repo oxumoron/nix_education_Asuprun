@@ -12,17 +12,18 @@ const filePath = process.cwd() + "/src/resource/contacts.json";
 let rawData = fs.readFileSync(filePath);
 let contacts = JSON.parse(rawData);
 
+// TASK 1
 const listContacts = function () {
   let rawData = fs.readFileSync(filePath);
   let contacts = JSON.parse(rawData);
   return contacts;
 };
 
+// TASK 2
 const getById = function (id) {
   let result = {};
   const err = {
-    code: 404,
-    message: "Id not found"
+    "message": "Not found"
   };
   contacts.map(contact => {
     if (parseInt(id) === contact.id) {
@@ -35,6 +36,31 @@ const getById = function (id) {
       }
     }
   })
+  return result;
+}
+
+// TASK 3
+const removeContact = function (id) {
+  let result = {};
+  const err = {
+    "message": "Contact not found"
+  };
+  const mes = {
+    "message": "Сontact deleted"
+  };
+  let index = contacts.findIndex(
+    (el) => el.id === parseInt(id)
+  );
+  if (index >= 0) {
+    result = {
+      ...mes
+    };
+  } else {
+    result = {
+      ...err
+    }
+  }
+
   return result;
 }
 
@@ -81,25 +107,32 @@ const getById = function (id) {
 // }
 
 
-
-app.get('/home', (req, res) => {
-
-})
-
-app.get('/about', (req, res) => {
-  res.status(200).type('text/plain')
-  res.send('About page')
-})
-
 // TASK 1
 app.get('/api/contacts', (req, res) => {
   res.status(200).type('text/plain');
   res.send(listContacts());
 })
 
+// TASK 2
+// app.get('/api/contacts/:contactId', (req, res) => {
+//   if (getById(req.params.contactId).message) {
+//     res.status(404).type('text/plain');
+//     res.send(getById(req.params.contactId));
+//   } else {
+//     res.status(200).type('text/plain');
+//     res.send(getById(req.params.contactId));
+//   }
+// })
+
+// TASK 3
 app.get('/api/contacts/:contactId', (req, res) => {
-  res.status(200).type('text/plain');
-  res.send(getById(req.params.contactId));
+  if (removeContact(req.params.contactId).message === "Contact not found") {
+    res.status(404).type('text/plain');
+    res.send(removeContact(req.params.contactId));
+  } else {
+    res.status(200).type('text/plain');
+    res.send(removeContact(req.params.contactId));
+  }
 })
 
 app.use((req, res, next) => {
