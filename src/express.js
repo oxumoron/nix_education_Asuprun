@@ -53,11 +53,11 @@ const removeContact = function (id) {
   );
   if (index >= 0) {
     result = {
-      ...mes
+      ...contacts.splice(index, 1)
     };
   } else {
     result = {
-      ...err
+      ...contacts
     }
   }
 
