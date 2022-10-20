@@ -1,8 +1,9 @@
 import express from 'express';
 import {
-  contacts
+  contactId,
+  contactsAll
 } from '../controllers/controllers.js';
 export const router = express.Router();
 
-router.get('/contacts', contacts)
-router.get('/contacts/:contactId', contacts)
+router.get('/contacts', contactsAll)
+router.get('/contacts/:contactId', contactId)
