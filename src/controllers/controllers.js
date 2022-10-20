@@ -45,3 +45,32 @@ export const createContact = function (req, res) {
     res.status(201).send(contact);
   }
 }
+
+export const updateContact = function (req, res) {
+  console.log(Object.keys(req.body));
+  const user = contacts.find(contact => contact.id === parseInt(req.params.contactId));
+  if (!user) {
+    res.status(404).send({
+      "message": "Not found"
+    })
+  } else if (Object.keys(req.body).length == 0) {
+    res.status(400).send({
+      "message": "Missing fields"
+    })
+  } else {
+    Object.keys(req.body).map(prop => {
+      switch (prop) {
+        case 'name':
+          user.name = req.body.name;
+          break;
+        case 'email':
+          user.email = req.body.email;
+          break;
+        case 'phone':
+          user.phone = req.body.phone;
+          break;
+      }
+    })
+    res.send(user);
+  }
+}
