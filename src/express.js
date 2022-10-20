@@ -20,15 +20,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use('/api/', router)
-app.post('/process_post', function (req, res) {
-  res.status(200).json({
-    response: {
-      id: req.body.id,
-      token: req.body.token,
-      geo: req.body.geo
-    }
-  })
+
+app.use((req, res, next) => {
+  res.status(404).type('text/plain')
+  res.send('Not found')
 })
-const server = app.listen(port, function () {
+
+const server = app.listen(port, () => {
   console.log(`Server is running on http://${host}:${port}`);
 });
