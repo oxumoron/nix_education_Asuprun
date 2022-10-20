@@ -74,3 +74,18 @@ export const updateContact = function (req, res) {
     res.send(user);
   }
 }
+
+export const delContact = function (req, res) {
+  const removeContact = contacts.find(contact => contact.id === parseInt(req.params.contactId));
+  if (!removeContact) {
+    res.status(404).send({
+      "message": "Contact not found"
+    })
+  } else {
+    const index = contacts.indexOf(removeContact);
+    contacts.splice(index, 1);
+    res.status(200).send([removeContact, {
+      "message": "Сontact deleted"
+    }]);
+  }
+}
