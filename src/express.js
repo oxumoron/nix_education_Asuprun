@@ -4,12 +4,25 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import {
+  db
+} from './connection/mongoDB.js';
+
+import {
   router
 } from './routes/routes.js';
+
+// import {
+//   getAllContacts
+// } from './controllers/controllers.js';
 
 const app = express();
 const host = "localhost";
 const port = 3000;
+
+// Mongoose
+db
+// get all contacts from file
+// getAllContacts()
 
 app.use(morgan('dev'));
 app.use(cors());
