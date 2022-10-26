@@ -8,25 +8,7 @@ const filePath = process.cwd() + "/src/resource/contacts.json";
 let rawData = fs.readFileSync(filePath);
 let contacts = JSON.parse(rawData);
 
-// export const getAllContacts = function () {
-//   contacts.map(contact => {
-//     const candidate = ModelContact.findOne({
-//       email: contact.email
-//     })
-//     if (candidate) {
-//       console.log('Contact already exists');
-//     } else {
-//       const newContact = new ModelContact({
-//         // id: contacts.length + 1,
-//         name: contact.name,
-//         email: contact.email,
-//         phone: contact.phone
-//       })
-//       newContact.save()
-//     }
-//   })
-//   console.log('All users created');
-// }
+
 
 export const contactsAll = function (req, res) {
   const listContacts = function (req, res) {
