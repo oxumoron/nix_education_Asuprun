@@ -85,3 +85,15 @@ export const delContact = function (req, res) {
       return res.send('Succesfully deleted.');
     })
 }
+
+export const login = function (req, res) {
+  res.status(200).json({
+    login: true
+  })
+}
+
+export const register = function (req, res) {
+  res.status(200).json({
+    register: true
+  })
+}
