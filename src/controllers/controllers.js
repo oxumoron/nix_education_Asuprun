@@ -16,7 +16,7 @@ module.exports.contactsAll = function (req, res) {
   // };
   res.status(200);
   // res.send(listContacts())
-  // res.send(ok)
+  res.send('ok')
 }
 
 // export const contactId = async (req, res) => {
