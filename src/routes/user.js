@@ -1,17 +1,18 @@
-import {
-  Router
-} from 'express';
-const router = Router();
-import {
-  authenticate
-} from 'passport';
+// import {
+//   Router
+// } from 'express';
+const express = require('express')
+const router = express.Router();
+// import {
+//   authenticate
+// } from 'passport';
 
-import {
-  json
-} from 'body-parser';
-import User, {
-  register
-} from '../models/user.js';
+// import {
+//   json
+// } from 'body-parser';
+const json = require('body-parser')
+// import User from '../models/user.js';
+const User = require('../models/user.js')
 
 router.use(json());
 

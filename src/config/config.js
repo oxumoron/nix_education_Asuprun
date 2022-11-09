@@ -1,3 +1,3 @@
-export const keys = {
+module.exports = {
   jwt: 'dev-jwt'
 }

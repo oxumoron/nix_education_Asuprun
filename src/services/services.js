@@ -1,25 +1,25 @@
-import fs from 'fs';
-import {
-  ModelContact
-} from '../models/model.js';
+// import fs from 'fs';
+// import {
+//   ModelContact
+// } from '../models/model.js';
 
-const filePath = process.cwd() + "/src/resource/contacts.json";
-
-
-let rawData = fs.readFileSync(filePath);
-let contacts = JSON.parse(rawData);
+// const filePath = process.cwd() + "/src/resource/contacts.json";
 
 
-export const getAllContacts = function () {
-  contacts.map(contact => {
-    const newContact = new ModelContact({
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone
-    })
-    newContact.save()
-  })
-  console.log('All users created');
-}
+// let rawData = fs.readFileSync(filePath);
+// let contacts = JSON.parse(rawData);
 
-// getAllContacts
+
+// export const getAllContacts = function () {
+//   contacts.map(contact => {
+//     const newContact = new ModelContact({
+//       name: contact.name,
+//       email: contact.email,
+//       phone: contact.phone
+//     })
+//     newContact.save()
+//   })
+//   console.log('All users created');
+// }
+
+// // getAllContacts

@@ -1,30 +1,36 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import morgan from 'morgan';
-import passport from 'passport';
+// import express from 'express';
+// import bodyParser from 'body-parser';
+// import cors from 'cors';
+// import morgan from 'morgan';
+// import passport from 'passport';
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const morgan = require('morgan')
+const passport = require('passport')
+
+
 // import {
 //   authenticate
 // } from './authenticate.js';
 
-import {
-  db
-} from './connection/mongoDB.js';
+// import {
+//   db
+// } from './connection/mongoDB.js';
+const db = require('./connection/mongoDB.js')
 
-import {
-  router
-} from './routes/routes.js';
+// import {
+//   router
+// } from './routes/routes.js';
+const router = require('./routes/routes.js')
 
 
-import {
-  Genre
-} from "./models/genre.js"
-import {
-  getAllContacts
-} from './services/services.js';
-import {
-  passport as midPas
-} from './middleware/passport.js';
+// import {
+//   Genre
+// } from "./models/genre.js"
+// import {
+//   getAllContacts
+// } from './services/services.js';
 
 const app = express();
 const host = "localhost";
@@ -36,8 +42,8 @@ db
 // getAllContacts()
 
 app.use(passport.initialize())
-midPas(passport)
-// require('./middleware/passport')(passport)
+// midPas(passport)
+require('./middleware/passport.js')(passport)
 
 app.use(morgan('dev'));
 app.use(cors());

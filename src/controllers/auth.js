@@ -1,12 +1,16 @@
-import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
-import User from "../models/user.js"
-import {
-  keys
-} from "../config/config.js"
+// import bcrypt from "bcryptjs"
+// import jwt from "jsonwebtoken"
+// import User from "../models/user.js"
+// import {
+//   keys
+// } from "../config/config.js"
 
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const User = require('../models/user.js')
+const keys = require('../config/config.js')
 
-export const login = async function (req, res) {
+module.exports.login = async function (req, res) {
   const candidate = await User.findOne({
     email: req.body.email
   })
@@ -36,7 +40,7 @@ export const login = async function (req, res) {
   }
 }
 
-export const register = async function (req, res) {
+module.exports.register = async function (req, res) {
   const candidate = await User.findOne({
     email: req.body.email
   })
