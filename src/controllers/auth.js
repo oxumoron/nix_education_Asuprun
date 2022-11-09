@@ -1,10 +1,3 @@
-// import bcrypt from "bcryptjs"
-// import jwt from "jsonwebtoken"
-// import User from "../models/user.js"
-// import {
-//   keys
-// } from "../config/config.js"
-
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.js')
@@ -21,7 +14,6 @@ module.exports.login = async function (req, res) {
       const token = jwt.sign({
         email: candidate.email,
         userId: candidate._id
-        // need create config
       }, keys.jwt, {
         expiresIn: 60 * 60
       })
@@ -56,7 +48,6 @@ module.exports.register = async function (req, res) {
       email: req.body.email,
       password: bcrypt.hashSync(password, salt)
     })
-
     try {
       await user.save()
       res.status(201).json({

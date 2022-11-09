@@ -1,14 +1,4 @@
-// import {
-//   Schema,
-//   model
-// } from 'mongoose';
-
 const mongoose = require('mongoose')
-// const {
-//   Schema
-// } = mongoose
-// import passportLocalMongoose from 'passport-local-mongoose';
-
 
 const User = mongoose.Schema({
   email: {

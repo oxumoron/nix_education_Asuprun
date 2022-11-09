@@ -1,17 +1,6 @@
-// import {
-//   Router
-// } from 'express';
 const express = require('express')
 const router = express.Router();
-// import {
-//   authenticate
-// } from 'passport';
-
-// import {
-//   json
-// } from 'body-parser';
 const json = require('body-parser')
-// import User from '../models/user.js';
 const User = require('../models/user.js')
 
 router.use(json());

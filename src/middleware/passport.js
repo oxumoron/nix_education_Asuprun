@@ -1,13 +1,3 @@
-// import {
-//   Strategy as JwtStrategy,
-//   ExtractJwt as ExtractJwt
-// } from 'passport-jwt';
-// import mongoose from 'mongoose';
-// import User from '../models/user.js';
-// import {
-//   keys
-// } from '../config/config.js';
-
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const User = require('../models/user.js')
