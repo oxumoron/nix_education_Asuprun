@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MacOutlet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <div class="container">
+        <div class="header__wrap">
+          <a href="#" class="logo">
+            <img src="img/logo.png" alt="logo">
+          </a>
+          <div class="header__right">
+            <div class="login">
+              Login
+            </div>
+            <div class="registration">
+              Registration
+            </div>
+            <div id="cart" class="cart btn">
+              <a href="#" class="cart-link">
+                <img src="img/cart.svg" alt="cart">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="banner">
+      <div class="container">
+        <div class="banner__inner">
+          <div class="banner__desc">
+            <h2 class="banner__title">IPad Air</h2>
+            <button class="btn cart__btn">Add to cart</button>
+          </div>
+          <img src="img/banner.jpg" alt="banner">
+        </div>
+      </div>
+    </section>
+    <div class="search">
+      <div class="container">
+        <div class="search__inner">
+          <label for="search__input">
+            <div class="search__icon">
+              <img src="img/icons/search.svg" alt="search">
+            </div>
+            <input type="search" id="search__input" name="search" placeholder="Enter device name...">
+          </label>
+          <div class="accord__icon">
+            <img src="img/icons/filter.svg" alt="filter">
+          </div>
+          <div class="setting__icon">
+            <img src="img/icons/settings.svg" alt="setting">
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="shop">
+      <div class="container">
+        <div class="shop__wrapper">
+          <div class="accord">
+            <div class="accord__inner">
+              <div class="cat">
+                <input class="cat__input" type="checkbox" id="inputprice">
+                <label class="cat__label" id="price" for="inputprice">Price</label>
+                <div class="cat__inner">
+                  <ul id="price__cat-list" class="cat__inner-list">
+                    <li class="cat__item">
+                      <label class="item__label" for="price-from">From</label>
+                      <input class="item__check" type="number" id="price-from">
+                    </li>
+                    <li class="cat__item">
+                      <label class="item__label" for="price-to">To</label>
+                      <input class="item__check" type="number" id="price-to">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="cat">
+                <input class="cat__input" type="checkbox" id="inputcolor">
+                <label class="cat__label" id="color" for="inputcolor">Color</label>
+                <div class="cat__inner">
+                  <ul id="color-cat__list" class="cat__inner-list">
+                  </ul>
+                </div>
+              </div>
+              <div class="cat">
+                <input class="cat__input" type="checkbox" id="inputmemory">
+                <label class="cat__label" id="memory" for="inputmemory">Memory</label>
+                <div class="cat__inner">
+                  <ul id="memory-cat__list" class="cat__inner-list">
+                  </ul>
+                </div>
+              </div>
+              <div class="cat">
+                <input class="cat__input" type="checkbox" id="inputos">
+                <label class="cat__label" id="os" for="inputos">Os</label>
+                <div class="cat__inner">
+                  <ul id="os-cat__list" class="cat__inner-list">
+                  </ul>
+                </div>
+              </div>
+              <div class="cat">
+                <input class="cat__input" type="checkbox" id="inputdisplay">
+                <label class="cat__label" id="display" for="inputdisplay">Display</label>
+                <div class="cat__inner">
+                  <ul id="display__cat-list" class="cat__inner-list">
+                    <li class="cat__item display__item">
+                      <label class="item__label" for="inch2_5">inch 2-5</label>
+                      <input class="item__check" type="checkbox" id="inch2_5">
+                    </li>
+                    <li class="cat__item display__item">
+                      <label class="item__label" for="inch5_7">inch 5-7</label>
+                      <input class="item__check" type="checkbox" id="inch5_7">
+                    </li>
+                    <li class="cat__item display__item">
+                      <label class="item__label" for="inch7_12">inch 7-12</label>
+                      <input class="item__check" type="checkbox" id="inch7_12">
+                    </li>
+                    <li class="cat__item display__item">
+                      <label class="item__label" for="inch12_16">inch 12-16</label>
+                      <input class="item__check" type="checkbox" id="inch12_16">
+                    </li>
+                    <li class="cat__item display__item">
+                      <label class="item__label" for="more16">inch 16+</label>
+                      <input class="item__check" type="checkbox" id="more16">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <button id="filter-off">filter-off</button>
+            </div>
+          </div>
+
+          <ul id="products" class="products">
+          </ul>
+        </div>
+      </div>
+    </section>
+    <div id="cart-modal" class="cart-modal">
+      <div class="cart__inner">
+        <div class="cart__header">
+          <h4 class="cart__title">Shopping Cart</h4>
+          <p>Checkout is almost done!</p>
+        </div>
+        <ul class="cart__items">
+        </ul>
+        <div class="cart__total">
+          <p>Total amount: <span id="cart__amount" class="cart__amount"></span> ptc.</p>
+          <p>Total price: <span id="cart__price" class="cart__price"></span>$</p>
+        </div>
+        <div class="cart__buy">
+          <button class="btn buy__btn">Buy</button>
+        </div>
+      </div>
+    </div>
+    <div class="product__modal" id="product__modal">
+      <div class="modal__inner">
+        <div class="modal__col">
+          <img id="popup-img" class="popup-img" src="" alt="">
+        </div>
+        <div class="modal__col modal__col-middle">
+          <h3 class="col__title" id="col__title"></h3>
+          <div class="col__reviews">
+            <div class="col__reviews-inner">
+              <div class="col__review"><span id="col__review"></span>% Positive reviews Above avarage
+              </div>
+            </div>
+            <div class="col__orders"><span id="col__orders"></span> orders</div>
+          </div>
+          <ul class="col__list">
+            <li class="col__list-item">Color: <span id="col-color"></span></li>
+            <li class="col__list-item">Operating System: <span id="col-os"></span></li>
+            <li class="col__list-item">Chip: <span id="col-chip"></span></li>
+            <li class="col__list-item">Height: <span id="col-height"></span> <span>cm</span></li>
+            <li class="col__list-item">Width: <span id="col-width"></span> <span>cm</span></li>
+            <li class="col__list-item">Depth: <span id="col-depth"></span> <span>cm</span></li>
+            <li class="col__list-item">Weight: <span id="col-weight"></span> <span>g</span></li>
+          </ul>
+        </div>
+        <div class="modal__col">
+          <div class="col__price">$ <span id="col-price"></span></div>
+          <div class="col__stock">Stock: <span id="col-stock"></span> pcs.</div>
+          <button class="popup__btn btn">Add to cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="registration__modal">
+      <div class="registration-modal__inner">
+        <div class="form__wrapper">
+          <div class="form__inner">
+            <h1>Registration</h1>
+            <form action="" name="registration" method="post">
+              <ul>
+                <li><label for="username">Name:</label></li>
+                <li><input id="username" type="text" name="username" size="50" /></li>
+                <li><label for="email">Email:</label></li>
+                <li><input id="email" type="text" name="email" size="50" /></li>
+                <li><label for="password">Password:</label></li>
+                <li><input id="password" type="password" name="password" size="12" /></li>
+                <li>
+                  <div class="btn__reg btn__sign">
+                    Sign up
+                  </div>
+                  <!-- <input type="submit" name="submit" value="Sign up" /></li> -->
+                <li>
+                  <div class="btn__reg btn__login">Login</div>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <div class="login__modal">
+      <div class="login-modal__inner">
+        <div class="form__wrapper">
+          <div class="form__inner">
+            <h1>Login</h1>
+            <form action="" name="login">
+              <ul>
+                <li><label for="username">Name:</label></li>
+                <li><input id="username-log" type="text" name="username" size="50" /></li>
+                <li><label for="password">Password:</label></li>
+                <li><input id="password-log" type="password" name="password" size="12" /></li>
+                <li>
+                  <div class="btn__log btn__login">Login</div>
+                </li>
+                <li>
+                  <div class="btn__log btn__sign">
+                    Sign up
+                  </div>
+                  <!-- <input type="submit" name="submit" value="Sign up" /></li> -->
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <script nomodule type="module" src="js/main.js"></script>
+</body>
+
+</html>
+
