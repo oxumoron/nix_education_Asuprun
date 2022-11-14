@@ -1,5 +1,6 @@
 const User = require('../models/user.js')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const products = require('../models/products.js');
 
 module.exports.userCreate = async function registration(req, res) {
   try {
@@ -35,7 +36,7 @@ module.exports.userCreate = async function registration(req, res) {
   }
 }
 
-module.exports.userSign = async function lgin(req, res) {
+module.exports.userSign = async function login(req, res) {
   try {
     const {
       username,
@@ -66,5 +67,14 @@ module.exports.userSign = async function lgin(req, res) {
     res.status(400).json({
       message: "Registration error"
     });
+  }
+}
+
+module.exports.getProducts = async function (req, res) {
+  try {
+    const items = await products.find();
+    res.status(200).json(items);
+  } catch (e) {
+    errorHandler(res, e)
   }
 }

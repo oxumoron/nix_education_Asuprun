@@ -9,6 +9,11 @@ module.exports.login = async function (req, res) {
     username,
     password
   } = req.body;
+
+  if (!(username && password)) {
+    res.status(400).send("Все поля должны быть заполнены");
+  }
+
   const candidate = await User.findOne({
     username
   })
@@ -22,7 +27,18 @@ module.exports.login = async function (req, res) {
         expiresIn: 60 * 60
       })
       candidate.token = token;
-      res.status(200).json(candidate)
+
+      // let options = {
+      //   path: "/",
+      //   sameSite: true,
+      //   maxAge: 1000 * 60 * 60 * 24, // would expire after 24 hours
+      //   httpOnly: true, // The cookie only accessible by the web server
+      // }
+
+      // res.cookie('x-access-token', token)
+
+      // res.setHeader('x-access-token', 'Bearer ' + token);
+      res.status(200).json(candidate.token)
     } else {
       res.status(401).json({
         message: "Пароли не совпадают,попробуйте снова"

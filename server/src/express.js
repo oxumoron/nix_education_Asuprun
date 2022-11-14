@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 
 const db = require('./connection/mongoDB.js')
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 app.use('/api/auth', router)
 
