@@ -78,3 +78,14 @@ module.exports.getProducts = async function (req, res) {
     errorHandler(res, e)
   }
 }
+
+module.exports.getProduct = async function (req, res) {
+  const prodName = await products.find({
+    name: res.body.prodName
+  });
+  // const prodName = req.params.prodName;
+  if (!prodName) res.status(404).send({
+    "message": "Not found"
+  });
+  res.send(prodName);
+}

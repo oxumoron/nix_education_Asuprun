@@ -19,6 +19,7 @@ module.exports.login = async function (req, res) {
   })
   if (candidate) {
     const passpordRes = bcrypt.compareSync(password, candidate.password)
+    console.log(passpordRes);
     if (passpordRes) {
       const token = jwt.sign({
         username: candidate.username,
@@ -27,7 +28,10 @@ module.exports.login = async function (req, res) {
         expiresIn: 60 * 60
       })
       candidate.token = token;
-
+      // console.log({
+      //   token,
+      //   ...candidate
+      // });
       // let options = {
       //   path: "/",
       //   sameSite: true,
@@ -38,7 +42,9 @@ module.exports.login = async function (req, res) {
       // res.cookie('x-access-token', token)
 
       // res.setHeader('x-access-token', 'Bearer ' + token);
-      res.status(200).json(candidate.token)
+      res.status(200).json({
+        token
+      })
     } else {
       res.status(401).json({
         message: "Пароли не совпадают,попробуйте снова"

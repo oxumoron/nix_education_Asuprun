@@ -16,7 +16,7 @@ const port = 3000;
 // Mongoose
 db
 
-
+// Passport
 app.use(passport.initialize())
 require('./middleware/passport.js')(passport)
 
