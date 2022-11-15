@@ -1,6 +1,27 @@
-import {
-  items
-} from './items.js';
+// import {
+//   items
+// } from './items.js';
+let token = '';
+
+const items = [];
+
+const getProductAll = () => {
+  fetch('http://localhost:3000/api/auth/items', {
+    method: "GET",
+    headers: {
+      "x-access-token": token,
+    }
+  }).then(function (response) {
+    response.json().then(function (products) {
+      products.forEach(function (product) {
+        items.push(product)
+      });
+      createCards(items);
+    });
+  }).catch(err => console.error(err));
+}
+
+
 
 const products = document.getElementById('products');
 const productWrapper = document.querySelector('li.product__wrapper');
@@ -21,10 +42,10 @@ const popupInner = document.querySelector('.modal__inner');
 
 // const like = document.getElementById('like');
 
-
-
+// console.log(items);
 
 const createCards = function (card) {
+  // clean list cards
   card.forEach((el) => {
     let newCard = document.createElement("li");
     let id = el.id;
@@ -70,7 +91,7 @@ const createCards = function (card) {
     //   cardBtn.disabled = true;
     // }
     // console.log(newStock === 0);
-
+    // add events click on card
     products.appendChild(newCard);
 
   });
@@ -166,7 +187,7 @@ productWrappers.forEach((item) => {
     const {
       target
     } = event;
-    if (target.parentElement.className === "like") {
+    if (target.parentElement.className === "product__btn") {
       const like = document.querySelectorAll('.like');
       like.forEach(el => {
         el.addEventListener('click', (event) => {
@@ -195,11 +216,11 @@ function addToCart() {
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
-    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-3).join('/'), 1];
+    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-4).join('/'), 1];
   }
 
   if (!setCartData(cartData)) {
-    // this.disabled = false;
+    return false;
   }
 }
 
@@ -221,11 +242,11 @@ function addToCartPopup() {
     itemTitle = parentBox.querySelector('.col__title').innerHTML,
     itemPrice = document.getElementById('col-price').innerHTML,
     itemImg = parentBox.querySelector('.popup-img').src;
-  console.log(itemImg)
+  console.log(itemImg);
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
-    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-3).join('/'), 1];
+    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-4).join('/'), 1];
   }
 
   if (!setCartData(cartData)) {
@@ -675,9 +696,10 @@ logBtn.addEventListener('click', async (event) => {
     // email: document.getElementById("email").value,
     password: document.getElementById("password-log").value
   };
-  console.log(user);
   let result = await fetch("http://localhost:3000/api/auth/login", {
     method: "POST",
+    // "token"
+
     headers: {
       "Content-Type": "application/json",
     },
@@ -685,8 +707,23 @@ logBtn.addEventListener('click', async (event) => {
   });
 
   result = await result.json();
-  console.log(result);
+  token = result.token;
+  getProductAll();
   if (result.token) {
     // console.log(result);
   }
 })
+
+
+// const appF = async () => {
+//   console.log(123);
+//   fetch("http://localhost:3000/api/auth/items", {
+//     method: "GET",
+//     // "token"
+//   });
+//   result = await result.json();
+//   token = result.token;
+
+// }
+
+// appF()

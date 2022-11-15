@@ -477,7 +477,7 @@ ol{
 
 #product__reviews:before{
   content: '';
-  background-image: url(../img/heart.svg);
+  /* background-image: url(../img/heart.svg); */
   height: 20px;
   width: 20px;
   position: absolute;
@@ -732,7 +732,7 @@ ol{
 
 .col__review::before{
   content: '';
-  background-image: url(/img/heart.svg);
+  /* background-image: url(/img/heart.svg); */
   height: 20px;
   width: 20px;
   position: absolute;
