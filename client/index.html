@@ -51,18 +51,20 @@
     <div class="search">
       <div class="container">
         <div class="search__inner">
-          <label for="search__input">
-            <div class="search__icon">
-              <img src="img/icons/search.svg" alt="search">
+          <form id="search__form">
+            <label for="search__input">
+              <div class="search__icon">
+                <img src="img/icons/search.svg" alt="search">
+              </div>
+              <input type="search" id="search__input" name="search" placeholder="Enter device name...">
+            </label>
+            <div class="accord__icon">
+              <img src="img/icons/filter.svg" alt="filter">
             </div>
-            <input type="search" id="search__input" name="search" placeholder="Enter device name...">
-          </label>
-          <div class="accord__icon">
-            <img src="img/icons/filter.svg" alt="filter">
-          </div>
-          <div class="setting__icon">
-            <img src="img/icons/settings.svg" alt="setting">
-          </div>
+            <div class="setting__icon">
+              <img src="img/icons/settings.svg" alt="setting">
+            </div>
+          </form>
         </div>
       </div>
     </div>

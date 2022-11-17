@@ -6,7 +6,7 @@ let token = '';
 const items = [];
 
 const getProductAll = () => {
-  fetch('http://localhost:3000/api/auth/items', {
+  fetch('http://localhost:3000/products/', {
     method: "GET",
     headers: {
       "x-access-token": token,
@@ -21,7 +21,37 @@ const getProductAll = () => {
   }).catch(err => console.error(err));
 }
 
+const searchProducts = () => {
+  const searchInput = document.getElementById('search__input');
+  const search = document.getElementById('search__form');
+  search.addEventListener('submit', (e) => {
+    e.preventDefault();
+    loadProducts(searchInput.value);
+  });
+};
 
+// searchProducts()
+
+const loadProducts = async (search = '') => {
+  fetch('http://localhost:3000/products/', {
+    params: {
+      search
+    }
+  }, {
+    method: "GET",
+    headers: {
+      // "x-access-token": token,
+    }
+  }).then(function (response) {
+    response.json().then(function (products) {
+      products.forEach(function (product) {
+        items.push(product)
+      });
+      // createCards(items);
+      console.log(items);
+    });
+  }).catch(err => console.error(err));
+};
 
 const products = document.getElementById('products');
 const productWrapper = document.querySelector('li.product__wrapper');
@@ -91,6 +121,7 @@ const createCards = function (card) {
     //   cardBtn.disabled = true;
     // }
     // console.log(newStock === 0);
+    // 
     // add events click on card
     products.appendChild(newCard);
 
