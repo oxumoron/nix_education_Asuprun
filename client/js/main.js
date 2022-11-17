@@ -717,6 +717,8 @@ regBtn.addEventListener('click', async (event) => {
   });
   if (result.user) {
     alert('User created')
+    registrationPopup.classList.remove('modal__active');
+    tagBody.classList.remove('hidden');
   }
 })
 
@@ -741,7 +743,8 @@ logBtn.addEventListener('click', async (event) => {
   token = result.token;
   getProductAll();
   if (result.token) {
-    // console.log(result);
+    loginPopup.classList.remove('modal__active');
+    tagBody.classList.remove('hidden');
   }
 })
 
