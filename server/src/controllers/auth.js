@@ -11,7 +11,7 @@ module.exports.login = async function (req, res) {
   } = req.body;
 
   if (!(username && password)) {
-    res.status(400).send("Все поля должны быть заполнены");
+    res.status(400).send("All fields must be filled");
   }
 
   const candidate = await User.findOne({
@@ -48,12 +48,12 @@ module.exports.login = async function (req, res) {
       })
     } else {
       res.status(401).json({
-        message: "Пароли не совпадают,попробуйте снова"
+        message: "Passwords do not match"
       })
     }
   } else {
     res.status(404).json({
-      message: "Пользователь с таким email не найден"
+      message: "User with this name not found"
     })
   }
 }

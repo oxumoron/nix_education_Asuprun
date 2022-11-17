@@ -2,6 +2,8 @@
 //   items
 // } from './items.js';
 let token = '';
+let tokens = [];
+let allCards = [];
 
 const items = [];
 
@@ -30,7 +32,7 @@ const searchProducts = () => {
   });
 };
 
-searchProducts()
+searchProducts();
 
 const loadProducts = async (search = '') => {
   fetch(`http://localhost:3000/products/${search}`, {
@@ -71,9 +73,10 @@ const popupInner = document.querySelector('.modal__inner');
 
 const createCards = function (card) {
   // clean list cards
+  allCards = [];
   card.forEach((el) => {
     let newCard = document.createElement("li");
-    let id = el.id;
+    let id = el._id;
     newCard.classList = "product__wrapper";
     newCard.id = `${id}`;
     newImage = `./img/${el.imgUrl}`;
@@ -118,8 +121,13 @@ const createCards = function (card) {
     // console.log(newStock === 0);
     // 
     // add events click on card
-    products.appendChild(newCard);
-
+    allCards.push(newCard);
+    newCard.addEventListener('click', (event) => {
+      // popupFunc(allCards)
+    });
+    // console.log(newCard);
+    allCards.map(card => products.appendChild(card));
+    // products.appendChild(newCard);
   });
 }
 
@@ -208,22 +216,22 @@ const productWrappers = document.querySelectorAll('li.product__wrapper');
 const tagBody = document.querySelector('body')
 
 // like
-productWrappers.forEach((item) => {
-  item.addEventListener('click', (event) => {
-    const {
-      target
-    } = event;
-    if (target.parentElement.className === "product__btn") {
-      const like = document.querySelectorAll('.like');
-      like.forEach(el => {
-        el.addEventListener('click', (event) => {
-          event.stopPropagation();
-          el.classList.toggle('filled');
-        })
-      })
-    }
-  })
-})
+// productWrappers.forEach((item) => {
+//   item.addEventListener('click', (event) => {
+//     const {
+//       target
+//     } = event;
+//     if (target.parentElement.className === "product__btn") {
+//       const like = document.querySelectorAll('.like');
+//       like.forEach(el => {
+//         el.addEventListener('click', (event) => {
+//           event.stopPropagation();
+//           el.classList.toggle('filled');
+//         })
+//       })
+//     }
+//   })
+// })
 
 // const cartPopup = document.getElementById('cart-modal');
 const arrBtnToAddCart = document.querySelectorAll('.btn');
@@ -352,10 +360,19 @@ let arrayY = [];
 function getCartData() {
   return JSON.parse(localStorage.getItem('cart'));
 }
-// Записываем данные в LocalStorage
+
 function setCartData(o) {
   localStorage.setItem('cart', JSON.stringify(o));
-  return false;
+  // return false;
+}
+
+function getTokenData() {
+  return JSON.parse(localStorage.getItem('token'));
+}
+
+function setTokenData(o) {
+  localStorage.setItem('token', JSON.stringify(o));
+  // return false;
 }
 
 function active() {
@@ -445,7 +462,7 @@ function popupFunc(array) {
     })
   })
 }
-popupFunc(items);
+// popupFunc(items);
 
 
 const removeChildren = function (item) {
@@ -682,14 +699,24 @@ tagBody.addEventListener('click', (event) => {
     target
   } = event;
   if (target.className === "registration") {
-    popupRegister()
+    popupRegister();
+  }
+  if (target.className === "btn__log btn__sign") {
+    popupRegister();
+    loginPopup.classList.remove('modal__active');
+    tagBody.classList.remove('hidden');
   }
   if (target.className === "login") {
-    popupLogin()
+    popupLogin();
+  }
+  if (target.className === "btn__reg btn__login") {
+    popupLogin();
+    registrationPopup.classList.remove('modal__active');
+    tagBody.classList.remove('hidden');
   }
 })
 
-const regBtn = document.querySelector('.btn__reg.btn__sign')
+const regBtn = document.querySelector('.btn__reg.btn__sign');
 regBtn.addEventListener('click', async (event) => {
   const user = {
     username: document.getElementById("username").value,
@@ -724,18 +751,22 @@ logBtn.addEventListener('click', async (event) => {
   };
   let result = await fetch("http://localhost:3000/api/auth/login", {
     method: "POST",
-    // "token"
-
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(user),
   });
-
   result = await result.json();
+  // console.log(result.message, result.token);
+  if (result.message === 'User with this name not found') {
+    alert('User with this name not found');
+    return false;
+  }
   token = result.token;
   getProductAll();
   if (result.token) {
+    tokens.push(JSON.stringify(result.token));
+    setTokenData(tokens);
     loginPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
   }
