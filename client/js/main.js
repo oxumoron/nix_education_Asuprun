@@ -30,25 +30,20 @@ const searchProducts = () => {
   });
 };
 
-// searchProducts()
+searchProducts()
 
 const loadProducts = async (search = '') => {
-  fetch('http://localhost:3000/products/', {
-    params: {
-      search
-    }
-  }, {
+  fetch(`http://localhost:3000/products/${search}`, {
     method: "GET",
     headers: {
-      // "x-access-token": token,
+      "x-access-token": token,
     }
   }).then(function (response) {
     response.json().then(function (products) {
       products.forEach(function (product) {
         items.push(product)
       });
-      // createCards(items);
-      console.log(items);
+      createCards(items);
     });
   }).catch(err => console.error(err));
 };
@@ -286,7 +281,6 @@ function addToCartPopup() {
 }
 
 function openCart() {
-
   let cartData = getCartData(),
     totalItems = '';
   if (cartData !== null) {
@@ -301,7 +295,6 @@ function openCart() {
               <ul class="cart__items">
               `;
     newCartArray.forEach(ar => {
-      console.log(ar);
       totalItems += `
                   <li class="cart__item">
                     <img id="item__img" class="item__img" src="${ar[2]}" height="100" width="100" alt="">

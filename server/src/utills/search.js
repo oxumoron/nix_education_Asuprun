@@ -1,12 +1,12 @@
 const products = require("../models/products");
 
-const searchProducts = (s = '') => products.find({
+const searchProd = (field = '') => products.find({
   name: {
-    $regex: s,
+    $regex: field,
     $options: 'i'
   }
 });
 
 module.exports = {
-  searchProducts
+  searchProd
 };
