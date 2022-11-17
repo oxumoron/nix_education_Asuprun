@@ -1,5 +1,7 @@
 const User = require('../models/user.js')
 const bcrypt = require('bcryptjs');
+const express = require('express');
+const searchProducts = require('../utills/search');
 const products = require('../models/products.js');
 
 module.exports.userCreate = async function registration(req, res) {
@@ -70,6 +72,11 @@ module.exports.userSign = async function login(req, res) {
   }
 }
 
+// module.exports.getProducts = async function (req, res) {
+//   const products = await searchProducts(req.query.search);
+//   res.status(200).json(products);
+// }
+
 module.exports.getProducts = async function (req, res) {
   try {
     const items = await products.find();
@@ -77,15 +84,4 @@ module.exports.getProducts = async function (req, res) {
   } catch (e) {
     errorHandler(res, e)
   }
-}
-
-module.exports.getProduct = async function (req, res) {
-  const prodName = await products.find({
-    name: res.body.prodName
-  });
-  // const prodName = req.params.prodName;
-  if (!prodName) res.status(404).send({
-    "message": "Not found"
-  });
-  res.send(prodName);
 }

@@ -17,9 +17,10 @@ module.exports.login = async function (req, res) {
   const candidate = await User.findOne({
     username
   })
+
   if (candidate) {
     const passpordRes = bcrypt.compareSync(password, candidate.password)
-    console.log(passpordRes);
+    // console.log(passpordRes);
     if (passpordRes) {
       const token = jwt.sign({
         username: candidate.username,

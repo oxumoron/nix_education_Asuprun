@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 const db = require('./connection/mongoDB.js')
 
 const router = require('./routes/routes.js')
+const items = require('./routes/items')
 
 const app = express();
 const host = "localhost";
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 
 app.use('/api/auth', router)
+app.use('/products', items)
 
 app.use((req, res, next) => {
   res.status(404).type('text/plain')

@@ -14,7 +14,7 @@ const {
 router.post('/registration', auth.register)
 router.post('/login', auth.login)
 router.get('/items', verifyToken, getProducts)
-router.get('/items/:prodName', controllers.getProduct)
+// router.get('/items/:prodName', controllers.getProduct)
 // router.post('/login', passport.authenticate('jwt', {
 //   session: false
 // }), auth.login)
