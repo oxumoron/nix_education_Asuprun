@@ -63,7 +63,8 @@ const loginPopup = document.querySelector('.login__modal');
 // const stockImg = document.getElementById('stock__img');
 // const cardBtn = document.querySelector('.product__btn');
 let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
-const cardBtn = document.querySelector('.product__btn');
+// const cardBtn = document.querySelector('.product__btn');
+const allBtn = document.querySelectorAll('.product__btn');
 const popupInner = document.querySelector('.modal__inner');
 
 
@@ -115,23 +116,22 @@ const createCards = function (card) {
                   </div>
                 </div>
     `;
-    // if(newStock === 0){
-    //   cardBtn.disabled = true;
-    // }
-    // console.log(newStock === 0);
-    // 
+
     // add events click on card
     allCards.push(newCard);
     newCard.addEventListener('click', (event) => {
       const {
         target
       } = event;
-      // console.log(newCard.id);
-      popupFunc(allCards, newCard.id)
+      if (target.className === 'btn product__btn') {
+        addToCart(newCard);
+        return false;
+      }
+      if (target.closest('.product__wrapper')) {
+        popupFunc(allCards, newCard.id)
+      }
     });
-    // console.log(newCard);
     allCards.map(card => products.appendChild(card));
-    // products.appendChild(newCard);
   });
 }
 
@@ -242,11 +242,10 @@ const arrBtnToAddCart = document.querySelectorAll('.btn');
 ////////////new cart
 const cartCont = document.getElementById('cart-modal');
 
-function addToCart() {
+function addToCart(parentBox) {
   // this.disabled = true;
   let cartData = getCartData() || {},
-    parentBox = this.parentNode.parentNode.parentNode,
-    itemId = this.getAttribute('id'),
+    itemId = parentBox.getAttribute('id'),
     itemTitle = parentBox.querySelector('.product__name').innerHTML,
     itemPrice = parentBox.querySelector('.price').innerHTML,
     itemImg = parentBox.querySelector('.product__img').src;
@@ -262,7 +261,6 @@ function addToCart() {
   }
 }
 
-const allBtn = document.querySelectorAll('.product__btn')
 for (let i = 0; i < allBtn.length; i++) {
   allBtn[i].addEventListener('click', event => {
     event.stopPropagation();
@@ -280,7 +278,7 @@ function addToCartPopup() {
     itemTitle = parentBox.querySelector('.col__title').innerHTML,
     itemPrice = document.getElementById('col-price').innerHTML,
     itemImg = parentBox.querySelector('.popup-img').src;
-  console.log(itemImg);
+  // console.log(itemImg);
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
@@ -454,7 +452,6 @@ function popupFunc(array, idCard) {
       }
     });
 
-
     popup.onmousedown = function (e) {
       let target = e.target;
       let modalContent = popup.getElementsByClassName('modal__inner')[0];
@@ -463,8 +460,6 @@ function popupFunc(array, idCard) {
         tagBody.classList.remove('hidden');
       }
     };
-
-    // })
   })
 }
 
