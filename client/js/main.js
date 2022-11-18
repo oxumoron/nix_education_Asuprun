@@ -106,7 +106,7 @@ const createCards = function (card) {
                     <h3 id="product__name" class="product__name">${newName}</h3>
                     <p class="product__stock"><img id="stock__img" src="${stockImg}" alt=""><span id="product__stock">${newStock}</span> left in stock</p>
                     <p class="product__price">Price: <span class="price" id="product__price">${newPrice}</span> $</p>
-                    <button id="${newCard.id}" class="btn product__btn">Add to cart</button>
+                    <button id="${newCard.id}" class="btn product__btn" ${newStock ? '' : 'disabled'}>Add to cart</button>
                   </div>
                   <div class="product__footer">
                     <div class="product__reviews"><span id="product__reviews">${newReviews}</span>% Positive reviews Above aletage
@@ -123,7 +123,11 @@ const createCards = function (card) {
     // add events click on card
     allCards.push(newCard);
     newCard.addEventListener('click', (event) => {
-      // popupFunc(allCards)
+      const {
+        target
+      } = event;
+      // console.log(newCard.id);
+      popupFunc(allCards, newCard.id)
     });
     // console.log(newCard);
     allCards.map(card => products.appendChild(card));
@@ -371,7 +375,8 @@ function getTokenData() {
 }
 
 function setTokenData(o) {
-  localStorage.setItem('token', JSON.stringify(o));
+  tokens.push(o);
+  localStorage.setItem('token', JSON.stringify(tokens));
   // return false;
 }
 
@@ -409,60 +414,59 @@ cartCont.onmousedown = function (e) {
 //   }
 // }
 
-function popupFunc(array) {
-  productWrappers.forEach((item) => {
-    item.addEventListener('click', () => {
-      popupInner.id = item.id;
-      popup.classList.add('modal__active');
-      tagBody.classList.add('hidden');
+function popupFunc(array, idCard) {
+  array.forEach((item) => {
+    // console.log(item);
+    // item.addEventListener('click', () => {
+    popupInner.id = item.id;
+    popup.classList.add('modal__active');
+    tagBody.classList.add('hidden');
 
-      const popupImg = document.getElementById('popup-img');
-      const popupReview = document.getElementById('col__review');
-      const popupOrders = document.getElementById('col__orders');
-      const popupName = document.getElementById('col__title');
-      const popupColor = document.getElementById('col-color');
-      const popupOs = document.getElementById('col-os');
-      const popupChip = document.getElementById('col-chip');
-      const popupHeight = document.getElementById('col-height');
-      const popupWidth = document.getElementById('col-width');
-      const popupDepth = document.getElementById('col-depth');
-      const popupWeight = document.getElementById('col-weight');
-      const popupPrice = document.getElementById('col-price');
-      const popupStock = document.getElementById('col-stock');
+    const popupImg = document.getElementById('popup-img');
+    const popupReview = document.getElementById('col__review');
+    const popupOrders = document.getElementById('col__orders');
+    const popupName = document.getElementById('col__title');
+    const popupColor = document.getElementById('col-color');
+    const popupOs = document.getElementById('col-os');
+    const popupChip = document.getElementById('col-chip');
+    const popupHeight = document.getElementById('col-height');
+    const popupWidth = document.getElementById('col-width');
+    const popupDepth = document.getElementById('col-depth');
+    const popupWeight = document.getElementById('col-weight');
+    const popupPrice = document.getElementById('col-price');
+    const popupStock = document.getElementById('col-stock');
 
-      array.find((el) => {
-        if (+el.id === +item.id) {
-          // console.log(item);
-          popupImg.src = `./img/${el.imgUrl}`;
-          popupReview.textContent = el.orderInfo.reviews;
-          popupOrders.textContent = el.orderInfo.inStock;
-          popupName.textContent = el.name;
-          popupColor.textContent = el.color;
-          popupOs.textContent = el.os;
-          popupChip.textContent = el.chip.name;
-          popupHeight.textContent = el.size.height;
-          popupWidth.textContent = el.size.width;
-          popupDepth.textContent = el.size.depth;
-          popupWeight.textContent = el.size.weight;
-          popupPrice.textContent = el.price;
-          popupStock.textContent = el.orderInfo.inStock;
-        }
-      });
+    items.find((el) => {
+      if (el._id === idCard) {
+        popupImg.src = `./img/${el.imgUrl}`;
+        popupReview.textContent = el.orderInfo.reviews;
+        popupOrders.textContent = el.orderInfo.inStock;
+        popupName.textContent = el.name;
+        popupColor.textContent = el.color;
+        popupOs.textContent = el.os;
+        popupChip.textContent = el.chip.name;
+        popupHeight.textContent = el.size.height;
+        popupWidth.textContent = el.size.width;
+        popupDepth.textContent = el.size.depth;
+        popupWeight.textContent = el.size.weight;
+        popupPrice.textContent = el.price;
+        popupStock.textContent = el.orderInfo.inStock;
+      }
+    });
 
 
-      popup.onmousedown = function (e) {
-        let target = e.target;
-        let modalContent = popup.getElementsByClassName('modal__inner')[0];
-        if (e.target.closest('.' + modalContent.className) === null) {
-          this.classList.remove('modal__active');
-          tagBody.classList.remove('hidden');
-        }
-      };
+    popup.onmousedown = function (e) {
+      let target = e.target;
+      let modalContent = popup.getElementsByClassName('modal__inner')[0];
+      if (e.target.closest('.' + modalContent.className) === null) {
+        this.classList.remove('modal__active');
+        tagBody.classList.remove('hidden');
+      }
+    };
 
-    })
+    // })
   })
 }
-// popupFunc(items);
 
 
 const removeChildren = function (item) {
@@ -757,16 +761,20 @@ logBtn.addEventListener('click', async (event) => {
     body: JSON.stringify(user),
   });
   result = await result.json();
-  // console.log(result.message, result.token);
   if (result.message === 'User with this name not found') {
     alert('User with this name not found');
     return false;
   }
+  // if (tokens.map(token => token === result.token)) {
+  //   getProductAll();
+  //   // console.log(tokens);
+  //   loginPopup.classList.remove('modal__active');
+  //   tagBody.classList.remove('hidden');
+  // }
   token = result.token;
   getProductAll();
   if (result.token) {
-    tokens.push(JSON.stringify(result.token));
-    setTokenData(tokens);
+    setTokenData(token);
     loginPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
   }
