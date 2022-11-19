@@ -129,6 +129,10 @@ ol{
   color: transparent;
 }
 
+.cart-link{
+  cursor: pointer;
+}
+
 /* .cart:before{
   content: '3';
   position: absolute;

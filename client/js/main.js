@@ -295,7 +295,9 @@ function openCart() {
     totalItems = '';
   if (cartData !== null) {
 
-    let newCartArray = Object.values(cartData);
+    // let newCartArray = Object.values(cartData);
+    let allIdInCart = Object.entries(cartData);
+    // allIdInCart.forEach(el => console.log(el[0]))
     totalItems = `
             <div class="cart__inner">
               <div class="cart__header">
@@ -304,30 +306,31 @@ function openCart() {
               </div>
               <ul class="cart__items">
               `;
-    newCartArray.forEach(ar => {
+    allIdInCart.forEach(ar => {
       totalItems += `
-                  <li class="cart__item">
-                    <img id="item__img" class="item__img" src="${ar[2]}" height="100" width="100" alt="">
-                    <div class="item__desc">
-                      <h5 id="item__title" class="item__title">${ar[0]}</h5>
-                      <span id="item__price" class="item__price">${ar[1]}</span>
-                    </div>
-                    <div class="item__buttons">
-                      <button class="btn__less">
-                        <</button> <span class="item__count">${ar[3]}</span>
-                          <button class="btn__more">></button>
-                          <button class="btn__del">X</button>
-                    </div>
-                  </li>
-                  
-                      `;
+          <li id="${ar[0]}" class="cart__item">
+            <img id="item__img" class="item__img" src="${ar[1][2]}" height="100" width="100" alt="">
+            <div class="item__desc">
+              <h5 id="item__title" class="item__title">${ar[1][0]}</h5>
+              <span id="item__price" class="item__price">${ar[1][1]}</span>
+            </div>
+            <div class="item__buttons">
+              <button class="btn__less">
+                <</button> <span class="item__count">${ar[1][3]}</span>
+                  <button class="btn__more">></button>
+                  <button class="btn__del">X</button>
+            </div>
+          </li>
+          
+              `;
 
+      // })
     })
     totalItems += `
     </ul>
         <div class="cart__total">
           <p>Total amount: <span id="cart__amount" class="cart__amount"></span> ptc.</p>
-          <p>Total price: <span id="cart__price" class="cart__price"></span>$</p>
+          <p>Total price: <span id="cart__price" class="cart__price"></span> $</p>
         </div>
         <div class="cart__buy">
           <button class="btn buy__btn">Buy</button>
@@ -774,6 +777,65 @@ logBtn.addEventListener('click', async (event) => {
     tagBody.classList.remove('hidden');
   }
 })
+
+function calcCartPrice() {
+  let totalAmount = 0;
+  let totalPrice = 0;
+
+  const cartItems = document.querySelectorAll('.cart__item');
+  const totalPriceEl = document.querySelector('.cart__price');
+  const totalAmountEl = document.querySelector('.cart__amount');
+
+  cartItems.forEach(function (item) {
+    const amountElement = item.querySelector('.item__count');
+    const priceElement = item.querySelector('.item__price');
+
+
+    const currentPrice = parseInt(amountElement.innerText) * parseInt(priceElement.innerText);
+    totalPrice += currentPrice;
+    totalAmount += parseInt(amountElement.innerText);
+  })
+
+  totalPriceEl.innerText = totalPrice;
+  totalAmountEl.innerText = totalAmount;
+}
+
+
+document.addEventListener('click', function (event) {
+  let counter;
+  const cartInner = document.querySelector('.cart__item');
+  // const btnMore = cartInner.querySelector('.btn__more');
+  // const btnLess = cartInner.querySelector('.btn__less');
+  // console.log(btnMore, btnLess);
+  if (event.target.className === 'btn__more' || event.target.className === 'btn__less') {
+    const counterWrapper = event.target.closest('.item__buttons');
+    counter = counterWrapper.querySelector('.item__count');
+  }
+
+  if (event.target.className === 'btn__more') {
+    if (parseInt(counter.innerText) >= 3) {
+      event.target.setAttribute("disabled", "disabled");
+    }
+    counter.innerText = ++counter.innerText;
+  }
+
+  if (event.target.className === 'btn__less') {
+    if (parseInt(counter.innerText) > 1) {
+      counter.innerText = --counter.innerText;
+    } else if (event.target.closest('.cart__items') && parseInt(counter.innerText) === 1) {
+      event.target.closest('.cart__item').remove();
+      calcCartPrice();
+    }
+  }
+
+  if (event.target.className === 'btn__del') {
+    event.target.closest('.cart__item').remove();
+    calcCartPrice();
+  }
+
+  calcCartPrice();
+})
+
 
 
 // const appF = async () => {
