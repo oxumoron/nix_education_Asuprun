@@ -792,9 +792,17 @@ document.addEventListener('click', function (event) {
   }
 
   if (event.target.className === 'btn__more') {
-    if (parseInt(counter.innerText) >= 3) {
-      event.target.setAttribute("disabled", "disabled");
-    }
+    // const el = event.target.closest('.cart__item').id;
+    // for (var key in getCartData()) {
+    //   if (key === el) {
+    //     let counter = getCartData()[key][3];
+    //     counter++;
+    //     console.log(counter);
+    //   }
+    // }
+    // if (parseInt(counter.innerText) >= 3) {
+    //   event.target.setAttribute("disabled", "disabled");
+    // }
     counter.innerText = ++counter.innerText;
   }
 
