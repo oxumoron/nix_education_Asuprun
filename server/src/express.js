@@ -2,8 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-const passport = require('passport')
-const cookieParser = require('cookie-parser')
+// const passport = require('passport')
+// const cookieParser = require('cookie-parser')
 
 const db = require('./connection/mongoDB.js')
 
@@ -18,8 +18,8 @@ const port = 3000;
 db
 
 // Passport
-app.use(passport.initialize())
-require('./middleware/passport.js')(passport)
+// app.use(passport.initialize())
+// require('./middleware/passport.js')(passport)
 
 app.use(morgan('dev'));
 app.use(cors());
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-app.use(cookieParser())
+// app.use(cookieParser())
 
 app.use('/api/auth', router)
 app.use('/products', items)

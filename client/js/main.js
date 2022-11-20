@@ -1,6 +1,7 @@
 // import {
 //   items
 // } from './items.js';
+let isAuth = false;
 let token = '';
 let tokens = [];
 let allCards = [];
@@ -54,26 +55,24 @@ const products = document.getElementById('products');
 const productWrapper = document.querySelector('li.product__wrapper');
 const registrationPopup = document.querySelector('.registration__modal');
 const loginPopup = document.querySelector('.login__modal');
-// const newName = document.getElementById('product__name');
-// const newImage = document.getElementById('product__photo');
-// const newOrders = document.getElementById('product__orders');
-// const newPrice = document.getElementById('product__price');
-// const newReviews = document.getElementById('product__reviews');
-// const newStock = document.getElementById('product__stock');
-// const stockImg = document.getElementById('stock__img');
-// const cardBtn = document.querySelector('.product__btn');
-let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
-// const cardBtn = document.querySelector('.product__btn');
+const colList = document.getElementById('color-cat__list');
+const memList = document.getElementById('memory-cat__list');
+const osList = document.getElementById('os-cat__list');
+const disList = document.getElementById('display__cat-list');
+const priceList = document.getElementById('price__cat-list');
+const popup = document.getElementById('product__modal');
+const productWrappers = document.querySelectorAll('li.product__wrapper');
+const tagBody = document.querySelector('body');
 const allBtn = document.querySelectorAll('.product__btn');
 const popupInner = document.querySelector('.modal__inner');
-
-
-// const like = document.getElementById('like');
-
-// console.log(items);
+const accordBtn = document.querySelector('.accord__icon');
+const accord = document.querySelector('.accord');
+const filRes = document.getElementById('filter-off');
+const priceFrom = document.getElementById('price-from');
+const priceTo = document.getElementById('price-to');
+let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
 
 const createCards = function (card) {
-  // clean list cards
   allCards = [];
   card.forEach((el) => {
     let newCard = document.createElement("li");
@@ -84,15 +83,12 @@ const createCards = function (card) {
     newName = el.name;
     newStock = el.orderInfo.inStock;
     if (newStock > 0) {
-      // cardBtn.disabled = false;
       stockImg = `./img/stock.svg`
     } else {
-      // cardBtn.disabled = true;
       stockImg = `./img/nostock.svg`;
     }
     newPrice = el.price;
     newOrders = Math.floor(300 + 700 * Math.random());
-    // cardBtn.id = `${id}`;
     newReviews = el.orderInfo.reviews;
 
     newCard.innerHTML = `
@@ -117,7 +113,6 @@ const createCards = function (card) {
                 </div>
     `;
 
-    // add events click on card
     allCards.push(newCard);
     newCard.addEventListener('click', (event) => {
       const {
@@ -133,91 +128,71 @@ const createCards = function (card) {
     });
     allCards.map(card => products.appendChild(card));
   });
+  if (items.length != 0) {
+    priceFil();
+    colMemOsFil();
+    filByPrice();
+  }
 }
 
 createCards(items);
 
+const priceFil = () => {
+  const allPrice = items.map(el => el.price);
+  const minPrice = Math.min.apply(null, allPrice);
+  const maxPrice = Math.max.apply(null, allPrice);
+  priceFrom.placeholder = minPrice;
+  priceTo.placeholder = maxPrice;
+}
 
-const priceFrom = document.getElementById('price-from');
-const priceTo = document.getElementById('price-to');
+const colMemOsFil = () => {
+  let colorAll = [];
+  let memoryAll = [];
+  let osAll = [];
 
-const allPrice = items.map(el => el.price);
-const minPrice = Math.min.apply(null, allPrice);
-const maxPrice = Math.max.apply(null, allPrice);
+  items.map(item => {
+    colorAll.push(...item.color);
+    memoryAll.push(item.storage);
+    osAll.push(item.os)
+  })
 
-priceFrom.placeholder = minPrice;
-priceTo.placeholder = maxPrice;
+  colorAll = [...new Set(colorAll)];
+  memoryAll = [...new Set(memoryAll)];
+  osAll = [...new Set(osAll)];
 
-
-
-const colList = document.getElementById('color-cat__list');
-const memList = document.getElementById('memory-cat__list');
-const osList = document.getElementById('os-cat__list');
-const disList = document.getElementById('display__cat-list');
-const priceList = document.getElementById('price__cat-list');
-
-let colorAll = [];
-let memoryAll = [];
-let osAll = [];
-
-items.map(item => {
-  colorAll.push(...item.color);
-  memoryAll.push(item.storage);
-  osAll.push(item.os)
-})
-
-
-colorAll = [...new Set(colorAll)];
-memoryAll = [...new Set(memoryAll)];
-osAll = [...new Set(osAll)];
-
-colorAll.map(elem => {
-  let newCol = document.createElement("li");
-  newCol.classList.add('cat__item');
-  newCol.innerHTML = `
+  colorAll.map(elem => {
+    let newCol = document.createElement("li");
+    newCol.classList.add('cat__item');
+    newCol.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
           <input class="item__check" type="checkbox" id="${elem}">
       `
 
-  colList.appendChild(newCol);
-});
+    colList.appendChild(newCol);
+  });
 
-
-
-memoryAll.map(elem => {
-  let newMem = document.createElement("li");
-  newMem.classList.add('cat__item');
-  newMem.innerHTML = `
+  memoryAll.map(elem => {
+    let newMem = document.createElement("li");
+    newMem.classList.add('cat__item');
+    newMem.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
           <input class="item__check" type="checkbox" id="${elem}">
       `
 
-  memList.appendChild(newMem);
-});
+    memList.appendChild(newMem);
+  });
 
-osAll.map(elem => {
-  let newOs = document.createElement("li");
-  newOs.classList.add('cat__item');
-  newOs.innerHTML = `
+  osAll.map(elem => {
+    let newOs = document.createElement("li");
+    newOs.classList.add('cat__item');
+    newOs.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
           <input class="item__check" type="checkbox" id="${elem}">
       `
 
-  osList.appendChild(newOs);
-});
-
-const accordBtn = document.querySelector('.accord__icon');
-const accord = document.querySelector('.accord');
-
-
-accordBtn.addEventListener('click', (event) => {
-  accord.classList.toggle('accord--active');
-  event.currentTarget.classList.toggle('active');
-});
-
-const popup = document.getElementById('product__modal');
-const productWrappers = document.querySelectorAll('li.product__wrapper');
-const tagBody = document.querySelector('body')
+    osList.appendChild(newOs);
+  });
+}
 
 // like
 // productWrappers.forEach((item) => {
@@ -237,19 +212,16 @@ const tagBody = document.querySelector('body')
 //   })
 // })
 
-// const cartPopup = document.getElementById('cart-modal');
 const arrBtnToAddCart = document.querySelectorAll('.btn');
-////////////new cart
+
 const cartCont = document.getElementById('cart-modal');
 
 function addToCart(parentBox) {
-  // this.disabled = true;
   let cartData = getCartData() || {},
     itemId = parentBox.getAttribute('id'),
     itemTitle = parentBox.querySelector('.product__name').innerHTML,
     itemPrice = parentBox.querySelector('.price').innerHTML,
     itemImg = parentBox.querySelector('.product__img').src;
-  // console.log('/' + itemImg.split('/').slice(-3).join('/'));
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
@@ -278,7 +250,6 @@ function addToCartPopup() {
     itemTitle = parentBox.querySelector('.col__title').innerHTML,
     itemPrice = document.getElementById('col-price').innerHTML,
     itemImg = parentBox.querySelector('.popup-img').src;
-  // console.log(itemImg);
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
@@ -295,9 +266,7 @@ function openCart() {
     totalItems = '';
   if (cartData !== null) {
 
-    // let newCartArray = Object.values(cartData);
     let allIdInCart = Object.entries(cartData);
-    // allIdInCart.forEach(el => console.log(el[0]))
     totalItems = `
             <div class="cart__inner">
               <div class="cart__header">
@@ -324,7 +293,6 @@ function openCart() {
           
               `;
 
-      // })
     })
     totalItems += `
     </ul>
@@ -339,7 +307,6 @@ function openCart() {
     cartCont.innerHTML = totalItems;
 
   } else {
-    // если в корзине пусто, то сигнализируем об этом
     cartCont.innerHTML = `
     <div class="cart__inner">
       <div class="cart__header">
@@ -350,13 +317,7 @@ function openCart() {
       <p style="font-size: 32px">В корзине пусто</p>
     `;
   }
-
 }
-
-document.getElementById('cart').addEventListener('click', (openCart));
-document.getElementById('cart').addEventListener('click', (active));
-
-
 
 // /////new cart
 let arrayCartItem = [];
@@ -520,13 +481,13 @@ for (let input of inputCol) {
   })
 }
 
-for (let input of inputPrice) {
-  input.addEventListener('keyup', (event) => {
-    if (event.code === 'Enter') {
-      filterPrice(input);
-    }
-  })
-}
+// for (let input of inputPrice) {
+//   input.addEventListener('keyup', (event) => {
+//     if (event.code === 'Enter') {
+//       filterPrice(input);
+//     }
+//   })
+// }
 
 for (let input of inputMem) {
   input.addEventListener('click', (event) => {
@@ -628,7 +589,18 @@ function filterDis(el) {
   return filteredDis;
 }
 
-let itemsSortByPrice = [];
+const filByPrice = () => {
+  let itemsSortByPrice = [];
+  itemsSortByPrice = [...sortArrByPrice()];
+  for (let input of inputPrice) {
+    input.addEventListener('keyup', (event) => {
+      if (event.code === 'Enter') {
+        filterPrice(input);
+      }
+    })
+  }
+}
+
 
 function sortArrByPrice() {
   return items.sort((prev, next) => {
@@ -637,7 +609,6 @@ function sortArrByPrice() {
     return prevB - nextB;
   })
 }
-itemsSortByPrice = [...sortArrByPrice()];
 
 function filterPrice() {
   let filteredPrice = [];
@@ -658,7 +629,6 @@ function filterPrice() {
   return filteredPrice;
 }
 
-const filRes = document.getElementById('filter-off');
 
 filRes.addEventListener('click', (event) => {
   accord.querySelectorAll('input').forEach((input) => {
@@ -733,11 +703,15 @@ regBtn.addEventListener('click', async (event) => {
     },
     body: JSON.stringify(user),
   });
-  // console.log('not true');
-  result = await result.json({
+  const resultErr = await result.json()
+  if (resultErr.message) {
+    alert('Incorrect email or passowrd. Password minimum 3, maximum 8. Email must be true')
+    return false;
+  }
+  const resultUser = await result.json({
     user
   });
-  if (result.user) {
+  if (resultUser.user) {
     alert('User created')
     registrationPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
@@ -763,20 +737,25 @@ logBtn.addEventListener('click', async (event) => {
     alert('User with this name not found');
     return false;
   }
-  // if (tokens.map(token => token === result.token)) {
-  //   getProductAll();
-  //   // console.log(tokens);
-  //   loginPopup.classList.remove('modal__active');
-  //   tagBody.classList.remove('hidden');
-  // }
   token = result.token;
   getProductAll();
+  isAuth = true;
+  if (isAuth === true) {
+    document.getElementById('cart').addEventListener('click', (openCart));
+    document.getElementById('cart').addEventListener('click', (active));
+    accordBtn.addEventListener('click', (event) => {
+      accord.classList.toggle('accord--active');
+      event.currentTarget.classList.toggle('active');
+    });
+  }
   if (result.token) {
     setTokenData(token);
     loginPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
   }
 })
+
+
 
 function calcCartPrice() {
   let totalAmount = 0;
