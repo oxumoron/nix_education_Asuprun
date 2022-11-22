@@ -71,7 +71,6 @@ const filRes = document.getElementById('filter-off');
 const priceFrom = document.getElementById('price-from');
 const priceTo = document.getElementById('price-to');
 
-
 let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
 
 const createCards = function (card) {
@@ -447,59 +446,9 @@ const inputPrice = priceList.querySelectorAll("input");
 const accordInner = document.querySelector('.accord__inner');
 const allInputInAccord = accordInner.querySelectorAll("input");
 
-// for (let input of allInputInAccord) {
-//   input.addEventListener('input', (event) => {
-//       let cardsArr = [];
-//         let filteredOs = [];
-//         if (input.checked) {
-//           items.filter((e) => {
-//             if (e.os === input.id) {
-//               filteredOs.push(e) && cardsArr.push(filteredOs);
-//             }
-//             // updateChildren(products, filteredOs);
-//             // console.log(e);
-//           })
-//         } else {
-//           // updateChildren(products, items);
-//           // cardsArr.push(filterPrice(inp))
-//         }
-//         // cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input));
-//         // updateChildren(products, cardsArr.push(filterPrice(input),filterCol(input),filterDis(input),filterMem(input),filterOs(input)));
-//         // console.log(cardsArr);
-//         // console.log(cardsArr);
-//       })
-//     }
-
 for (let input of inputCol) {
-  input.addEventListener('click', (event) => {
+  input.addEventListener('click', () => {
     filterCol(input);
-  })
-}
-
-// for (let input of inputPrice) {
-//   input.addEventListener('keyup', (event) => {
-//     if (event.code === 'Enter') {
-//       filterPrice(input);
-//     }
-//   })
-// }
-
-for (let input of inputMem) {
-  input.addEventListener('click', (event) => {
-    filterMem(input);
-  })
-}
-
-for (let input of inputOs) {
-  input.addEventListener('click', (event) => {
-    filterOs(input);
-    console.log(input);
-  })
-}
-
-for (let input of inputDisplay) {
-  input.addEventListener('click', (event) => {
-    filterDis(input);
   })
 }
 
@@ -518,6 +467,12 @@ function filterCol(el) {
   return filteredColor;
 }
 
+for (let input of inputMem) {
+  input.addEventListener('click', (event) => {
+    filterMem(input);
+  })
+}
+
 function filterMem(el) {
   let filteredMem = [];
   if (el.checked) {
@@ -531,6 +486,13 @@ function filterMem(el) {
     updateChildren(products, items);
   }
   return filterMem;
+}
+
+for (let input of inputOs) {
+  input.addEventListener('click', (event) => {
+    filterOs(input);
+    console.log(input);
+  })
 }
 
 function filterOs(el) {
@@ -547,6 +509,12 @@ function filterOs(el) {
   }
   console.log(filterOs);
   return filterOs;
+}
+
+for (let input of inputDisplay) {
+  input.addEventListener('click', (event) => {
+    filterDis(input);
+  })
 }
 
 function filterDis(el) {
@@ -586,17 +554,6 @@ function filterDis(el) {
   return filteredDis;
 }
 
-// const filByPrice = () => {
-//   let itemsSortByPrice = [];
-//   itemsSortByPrice = [...sortArrByPrice()];
-//   // const priceFil = () => {
-//   const allPrice = items.map(el => el.price);
-//   const minPrice = Math.min.apply(null, allPrice);
-//   const maxPrice = Math.max.apply(null, allPrice);
-//   priceFrom.placeholder = minPrice;
-//   priceTo.placeholder = maxPrice;
-// }
-
 for (let input of inputPrice) {
   input.addEventListener('keyup', (event) => {
     if (event.code === 'Enter') {
@@ -604,15 +561,13 @@ for (let input of inputPrice) {
     }
   })
 }
-
+// filteredPrice
 function filterPrice() {
-
   let itemsSortByPrice = [];
   itemsSortByPrice = [...sortArrByPrice()];
   const allPrice = items.map(el => el.price);
   const minPrice = Math.min.apply(null, allPrice);
   const maxPrice = Math.max.apply(null, allPrice);
-  console.log(priceFrom);
   priceFrom.placeholder = minPrice;
   priceTo.placeholder = maxPrice;
   let filteredPrice = [];
@@ -643,9 +598,6 @@ function sortArrByPrice() {
   })
 }
 
-
-
-
 filRes.addEventListener('click', (event) => {
   accord.querySelectorAll('input').forEach((input) => {
     input.checked = false;
@@ -653,8 +605,6 @@ filRes.addEventListener('click', (event) => {
   });
   updateChildren(products, items);
 });
-//   updateChildren(products, items);
-// console.log(priceArr);
 
 function popupRegister() {
   registrationPopup.classList.add('modal__active');
@@ -771,8 +721,6 @@ logBtn.addEventListener('click', async (event) => {
   }
 })
 
-
-
 function calcCartPrice() {
   let totalAmount = 0;
   let totalPrice = 0;
@@ -794,7 +742,6 @@ function calcCartPrice() {
   totalPriceEl.innerText = totalPrice;
   totalAmountEl.innerText = totalAmount;
 }
-
 
 document.addEventListener('click', function (event) {
   let counter;
