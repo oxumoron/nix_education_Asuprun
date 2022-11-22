@@ -2,6 +2,7 @@
 //   items
 // } from './items.js';
 let isAuth = false;
+let init = false;
 let token = '';
 let tokens = [];
 let allCards = [];
@@ -130,15 +131,76 @@ const createCards = function (card) {
     allCards.map(card => products.appendChild(card));
   });
   if (items.length != 0) {
-    // priceFil();
-    colMemOsFil();
-    // filByPrice();
+    if (init === false) {
+      colMemOsFil();
+      init = true;
+    }
+    color();
+    memory();
+    osystem();
   }
 }
 
 createCards(items);
 
+function color() {
+  const inputCol = colList.querySelectorAll("input");
+  for (let input of inputCol) {
+    input.addEventListener('click', () => {
+      let filteredColor = [];
+      if (input.checked) {
+        items.filter((e) => {
+          if (e.color.indexOf(input.id) > -1) {
+            filteredColor.push(e)
+          }
+        })
+        updateChildren(products, filteredColor);
+      } else {
+        updateChildren(products, items);
+      }
+    })
+  }
+}
 
+function memory() {
+  const inputMem = memList.querySelectorAll("input");
+  for (let input of inputMem) {
+    input.addEventListener('click', () => {
+      let filteredMem = [];
+      if (input.checked) {
+        items.filter((e) => {
+          if (e.storage === +input.id) {
+            filteredMem.push(e)
+          }
+        })
+        updateChildren(products, filteredMem);
+      } else {
+        updateChildren(products, items);
+      }
+    })
+  }
+
+}
+
+function osystem() {
+  const inputOs = osList.querySelectorAll("input");
+  for (let input of inputOs) {
+    input.addEventListener('click', () => {
+      let filteredOs = [];
+      if (input.checked) {
+        items.filter((e) => {
+          if (e.os === input.id) {
+            filteredOs.push(e)
+          }
+        })
+        updateChildren(products, filteredOs);
+      } else {
+        updateChildren(products, items);
+      }
+    })
+  }
+
+}
 
 const colMemOsFil = () => {
   let colorAll = [];
@@ -173,8 +235,9 @@ const colMemOsFil = () => {
           <label class="item__label" for="${elem}">${elem}</label>
           <input class="item__check" type="checkbox" id="${elem}">
       `
-
-    memList.appendChild(newMem);
+    if (elem != null) {
+      memList.appendChild(newMem);
+    }
   });
 
   osAll.map(elem => {
@@ -184,28 +247,11 @@ const colMemOsFil = () => {
           <label class="item__label" for="${elem}">${elem}</label>
           <input class="item__check" type="checkbox" id="${elem}">
       `
-
-    osList.appendChild(newOs);
+    if (elem != null) {
+      osList.appendChild(newOs);
+    }
   });
 }
-
-// like
-// productWrappers.forEach((item) => {
-//   item.addEventListener('click', (event) => {
-//     const {
-//       target
-//     } = event;
-//     if (target.parentElement.className === "product__btn") {
-//       const like = document.querySelectorAll('.like');
-//       like.forEach(el => {
-//         el.addEventListener('click', (event) => {
-//           event.stopPropagation();
-//           el.classList.toggle('filled');
-//         })
-//       })
-//     }
-//   })
-// })
 
 const arrBtnToAddCart = document.querySelectorAll('.btn');
 
@@ -351,26 +397,6 @@ cartCont.onmousedown = function (e) {
   }
 };
 
-// document.querySelector('body').addEventListener('click', event => {
-//   const {target} = event;
-//     if (hasClassedParent(target, 'product__wrapper')) {
-//       popupFunc(items);
-//     }
-//   })
-
-
-// function hasClassedParent(el, cssClass) {
-//   if(el.parentNode && el.parentNode.tagName !== 'BODY') {
-//     if(el.parentNode.classList.contains(cssClass)) {
-//       return el.parentNode;
-//     } else {
-//       return hasClassedParent(el.parentNode, cssClass);
-//     }
-//   } else {
-//     return null;
-//   }
-// }
-
 function popupFunc(array, idCard) {
   array.forEach((item) => {
     // console.log(item);
@@ -422,7 +448,6 @@ function popupFunc(array, idCard) {
   })
 }
 
-
 const removeChildren = function (item) {
   while (item.firstChild) {
     item.removeChild(item.firstChild)
@@ -438,78 +463,10 @@ const updateChildren = function (item, children) {
   createCards(childrenArr);
 }
 
-const inputCol = colList.querySelectorAll("input");
-const inputMem = memList.querySelectorAll("input");
-const inputOs = osList.querySelectorAll("input");
-const inputDisplay = disList.querySelectorAll("input");
-const inputPrice = priceList.querySelectorAll("input");
 const accordInner = document.querySelector('.accord__inner');
 const allInputInAccord = accordInner.querySelectorAll("input");
 
-for (let input of inputCol) {
-  input.addEventListener('click', () => {
-    filterCol(input);
-  })
-}
-
-function filterCol(el) {
-  let filteredColor = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (e.color.indexOf(el.id) > -1) {
-        filteredColor.push(e)
-      }
-      updateChildren(products, filteredColor);
-    })
-  } else {
-    updateChildren(products, items);
-  }
-  return filteredColor;
-}
-
-for (let input of inputMem) {
-  input.addEventListener('click', (event) => {
-    filterMem(input);
-  })
-}
-
-function filterMem(el) {
-  let filteredMem = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (e.storage === +el.id) {
-        filteredMem.push(e)
-      }
-      updateChildren(products, filteredMem);
-    })
-  } else {
-    updateChildren(products, items);
-  }
-  return filterMem;
-}
-
-for (let input of inputOs) {
-  input.addEventListener('click', (event) => {
-    filterOs(input);
-    console.log(input);
-  })
-}
-
-function filterOs(el) {
-  let filteredOs = [];
-  if (el.checked) {
-    items.filter((e) => {
-      if (e.os === el.id) {
-        filteredOs.push(e)
-      }
-      updateChildren(products, filteredOs);
-    })
-  } else {
-    updateChildren(products, items);
-  }
-  console.log(filterOs);
-  return filterOs;
-}
+const inputDisplay = disList.querySelectorAll("input");
 
 for (let input of inputDisplay) {
   input.addEventListener('click', (event) => {
@@ -553,6 +510,8 @@ function filterDis(el) {
   }
   return filteredDis;
 }
+
+const inputPrice = priceList.querySelectorAll("input");
 
 for (let input of inputPrice) {
   input.addEventListener('keyup', (event) => {
