@@ -70,6 +70,8 @@ const accord = document.querySelector('.accord');
 const filRes = document.getElementById('filter-off');
 const priceFrom = document.getElementById('price-from');
 const priceTo = document.getElementById('price-to');
+
+
 let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
 
 const createCards = function (card) {
@@ -129,21 +131,15 @@ const createCards = function (card) {
     allCards.map(card => products.appendChild(card));
   });
   if (items.length != 0) {
-    priceFil();
+    // priceFil();
     colMemOsFil();
-    filByPrice();
+    // filByPrice();
   }
 }
 
 createCards(items);
 
-const priceFil = () => {
-  const allPrice = items.map(el => el.price);
-  const minPrice = Math.min.apply(null, allPrice);
-  const maxPrice = Math.max.apply(null, allPrice);
-  priceFrom.placeholder = minPrice;
-  priceTo.placeholder = maxPrice;
-}
+
 
 const colMemOsFil = () => {
   let colorAll = [];
@@ -448,7 +444,6 @@ const inputMem = memList.querySelectorAll("input");
 const inputOs = osList.querySelectorAll("input");
 const inputDisplay = disList.querySelectorAll("input");
 const inputPrice = priceList.querySelectorAll("input");
-
 const accordInner = document.querySelector('.accord__inner');
 const allInputInAccord = accordInner.querySelectorAll("input");
 
@@ -498,6 +493,7 @@ for (let input of inputMem) {
 for (let input of inputOs) {
   input.addEventListener('click', (event) => {
     filterOs(input);
+    console.log(input);
   })
 }
 
@@ -549,6 +545,7 @@ function filterOs(el) {
   } else {
     updateChildren(products, items);
   }
+  console.log(filterOs);
   return filterOs;
 }
 
@@ -589,18 +586,54 @@ function filterDis(el) {
   return filteredDis;
 }
 
-const filByPrice = () => {
+// const filByPrice = () => {
+//   let itemsSortByPrice = [];
+//   itemsSortByPrice = [...sortArrByPrice()];
+//   // const priceFil = () => {
+//   const allPrice = items.map(el => el.price);
+//   const minPrice = Math.min.apply(null, allPrice);
+//   const maxPrice = Math.max.apply(null, allPrice);
+//   priceFrom.placeholder = minPrice;
+//   priceTo.placeholder = maxPrice;
+// }
+
+for (let input of inputPrice) {
+  input.addEventListener('keyup', (event) => {
+    if (event.code === 'Enter') {
+      filterPrice(input);
+    }
+  })
+}
+
+function filterPrice() {
+
   let itemsSortByPrice = [];
   itemsSortByPrice = [...sortArrByPrice()];
-  for (let input of inputPrice) {
-    input.addEventListener('keyup', (event) => {
-      if (event.code === 'Enter') {
-        filterPrice(input);
+  const allPrice = items.map(el => el.price);
+  const minPrice = Math.min.apply(null, allPrice);
+  const maxPrice = Math.max.apply(null, allPrice);
+  console.log(priceFrom);
+  priceFrom.placeholder = minPrice;
+  priceTo.placeholder = maxPrice;
+  let filteredPrice = [];
+  if (priceFrom.value < minPrice) {
+    alert('Price value less min value = ' + minPrice)
+  } else if (priceTo > maxPrice) {
+    alert('Price value more max value =' + maxPrice)
+  } else if (priceTo < priceFrom) {
+    alert('Incorrect data')
+  } else {
+    itemsSortByPrice.filter((e) => {
+      if (priceFrom.value <= e.price && e.price <= priceTo.value) {
+        // console.log(priceFrom.value, e, priceTo.value);
+        filteredPrice.push(e);
+
+        updateChildren(products, filteredPrice);
       }
     })
   }
+  return filteredPrice;
 }
-
 
 function sortArrByPrice() {
   return items.sort((prev, next) => {
@@ -610,24 +643,7 @@ function sortArrByPrice() {
   })
 }
 
-function filterPrice() {
-  let filteredPrice = [];
-  if (priceFrom.value < minPrice) {
-    // alert('Price value less min value = ' + minPrice)
-  } else if (priceTo > maxPrice) {
-    // alert('Price value more max value =' + maxPrice)
-  } else if (priceTo < priceFrom) {
-    // alert('Incorrect data')
-  } else {
-    itemsSortByPrice.filter((e) => {
-      if (priceFrom.value <= e.price && e.price <= priceTo.value) {
-        filteredPrice.push(e);
-        updateChildren(products, filteredPrice);
-      }
-    })
-  }
-  return filteredPrice;
-}
+
 
 
 filRes.addEventListener('click', (event) => {
