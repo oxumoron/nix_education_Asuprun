@@ -704,27 +704,26 @@ function calcCartPrice() {
 
 document.addEventListener('click', function (event) {
   let counter;
-  const cartInner = document.querySelector('.cart__item');
+  let count;
+  // const cartInner = document.querySelector('.cart__item');
   // const btnMore = cartInner.querySelector('.btn__more');
   // const btnLess = cartInner.querySelector('.btn__less');
-  // console.log(btnMore, btnLess);
   if (event.target.className === 'btn__more' || event.target.className === 'btn__less') {
     const counterWrapper = event.target.closest('.item__buttons');
     counter = counterWrapper.querySelector('.item__count');
   }
 
   if (event.target.className === 'btn__more') {
-    // const el = event.target.closest('.cart__item').id;
-    // for (var key in getCartData()) {
-    //   if (key === el) {
-    //     let counter = getCartData()[key][3];
-    //     counter++;
-    //     console.log(counter);
-    //   }
-    // }
-    // if (parseInt(counter.innerText) >= 3) {
-    //   event.target.setAttribute("disabled", "disabled");
-    // }
+    const el = event.target.closest('.cart__item').id;
+    let newData = Object.assign(getCartData());
+    Object.entries(newData).forEach((n) => {
+      if (n[0] === el) {
+        count = n[1][3];
+        count++;
+        n[1][3] = count;
+        setCartData(newData);
+      }
+    });
     counter.innerText = ++counter.innerText;
   }
 
