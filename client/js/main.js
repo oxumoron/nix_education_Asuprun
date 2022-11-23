@@ -6,8 +6,9 @@ let init = false;
 let token = '';
 let tokens = [];
 let allCards = [];
+let items = [];
 
-const items = [];
+const products = document.getElementById('products');
 
 const getProductAll = () => {
   fetch('http://localhost:3000/products/', {
@@ -34,25 +35,24 @@ const searchProducts = () => {
   });
 };
 
-searchProducts();
 
 const loadProducts = async (search = '') => {
+  let items = [];
   fetch(`http://localhost:3000/products/${search}`, {
     method: "GET",
     headers: {
       "x-access-token": token,
     }
   }).then(function (response) {
-    response.json().then(function (products) {
-      products.forEach(function (product) {
+    response.json().then(function (goods) {
+      goods.forEach(function (product) {
         items.push(product)
       });
-      createCards(items);
+      updateChildren(products, items);
     });
   }).catch(err => console.error(err));
 };
 
-const products = document.getElementById('products');
 const productWrapper = document.querySelector('li.product__wrapper');
 const registrationPopup = document.querySelector('.registration__modal');
 const loginPopup = document.querySelector('.login__modal');
@@ -141,7 +141,7 @@ const createCards = function (card) {
   }
 }
 
-createCards(items);
+// createCards(items);
 
 function color() {
   const inputCol = colList.querySelectorAll("input");
@@ -614,7 +614,7 @@ tagBody.addEventListener('click', (event) => {
 })
 
 const regBtn = document.querySelector('.btn__reg.btn__sign');
-regBtn.addEventListener('click', async (event) => {
+regBtn.addEventListener('click', async () => {
   const user = {
     username: document.getElementById("username").value,
     email: document.getElementById("email").value,
@@ -644,7 +644,7 @@ regBtn.addEventListener('click', async (event) => {
 })
 
 const logBtn = document.querySelector('.btn__log.btn__login')
-logBtn.addEventListener('click', async (event) => {
+logBtn.addEventListener('click', async () => {
   const user = {
     username: document.getElementById("username-log").value,
     // email: document.getElementById("email").value,
@@ -664,6 +664,7 @@ logBtn.addEventListener('click', async (event) => {
   }
   token = result.token;
   getProductAll();
+  searchProducts();
   isAuth = true;
   if (isAuth === true) {
     document.getElementById('cart').addEventListener('click', (openCart));
@@ -703,17 +704,18 @@ function calcCartPrice() {
 }
 
 document.addEventListener('click', function (event) {
-  let counter;
-  let count;
   // const cartInner = document.querySelector('.cart__item');
   // const btnMore = cartInner.querySelector('.btn__more');
   // const btnLess = cartInner.querySelector('.btn__less');
+  let counter;
+  let count;
   if (event.target.className === 'btn__more' || event.target.className === 'btn__less') {
     const counterWrapper = event.target.closest('.item__buttons');
     counter = counterWrapper.querySelector('.item__count');
   }
 
   if (event.target.className === 'btn__more') {
+    // btnLess.removeAttribute('disabled', '');
     const el = event.target.closest('.cart__item').id;
     let newData = Object.assign(getCartData());
     Object.entries(newData).forEach((n) => {
@@ -725,36 +727,53 @@ document.addEventListener('click', function (event) {
       }
     });
     counter.innerText = ++counter.innerText;
+  } else if (event.target.className === '.cart__items' && parseInt(counter.innerText) === 3) {
+    console.log(count);
+    // event.target.closest('.cart__item').remove();
+    // btnMore.setAttribute('disabled', '')
+    return false;
   }
 
   if (event.target.className === 'btn__less') {
+    const el = event.target.closest('.cart__item').id;
+    let newData = Object.assign(getCartData());
     if (parseInt(counter.innerText) > 1) {
+      Object.entries(newData).forEach((n) => {
+        if (n[0] === el) {
+          count = n[1][3];
+          count--;
+          n[1][3] = count;
+          setCartData(newData);
+        }
+      });
       counter.innerText = --counter.innerText;
     } else if (event.target.closest('.cart__items') && parseInt(counter.innerText) === 1) {
-      event.target.closest('.cart__item').remove();
-      calcCartPrice();
+      console.log(count);
+
+      // event.target.closest('.cart__item').remove();
+      // btnLess.setAttribute('disabled', '')
+      // calcCartPrice();
+      return false;
     }
   }
 
   if (event.target.className === 'btn__del') {
+    const el = event.target.closest('.cart__item').id;
+    let getData = Object.assign(getCartData());
+    let newData = {};
+    // console.log(getData); //{63729890289a81ec8534456d: Array(4), 63729890289a81ec85344566: Array(4), 63729890289a81ec8534455b: Array(4)}
+    Object.entries(getData).forEach((n) => {
+      if (n[0] != el) {
+        newData = {
+          ...n
+        }
+        // console.log(n); // ['63729890289a81ec8534456d', Array(4)]
+      }
+    })
+    // setCartData(newData);
     event.target.closest('.cart__item').remove();
     calcCartPrice();
   }
 
   calcCartPrice();
 })
-
-
-
-// const appF = async () => {
-//   console.log(123);
-//   fetch("http://localhost:3000/api/auth/items", {
-//     method: "GET",
-//     // "token"
-//   });
-//   result = await result.json();
-//   token = result.token;
-
-// }
-
-// appF()
