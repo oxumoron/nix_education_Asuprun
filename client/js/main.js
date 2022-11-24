@@ -133,11 +133,11 @@ const createCards = function (card) {
   if (items.length != 0) {
     if (init === false) {
       colMemOsFil();
+      color();
+      memory();
+      osystem();
       init = true;
     }
-    color();
-    memory();
-    osystem();
   }
 }
 
@@ -728,7 +728,6 @@ document.addEventListener('click', function (event) {
     });
     counter.innerText = ++counter.innerText;
   } else if (event.target.className === '.cart__items' && parseInt(counter.innerText) === 3) {
-    console.log(count);
     // event.target.closest('.cart__item').remove();
     // btnMore.setAttribute('disabled', '')
     return false;
@@ -743,13 +742,12 @@ document.addEventListener('click', function (event) {
           count = n[1][3];
           count--;
           n[1][3] = count;
+          console.log(newData);
           setCartData(newData);
         }
       });
       counter.innerText = --counter.innerText;
     } else if (event.target.closest('.cart__items') && parseInt(counter.innerText) === 1) {
-      console.log(count);
-
       // event.target.closest('.cart__item').remove();
       // btnLess.setAttribute('disabled', '')
       // calcCartPrice();
@@ -762,14 +760,23 @@ document.addEventListener('click', function (event) {
     let getData = Object.assign(getCartData());
     let newData = {};
     // console.log(getData); //{63729890289a81ec8534456d: Array(4), 63729890289a81ec85344566: Array(4), 63729890289a81ec8534455b: Array(4)}
+    // for (const key in getData) {
+    //   newData = {
+    //     `${key}`: getData[key]
+    //   }
+    //   console.log(newData);
+    // }
+
     Object.entries(getData).forEach((n) => {
       if (n[0] != el) {
-        newData = {
-          ...n
-        }
-        // console.log(n); // ['63729890289a81ec8534456d', Array(4)]
+        let key = n[0]
+        let value = n[1]
+        Object.defineProperty(newData, key, {
+          value
+        })
       }
     })
+    console.log(newData); // {63729890289a81ec8534456d: Array(4), 63729890289a81ec85344566: Array(4)}
     // setCartData(newData);
     event.target.closest('.cart__item').remove();
     calcCartPrice();
