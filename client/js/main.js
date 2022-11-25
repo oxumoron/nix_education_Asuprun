@@ -71,6 +71,10 @@ const accord = document.querySelector('.accord');
 const filRes = document.getElementById('filter-off');
 const priceFrom = document.getElementById('price-from');
 const priceTo = document.getElementById('price-to');
+const accordInner = document.querySelector('.accord__inner');
+const allInputInAccord = accordInner.querySelectorAll("input");
+const cartCounter = document.getElementById('counter');
+const cartId = document.getElementById('cart');
 
 let newName, newImage, newOrders, newPrice, newReviews, newStock, stockImg;
 
@@ -122,6 +126,7 @@ const createCards = function (card) {
       } = event;
       if (target.className === 'btn product__btn') {
         addToCart(newCard);
+        checkCounter();
         return false;
       }
       if (target.closest('.product__wrapper')) {
@@ -136,12 +141,26 @@ const createCards = function (card) {
       color();
       memory();
       osystem();
+      checkCounter()
+
       init = true;
     }
   }
 }
 
 // createCards(items);
+
+function createArrayFilter() {
+  const input = accord.querySelectorAll('.cat__item .item__check')
+  let arrayOfAllProducts = [];
+  console.log(input);
+  allInputInAccord.forEach((input) => {
+    if (input.checked) {}
+  })
+}
+for (let input of allInputInAccord) {
+  input.addEventListener('input', createArrayFilter)
+}
 
 function color() {
   const inputCol = colList.querySelectorAll("input");
@@ -283,6 +302,7 @@ for (let i = 0; i < allBtn.length; i++) {
 
 const btnInPopup = document.querySelector('.popup__btn')
 btnInPopup.addEventListener('click', addToCartPopup);
+btnInPopup.addEventListener('click', checkCounter());
 
 function addToCartPopup() {
   let cartData = getCartData() || {},
@@ -463,8 +483,7 @@ const updateChildren = function (item, children) {
   createCards(childrenArr);
 }
 
-const accordInner = document.querySelector('.accord__inner');
-const allInputInAccord = accordInner.querySelectorAll("input");
+
 
 const inputDisplay = disList.querySelectorAll("input");
 
@@ -667,8 +686,9 @@ logBtn.addEventListener('click', async () => {
   searchProducts();
   isAuth = true;
   if (isAuth === true) {
-    document.getElementById('cart').addEventListener('click', (openCart));
-    document.getElementById('cart').addEventListener('click', (active));
+    cartId.classList.remove('display-none')
+    cartId.addEventListener('click', (openCart));
+    cartId.addEventListener('click', (active));
     accordBtn.addEventListener('click', (event) => {
       accord.classList.toggle('accord--active');
       event.currentTarget.classList.toggle('active');
@@ -781,6 +801,22 @@ document.addEventListener('click', function (event) {
     event.target.closest('.cart__item').remove();
     calcCartPrice();
   }
-
+  checkCounter();
   calcCartPrice();
 })
+
+function checkCounter() {
+  if (getCartData()) {
+    let counter = 0;
+    let data = getCartData();
+    for (const key in data) {
+      const el = data[key];
+      counter += +el[3];
+    }
+    cartCounter.classList.remove('display-none');
+    cartCounter.innerText = counter;
+    console.log(counter);
+  } else {
+    cartCounter.classList.add('display-none');
+  }
+}
