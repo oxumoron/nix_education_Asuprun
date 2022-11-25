@@ -28,11 +28,15 @@ const getProductAll = () => {
 
 const searchProducts = () => {
   const searchInput = document.getElementById('search__input');
+  const searchBtn = document.querySelector('.search__icon');
   const search = document.getElementById('search__form');
   search.addEventListener('submit', (e) => {
     e.preventDefault();
     loadProducts(searchInput.value);
   });
+  searchBtn.addEventListener('click', () => {
+    loadProducts(searchInput.value);
+  })
 };
 
 
@@ -786,7 +790,7 @@ document.addEventListener('click', function (event) {
     //   }
     //   console.log(newData);
     // }
-
+    console.log(getData, JSON.stringify(getData));
     Object.entries(getData).forEach((n) => {
       if (n[0] != el) {
         let key = n[0]
@@ -796,8 +800,9 @@ document.addEventListener('click', function (event) {
         })
       }
     })
-    console.log(newData); // {63729890289a81ec8534456d: Array(4), 63729890289a81ec85344566: Array(4)}
+    console.log(newData, JSON.stringify(newData)); // {63729890289a81ec8534456d: Array(4), 63729890289a81ec85344566: Array(4)}
     // setCartData(newData);
+
     event.target.closest('.cart__item').remove();
     calcCartPrice();
   }
@@ -815,7 +820,6 @@ function checkCounter() {
     }
     cartCounter.classList.remove('display-none');
     cartCounter.innerText = counter;
-    console.log(counter);
   } else {
     cartCounter.classList.add('display-none');
   }
