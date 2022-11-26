@@ -4,6 +4,7 @@
 let isAuth = false;
 let init = false;
 let token = '';
+let filItems = {};
 let tokens = [];
 let allCards = [];
 let items = [];
@@ -157,7 +158,6 @@ const createCards = function (card) {
 function createArrayFilter() {
   const input = accord.querySelectorAll('.cat__item .item__check')
   let arrayOfAllProducts = [];
-  console.log(input);
   allInputInAccord.forEach((input) => {
     if (input.checked) {}
   })
@@ -189,6 +189,7 @@ function memory() {
   const inputMem = memList.querySelectorAll("input");
   for (let input of inputMem) {
     input.addEventListener('click', () => {
+      // filItems = {};
       let filteredMem = [];
       if (input.checked) {
         items.filter((e) => {
@@ -197,12 +198,17 @@ function memory() {
           }
         })
         updateChildren(products, filteredMem);
+        // filItems = {
+        //   ...filteredMem
+        // };
       } else {
         updateChildren(products, items);
       }
+      // console.log(memory());
+
     })
   }
-
+  return filItems;
 }
 
 function osystem() {
@@ -766,7 +772,6 @@ document.addEventListener('click', function (event) {
           count = n[1][3];
           count--;
           n[1][3] = count;
-          console.log(newData);
           setCartData(newData);
         }
       });
