@@ -1,6 +1,7 @@
 const User = require('../models/user.js')
 const bcrypt = require('bcryptjs');
 const products = require('../models/products.js');
+const path = require('path');
 const errorHandler = require('../utills/errorHandler.js');
 
 module.exports.userCreate = async function registration(req, res) {
@@ -68,7 +69,7 @@ module.exports.userSign = async function login(req, res) {
 module.exports.getProducts = async function (req, res) {
   try {
     const items = await products.find();
-    res.status(200).json(items);
+    res.status(200).sendFile(path.resolve('app/html/index.html')).json(items);
   } catch (e) {
     errorHandler(res, e)
   }

@@ -26,6 +26,21 @@ const getProductAll = () => {
     });
   }).catch(err => console.error(err));
 }
+// const getProductAll = () => {
+//   fetch('http://localhost:3000/products/', {
+//     method: "GET",
+//     // headers: {
+//     //   "x-access-token": token,
+//     // }
+//   }).then(function (response) {
+//     response.json().then(function (products) {
+//       products.forEach(function (product) {
+//         items.push(product)
+//       });
+//       createCards(items);
+//     });
+//   }).catch(err => console.error(err));
+// }
 
 const searchProducts = () => {
   const searchInput = document.getElementById('search__input');
@@ -142,11 +157,11 @@ const createCards = function (card) {
   });
   if (items.length != 0) {
     if (init === false) {
-      colMemOsFil();
-      color();
-      memory();
-      osystem();
-      checkCounter()
+      // colMemOsFil();
+      // color();
+      // memory();
+      // osystem();
+      checkCounter();
 
       init = true;
     }
@@ -201,12 +216,15 @@ function memory() {
   return filItems;
 }
 
+// let fil = [];
+
 function osystem() {
   const inputOs = osList.querySelectorAll("input");
   for (let input of inputOs) {
     input.addEventListener('click', () => {
       let filteredOs = [];
       if (input.checked) {
+        // fil.push(input);
         items.filter((e) => {
           if (e.os === input.id) {
             filteredOs.push(e)
@@ -216,6 +234,7 @@ function osystem() {
       } else {
         updateChildren(products, items);
       }
+      // console.log(new Set(fil));
     })
   }
 
@@ -692,10 +711,16 @@ logBtn.addEventListener('click', async () => {
     accordBtn.addEventListener('click', (event) => {
       accord.classList.toggle('accord--active');
       event.currentTarget.classList.toggle('active');
+      colMemOsFil();
+      color();
+      memory();
+      osystem();
     });
   }
   if (result.token) {
-    setTokenData(token);
+    // setTokenData(token);
+    document.cookie = `myToken=${token}; max-age=3600`;
+    console.log(document.cookie);
     loginPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
   }
