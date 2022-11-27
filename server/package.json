@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack",
     "start": "node ./src/express.js",
-    "start-serv": "nodemon ./src/express.js",
+    "start-server": "nodemon ./src/express.js",
     "start-seed": "node ./src/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

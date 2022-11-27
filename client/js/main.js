@@ -155,16 +155,6 @@ const createCards = function (card) {
 
 // createCards(items);
 
-function createArrayFilter() {
-  const input = accord.querySelectorAll('.cat__item .item__check')
-  let arrayOfAllProducts = [];
-  allInputInAccord.forEach((input) => {
-    if (input.checked) {}
-  })
-}
-for (let input of allInputInAccord) {
-  input.addEventListener('input', createArrayFilter)
-}
 
 function color() {
   const inputCol = colList.querySelectorAll("input");
