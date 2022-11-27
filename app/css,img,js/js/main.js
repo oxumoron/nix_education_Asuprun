@@ -14,9 +14,9 @@ const products = document.getElementById('products');
 const getProductAll = () => {
   fetch('http://localhost:3000/products/', {
     method: "GET",
-    headers: {
-      "x-access-token": token,
-    }
+    // headers: {
+    //   "x-access-token": token,
+    // }
   }).then(function (response) {
     response.json().then(function (products) {
       products.forEach(function (product) {
