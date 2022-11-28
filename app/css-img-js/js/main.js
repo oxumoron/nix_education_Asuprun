@@ -20,7 +20,7 @@ const getProductAll = () => {
       products.forEach(function (product) {
         items.push(product)
       });
-      console.log(items);
+      // console.log(items);
       createCards(items);
     });
   }).catch(err => console.error(err));
