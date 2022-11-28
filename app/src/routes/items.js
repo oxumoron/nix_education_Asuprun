@@ -10,8 +10,8 @@ const {
 } = require('../utills/search')
 
 router.get('', getFirstPage)
-router.get('products/', getProducts)
-// router.get('products/', verifyToken, getProducts)
+// router.get('products/', getProducts)
+router.get('products/', verifyToken, getProducts)
 router.get('products/:key', verifyToken, async function (req, res) {
   try {
     const data = await searchProd(req.params.key);
