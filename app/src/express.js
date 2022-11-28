@@ -23,8 +23,9 @@ db
 // app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
-}));
-app.use(bodyParser.json());
+}))
+app.use(bodyParser.json())
+app.use(express.static(path.resolve('app/css-img-js')))
 app.use(cookieParser())
 
 app.use('/api/auth', router)
