@@ -8,8 +8,8 @@ let items = [];
 
 const products = document.getElementById('products');
 
-const getProductAll = async () => {
-  await fetch('https://nix-module.herokuapp.com/products/', {
+const getProductAll = () => {
+  fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
       // 'Content-Type': 'application/json',

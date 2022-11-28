@@ -9,7 +9,7 @@ const {
   searchProd
 } = require('../utills/search')
 
-router.get('', getFirstPage)
+router.get('/', getFirstPage)
 // router.get('products/', getProducts)
 router.get('products/', verifyToken, getProducts)
 // router.get('products/:key', async function (req, res) {
