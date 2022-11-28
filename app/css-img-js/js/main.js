@@ -145,6 +145,23 @@ const createCards = function (card) {
       const {
         target
       } = event;
+      if (target.parentElement.className === "like") {
+        console.log(222);
+        const like = document.querySelectorAll('.like__img');
+        like.forEach(el => {
+          el.addEventListener('click', (event) => {
+            console.log(333);
+            event.stopPropagation();
+
+            if (!el.classList.contains('filled')) {
+              el.classList.add('filled');
+            } else {
+              el.classList.remove('filled');
+            }
+          })
+        })
+      }
+
       if (target.className === 'btn product__btn') {
         addToCart(newCard);
         checkCounter();
