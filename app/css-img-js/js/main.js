@@ -121,7 +121,7 @@ const createCards = function (card) {
     newCard.innerHTML = `
               <div class="product">
                   <div class="like">
-                  <img src="img/icons/like_empty.svg" alt="">
+                  <img class="like__img" src="img/icons/like_empty.svg" alt="">
                   </div>
                   <div class="product__photo">
                     <img class="product__img" id="product__photo" src="${newImage}" height="200" width="200" alt="">
@@ -145,9 +145,9 @@ const createCards = function (card) {
       const {
         target
       } = event;
-      if (target.className === 'like') {
+      if (target.className === 'like__img') {
         console.log(123);
-        event.preventDefault();
+        event.stopPropagation();
       }
       if (target.className === 'btn product__btn') {
         addToCart(newCard);
