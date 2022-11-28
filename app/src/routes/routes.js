@@ -9,13 +9,13 @@ const {
   body
 } = require('express-validator')
 
-router.post('/registration',
+router.post('/registration/',
   body('email').isEmail(),
   body('password').isLength({
     min: 3,
     max: 8
   }), auth.register)
-router.post('/login', auth.login)
+router.post('/login/', auth.login)
 // router.get('/items', verifyToken, getProducts)
 
 

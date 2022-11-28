@@ -60,7 +60,7 @@ module.exports.register = async function (req, res) {
 
   if (candidate) {
     res.status(409).json({
-      message: 'Такой email занят. Попробуйте другой.'
+      message: 'Email already exists'
     })
   } else {
     const salt = bcrypt.genSaltSync(10)
