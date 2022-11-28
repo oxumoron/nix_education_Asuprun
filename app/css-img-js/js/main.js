@@ -11,9 +11,9 @@ const products = document.getElementById('products');
 const getProductAll = () => {
   fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
-    headers: {
-      "x-access-token": token,
-    }
+    // headers: {
+    //   "x-access-token": token,
+    // }
   }).then(function (response) {
     response.json().then(function (products) {
       products.forEach(function (product) {

@@ -16,7 +16,7 @@ router.post('/registration',
     max: 8
   }), auth.register)
 router.post('/login', auth.login)
-router.get('/items', verifyToken, getProducts)
+// router.get('/items', verifyToken, getProducts)
 
 
 module.exports = router
