@@ -671,12 +671,12 @@ regBtn.addEventListener('click', async () => {
     alert('Incorrect email or passowrd. Password minimum 3, maximum 8. Email must be true')
     return false;
   }
-  console.log(result.status === 201);
-  const resultUser = await result.json({
-    user
-  });
+  // console.log(result.status === 201);
+  // const resultUser = await result.json({
+  //   user
+  // });
 
-  if (resultUser.user) {
+  if (result.status === 201) {
     alert('User created')
     registrationPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
