@@ -738,18 +738,21 @@ function calcCartPrice() {
   const totalPriceEl = document.querySelector('.cart__price');
   const totalAmountEl = document.querySelector('.cart__amount');
 
-  cartItems.forEach(function (item) {
-    const amountElement = item.querySelector('.item__count');
-    const priceElement = item.querySelector('.item__price');
+  if (totalPriceEl && totalAmountEl) {
+
+    cartItems.forEach(function (item) {
+      const amountElement = item.querySelector('.item__count');
+      const priceElement = item.querySelector('.item__price');
 
 
-    const currentPrice = parseInt(amountElement.innerText) * parseInt(priceElement.innerText);
-    totalPrice += currentPrice;
-    totalAmount += parseInt(amountElement.innerText);
-  })
+      const currentPrice = parseInt(amountElement.innerText) * parseInt(priceElement.innerText);
+      totalPrice += currentPrice;
+      totalAmount += parseInt(amountElement.innerText);
+    })
 
-  totalPriceEl.innerText = totalPrice;
-  totalAmountEl.innerText = totalAmount;
+    totalPriceEl.innerText = totalPrice;
+    totalAmountEl.innerText = totalAmount;
+  }
 }
 
 document.addEventListener('click', function (event) {
