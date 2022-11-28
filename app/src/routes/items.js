@@ -3,6 +3,7 @@ const router = express.Router()
 const verifyToken = require('../middleware/auth')
 const {
   getProducts,
+  getFirstPage
 } = require('../controllers/controllers')
 const {
   searchProd
