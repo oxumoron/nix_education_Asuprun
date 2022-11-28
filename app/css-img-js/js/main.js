@@ -1,6 +1,3 @@
-// import {
-//   items
-// } from './items.js';
 let isAuth = false;
 let init = false;
 let token = '';
@@ -12,7 +9,7 @@ let items = [];
 const products = document.getElementById('products');
 
 const getProductAll = () => {
-  fetch('http://localhost:3000/products/', {
+  fetch('http://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
       "x-access-token": token,
