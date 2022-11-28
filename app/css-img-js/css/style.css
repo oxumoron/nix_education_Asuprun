@@ -455,15 +455,9 @@ ol{
   box-shadow: 0px 0px 25px rgb(0 0 0 / 30%)
 }
 
-.like svg{
-  stroke-width: 10px;
-  margin-left: 250px;
-  margin-top: 10px;
-  cursor:pointer;
-  transition:fill .3s;
-}
-.like.filled svg{
-  fill: red;
+.like{
+  text-align: right;
+  padding: 5px;
 }
 
 .product__photo{
@@ -522,7 +516,7 @@ ol{
 
 #product__reviews:before{
   content: '';
-  /* background-image: url(../img/heart.svg); */
+  background-image: url(../img/heart.svg);
   height: 20px;
   width: 20px;
   position: absolute;

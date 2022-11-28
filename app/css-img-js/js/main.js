@@ -145,6 +145,10 @@ const createCards = function (card) {
       const {
         target
       } = event;
+      if (target.className === 'like') {
+        console.log(123);
+        event.preventDefault();
+      }
       if (target.className === 'btn product__btn') {
         addToCart(newCard);
         checkCounter();
