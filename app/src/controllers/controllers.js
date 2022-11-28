@@ -70,7 +70,7 @@ module.exports.getProducts = async function (req, res) {
   try {
     const items = await products.find();
     // res.status(200).sendFile(path.resolve('app/html/index.html'));
-    res.status(200).sendFile(path.resolve('app/html/index.html')).json(items);
+    res.status(200).json(items).sendFile(path.resolve('app/html/index.html'));
   } catch (e) {
     errorHandler(res, e)
   }
