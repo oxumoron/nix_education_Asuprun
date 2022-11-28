@@ -14,9 +14,9 @@ const products = document.getElementById('products');
 const getProductAll = () => {
   fetch('http://localhost:3000/products/', {
     method: "GET",
-    // headers: {
-    //   "x-access-token": token,
-    // }
+    headers: {
+      "x-access-token": token,
+    }
   }).then(function (response) {
     response.json().then(function (products) {
       products.forEach(function (product) {
@@ -58,7 +58,7 @@ const searchProducts = () => {
 
 const loadProducts = async (search = '') => {
   let items = [];
-  fetch(`http://localhost:3000/products/${search}`, {
+  fetch(`https://nix-module.herokuapp.com/products/${search}`, {
     method: "GET",
     headers: {
       "x-access-token": token,
@@ -659,7 +659,7 @@ regBtn.addEventListener('click', async () => {
     password: document.getElementById("password").value,
   };
   // console.log(user);
-  let result = await fetch("http://localhost:3000/api/auth/registration", {
+  let result = await fetch("https://nix-module.herokuapp.com/api/auth/registration", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -688,7 +688,7 @@ logBtn.addEventListener('click', async () => {
     // email: document.getElementById("email").value,
     password: document.getElementById("password-log").value
   };
-  let result = await fetch("http://localhost:3000/api/auth/login", {
+  let result = await fetch("https://nix-module.herokuapp.com/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
