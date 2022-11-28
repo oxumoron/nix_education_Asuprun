@@ -1,7 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 // const cors = require('cors')
-const morgan = require('morgan')
+// const morgan = require('morgan')
+
 const path = require('path')
 const cookieParser = require('cookie-parser')
 
@@ -12,23 +13,19 @@ const items = require('./routes/items')
 
 const app = express();
 const host = "localhost";
-const port = 3000;
-// const port = process.env.PORT || 3000;
+// const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Mongoose
 db
 
-// Passport
-// app.use(passport.initialize())
-// require('./middleware/passport.js')(passport)
-
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 // app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-// app.use(cookieParser())
+app.use(cookieParser())
 
 app.use('/api/auth', router)
 app.use('/products', items)
