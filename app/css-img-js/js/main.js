@@ -11,10 +11,10 @@ const products = document.getElementById('products');
 const getProductAll = () => {
   fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
-    // headers: {
-    // 'Content-Type': 'application/json',
-    // "x-access-token": token,
-    // }
+    headers: {
+      // 'Content-Type': 'application/json',
+      "x-access-token": token,
+    }
   }).then(function (response) {
     response.json().then(function (products) {
       products.forEach(function (product) {
@@ -59,10 +59,10 @@ const loadProducts = async (search = '') => {
   let items = [];
   fetch(`https://nix-module.herokuapp.com/products/${search}`, {
     method: "GET",
-    // headers: {
-    // 'Content-Type': 'application/json',
-    // "x-access-token": token,
-    // }
+    headers: {
+      // 'Content-Type': 'application/json',
+      "x-access-token": token,
+    }
   }).then(function (response) {
     response.json().then(function (goods) {
       goods.forEach(function (product) {
