@@ -10,10 +10,10 @@ const verifyToken = (req, res, next) => {
     if (!token) {
       return res.status(403).send("A token is required for authentication");
     }
-    jwt.verify(token, config);
+    // jwt.verify(token, config);
 
-    // const decoded = jwt.verify(token, config);
-    // req.user = decoded;
+    const decoded = jwt.verify(token, config);
+    req.user = decoded;
     next();
   } catch (err) {
     return res.status(401).send("Invalid Token");
