@@ -671,9 +671,7 @@ regBtn.addEventListener('click', async () => {
     alert('Incorrect email or passowrd. Password minimum 3, maximum 8. Email must be true')
     return false;
   }
-  console.log(result.json({
-    user
-  }));
+  console.log(result);
   const resultUser = await result.json({
     user
   });
