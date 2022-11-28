@@ -17,12 +17,12 @@ const getProductAll = () => {
       "x-access-token": token,
     }
   }).then(function (response) {
-    response.json().then(function (products) {
-      products.forEach(function (product) {
+    response.json().then(function (goods) {
+      goods.forEach(function (product) {
         items.push(product)
       });
-      console.log(items);
-      createCards(items);
+      // console.log(items);
+      updateChildren(products, items);
     })
   }).catch(err => console.error(err));
 }
