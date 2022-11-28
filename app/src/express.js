@@ -29,6 +29,9 @@ app.use(cookieParser())
 
 app.use('/api/auth', router)
 app.use('/products', items)
+app.use('', (req, res) => {
+  res.redirect('/products/');
+})
 
 app.use((req, res, next) => {
   res.status(404).type('text/plain')
