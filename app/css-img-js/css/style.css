@@ -460,6 +460,10 @@ ol{
   padding: 5px;
 }
 
+.like__img.filled {
+  background-image: url(../img/icons/like_filled.svg);
+}
+
 .product__photo{
   /* margin-top: 13px; */
   margin-bottom: 25px;

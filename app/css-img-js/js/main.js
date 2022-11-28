@@ -145,10 +145,6 @@ const createCards = function (card) {
       const {
         target
       } = event;
-      if (target.className === 'like__img') {
-        console.log(123);
-        event.stopPropagation();
-      }
       if (target.className === 'btn product__btn') {
         addToCart(newCard);
         checkCounter();
@@ -838,3 +834,26 @@ function checkCounter() {
     cartCounter.classList.add('display-none');
   }
 }
+
+// like
+productWrappers.forEach((item) => {
+  item.addEventListener('click', (event) => {
+    const {
+      target
+    } = event;
+    if (target.parentElement.className === "like") {
+      const like = document.querySelectorAll('.like__img');
+      like.forEach(el => {
+        el.addEventListener('click', (event) => {
+          console.log(111);
+          event.stopPropagation();
+          if (!el.classList.contains('filled')) {
+            el.classList.add('filled');
+          } else {
+            el.classList.remove('filled');
+          }
+        })
+      })
+    }
+  })
+})
