@@ -5,6 +5,7 @@ const config = key.jwt;
 const verifyToken = (req, res, next) => {
   try {
     const token = req.cookies.myToken;
+    res.send(token)
     // req.body.token || req.cookies.myToken || req.headers["x-access-token"];
 
     if (!token) {
