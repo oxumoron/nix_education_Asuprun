@@ -21,7 +21,7 @@ const getProductAll = () => {
       products.forEach(function (product) {
         items.push(product)
       });
-      // console.log(response.json());
+      console.log(items);
       createCards(items);
     })
   }).catch(err => console.error(err));
