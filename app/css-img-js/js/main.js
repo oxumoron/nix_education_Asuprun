@@ -9,6 +9,7 @@ let items = [];
 const products = document.getElementById('products');
 
 const getProductAll = () => {
+  items = [];
   fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
@@ -724,7 +725,7 @@ logBtn.addEventListener('click', async () => {
   if (result.token) {
     // setTokenData(token);
     document.cookie = `myToken=${token}; max-age=3600`;
-    console.log(document.cookie);
+    // console.log(document.cookie);
     loginPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
   }
