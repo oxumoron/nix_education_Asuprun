@@ -9,9 +9,8 @@ const {
   searchProd
 } = require('../utills/search')
 
-router.get('/', getFirstPage)
-// router.get('products/', getProducts)
 router.get('products/', verifyToken, getProducts)
+// router.get('products/', getProducts)
 // router.get('products/:key', async function (req, res) {
 router.get('products/:key', verifyToken, async function (req, res) {
   try {
@@ -22,5 +21,6 @@ router.get('products/:key', verifyToken, async function (req, res) {
   }
 })
 
+router.get('/', getFirstPage)
 
 module.exports = router
