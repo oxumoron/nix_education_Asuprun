@@ -21,6 +21,6 @@ router.get('products/:key', verifyToken, async function (req, res) {
   }
 })
 
-router.get('/', getFirstPage)
+// router.get('/', getFirstPage)
 
 module.exports = router
