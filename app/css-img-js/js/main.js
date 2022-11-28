@@ -9,7 +9,7 @@ let items = [];
 const products = document.getElementById('products');
 
 const getProductAll = () => {
-  fetch('http://nix-module.herokuapp.com/', {
+  fetch('http://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
       "x-access-token": token,
@@ -56,7 +56,7 @@ const searchProducts = () => {
 
 const loadProducts = async (search = '') => {
   let items = [];
-  fetch(`https://nix-module.herokuapp.com/${search}`, {
+  fetch(`https://nix-module.herokuapp.com/products/${search}`, {
     method: "GET",
     headers: {
       "x-access-token": token,

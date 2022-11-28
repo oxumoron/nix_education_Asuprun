@@ -8,9 +8,9 @@ const {
   searchProd
 } = require('../utills/search')
 
-router.get('/', getProducts)
-// router.get('/', verifyToken, getProducts)
-router.get('/:key', verifyToken, async function (req, res) {
+router.get('', getFirstPage)
+router.get('products/', verifyToken, getProducts)
+router.get('products/:key', verifyToken, async function (req, res) {
   try {
     const data = await searchProd(req.params.key);
     res.status(200).sendFile(path.resolve('app/html/index.html')).json(data);
