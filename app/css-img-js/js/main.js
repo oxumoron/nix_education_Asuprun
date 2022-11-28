@@ -304,7 +304,7 @@ function addToCart(parentBox) {
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
-    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-4).join('/'), 1];
+    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-3).join('/'), 1];
   }
 
   if (!setCartData(cartData)) {
@@ -333,7 +333,7 @@ function addToCartPopup() {
   if (cartData.hasOwnProperty(itemId)) {
     cartData[itemId][3] += 1;
   } else {
-    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-4).join('/'), 1];
+    cartData[itemId] = [itemTitle, itemPrice, '/' + itemImg.split('/').slice(-3).join('/'), 1];
   }
 
   if (!setCartData(cartData)) {
