@@ -710,6 +710,7 @@ logBtn.addEventListener('click', async () => {
   if (isAuth === true) {
     localStorage.clear()
     checkCounter()
+    like()
     cartId.classList.remove('display-none')
     cartId.addEventListener('click', (openCart));
     cartId.addEventListener('click', (active));
@@ -836,27 +837,29 @@ function checkCounter() {
 }
 
 // like
-productWrappers.forEach((item) => {
-  console.log(111);
-  item.addEventListener('click', (event) => {
-    const {
-      target
-    } = event;
-    if (target.parentElement.className === "like") {
-      console.log(222);
-      const like = document.querySelectorAll('.like__img');
-      like.forEach(el => {
-        el.addEventListener('click', (event) => {
-          console.log(333);
-          event.stopPropagation();
+function like() {
+  productWrappers.forEach((item) => {
+    console.log(111);
+    item.addEventListener('click', (event) => {
+      const {
+        target
+      } = event;
+      if (target.parentElement.className === "like") {
+        console.log(222);
+        const like = document.querySelectorAll('.like__img');
+        like.forEach(el => {
+          el.addEventListener('click', (event) => {
+            console.log(333);
+            event.stopPropagation();
 
-          if (!el.classList.contains('filled')) {
-            el.classList.add('filled');
-          } else {
-            el.classList.remove('filled');
-          }
+            if (!el.classList.contains('filled')) {
+              el.classList.add('filled');
+            } else {
+              el.classList.remove('filled');
+            }
+          })
         })
-      })
-    }
+      }
+    })
   })
-})
+}
