@@ -707,6 +707,7 @@ logBtn.addEventListener('click', async () => {
   searchProducts();
   isAuth = true;
   if (isAuth === true) {
+    localStorage.clear()
     cartId.classList.remove('display-none')
     cartId.addEventListener('click', (openCart));
     cartId.addEventListener('click', (active));
