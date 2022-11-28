@@ -12,7 +12,7 @@ const getProductAll = () => {
   fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       "x-access-token": token,
     }
   }).then(function (response) {
@@ -60,7 +60,7 @@ const loadProducts = async (search = '') => {
   fetch(`https://nix-module.herokuapp.com/products/${search}`, {
     method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       "x-access-token": token,
     }
   }).then(function (response) {
