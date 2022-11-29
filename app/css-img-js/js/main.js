@@ -730,54 +730,58 @@ logBtn.addEventListener('click', async () => {
     cartId.addEventListener('click', (active));
 
 
-    const findServices = (filters) => {
-      let answer = [...items];
-
-      for (const filter in filters) {
-        const filterSet = filters[filter];
-
-        answer = answer.filter(
-          item => filterSet.size === 0 || filterSet.has(item[filter])
-        );
-      }
-
-      // document.querySelector('#selected').innerHTML = answer.map(item => `<p>${item.Type} ${item.Size} ${item.Color}</p>`).join('');
-
-      return answer;
-    }
-
-    const filters = {
-      // Color: new Set(),
-      storage: new Set(),
-      os: new Set(),
-    };
-
-    const checkboxes = document.querySelectorAll('[type="checkbox"]');
-    let arr = [];
-    checkboxes.forEach(el => {
-      console.log(el);
-      if (el.hasAttribute('data-id')) {
-        arr.push(el)
-      }
-    })
-    // console.log(arr);
-
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', (e) => {
-        console.clear();
-
-        const target = e.target;
-        const [prop, value] = target.name.split('-');
-
-        filters[prop][target.checked ? 'add' : 'delete']('' + value);
-
-        findServices(filters);
-      })
-    })
-    findServices(filters);
     accordBtn.addEventListener('click', (event) => {
       accord.classList.toggle('accord--active');
       event.currentTarget.classList.toggle('active');
+      //////////////////////////
+
+      const findServices = (filters) => {
+        let answer = [...items];
+
+        for (const filter in filters) {
+          const filterSet = filters[filter];
+
+          answer = answer.filter(
+            item => filterSet.size === 0 || filterSet.has(item[filter])
+          );
+        }
+
+        // document.querySelector('#selected').innerHTML = answer.map(item => `<p>${item.Type} ${item.Size} ${item.Color}</p>`).join('');
+
+        return answer;
+      }
+
+      const filters = {
+        // Color: new Set(),
+        storage: new Set(),
+        os: new Set(),
+      };
+
+      const checkboxes = document.querySelectorAll('[type="checkbox"]');
+      let arr = [];
+      checkboxes.forEach(el => {
+        console.log(el);
+        if (el.hasAttribute('data-id')) {
+          console.log(123, el);
+          arr.push(el)
+        }
+      })
+      // console.log(arr);
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          console.clear();
+
+          const target = e.target;
+          const [prop, value] = target.name.split('-');
+
+          filters[prop][target.checked ? 'add' : 'delete']('' + value);
+
+          findServices(filters);
+        })
+      })
+      findServices(filters);
+      /////////////////////////
       colMemOsFil();
       color();
       memory();
