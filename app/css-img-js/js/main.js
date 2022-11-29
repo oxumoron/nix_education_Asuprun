@@ -744,7 +744,7 @@ logBtn.addEventListener('click', async () => {
 
         for (const filter in filters) {
           const filterSet = filters[filter];
-
+          console.log(filterSet);
           answer = answer.filter(
             item => filterSet.size === 0 || filterSet.has(item[filter])
           );
@@ -777,6 +777,7 @@ logBtn.addEventListener('click', async () => {
           const target = e.target;
           console.log(target.name);
           const [prop, value] = target.name.split('-');
+          console.log([prop, value]);
           filters[prop][target.checked ? 'add' : 'delete']('' + value);
 
           findServices(filters);
