@@ -13,7 +13,6 @@ const getProductAll = () => {
   fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
-      // 'Content-Type': 'application/json',
       "x-access-token": token,
     }
   }).then(function (response) {
@@ -26,21 +25,6 @@ const getProductAll = () => {
     })
   }).catch(err => console.error(err));
 }
-// const getProductAll = () => {
-//   fetch('http://localhost:3000/products/', {
-//     method: "GET",
-//     // headers: {
-//     //   "x-access-token": token,
-//     // }
-//   }).then(function (response) {
-//     response.json().then(function (products) {
-//       products.forEach(function (product) {
-//         items.push(product)
-//       });
-//       createCards(items);
-//     });
-//   }).catch(err => console.error(err));
-// }
 
 const searchProducts = () => {
   const searchInput = document.getElementById('search__input');
@@ -61,7 +45,6 @@ const loadProducts = async (search = '') => {
   fetch(`https://nix-module.herokuapp.com/products/${search}`, {
     method: "GET",
     headers: {
-      // 'Content-Type': 'application/json',
       "x-access-token": token,
     }
   }).then(function (response) {
@@ -232,7 +215,6 @@ function memory() {
   return filItems;
 }
 
-// let fil = [];
 
 function osystem() {
   const inputOs = osList.querySelectorAll("input");
@@ -240,7 +222,6 @@ function osystem() {
     input.addEventListener('click', () => {
       let filteredOs = [];
       if (input.checked) {
-        // fil.push(input);
         items.filter((e) => {
           if (e.os === input.id) {
             filteredOs.push(e)
@@ -250,7 +231,6 @@ function osystem() {
       } else {
         updateChildren(products, items);
       }
-      // console.log(new Set(fil));
     })
   }
 
@@ -415,7 +395,6 @@ function openCart() {
   }
 }
 
-// /////new cart
 let arrayCartItem = [];
 let arrayY = [];
 
@@ -425,17 +404,6 @@ function getCartData() {
 
 function setCartData(o) {
   localStorage.setItem('cart', JSON.stringify(o));
-  // return false;
-}
-
-function getTokenData() {
-  return JSON.parse(localStorage.getItem('token'));
-}
-
-function setTokenData(o) {
-  tokens.push(o);
-  localStorage.setItem('token', JSON.stringify(tokens));
-  // return false;
 }
 
 function active() {
@@ -444,7 +412,6 @@ function active() {
 }
 
 cartCont.onmousedown = function (e) {
-  let target = e.target;
   let modalContent = cartCont.getElementsByClassName('cart__inner')[0];
   if (e.target.closest('.' + modalContent.className) === null) {
     this.classList.remove('active');
@@ -454,8 +421,6 @@ cartCont.onmousedown = function (e) {
 
 function popupFunc(array, idCard) {
   array.forEach((item) => {
-    // console.log(item);
-    // item.addEventListener('click', () => {
     popupInner.id = item.id;
     popup.classList.add('modal__active');
     tagBody.classList.add('hidden');
@@ -493,7 +458,6 @@ function popupFunc(array, idCard) {
     });
 
     popup.onmousedown = function (e) {
-      let target = e.target;
       let modalContent = popup.getElementsByClassName('modal__inner')[0];
       if (e.target.closest('.' + modalContent.className) === null) {
         this.classList.remove('modal__active');
@@ -518,12 +482,10 @@ const updateChildren = function (item, children) {
   createCards(childrenArr);
 }
 
-
-
 const inputDisplay = disList.querySelectorAll("input");
 
 for (let input of inputDisplay) {
-  input.addEventListener('click', (event) => {
+  input.addEventListener('click', () => {
     filterDis(input);
   })
 }
@@ -593,7 +555,6 @@ function filterPrice() {
   } else {
     itemsSortByPrice.filter((e) => {
       if (priceFrom.value <= e.price && e.price <= priceTo.value) {
-        // console.log(priceFrom.value, e, priceTo.value);
         filteredPrice.push(e);
 
         updateChildren(products, filteredPrice);
@@ -611,7 +572,7 @@ function sortArrByPrice() {
   })
 }
 
-filRes.addEventListener('click', (event) => {
+filRes.addEventListener('click', () => {
   accord.querySelectorAll('input').forEach((input) => {
     input.checked = false;
     input.value = null;
@@ -623,7 +584,6 @@ function popupRegister() {
   registrationPopup.classList.add('modal__active');
   tagBody.classList.add('hidden');
   registrationPopup.onmousedown = function (e) {
-    let target = e.target;
     let modalContent = registrationPopup.getElementsByClassName('registration-modal__inner')[0];
     if (e.target.closest('.' + modalContent.className) === null) {
       this.classList.remove('modal__active');
@@ -636,7 +596,6 @@ function popupLogin() {
   loginPopup.classList.add('modal__active');
   tagBody.classList.add('hidden');
   loginPopup.onmousedown = function (e) {
-    let target = e.target;
     let modalContent = loginPopup.getElementsByClassName('login-modal__inner')[0];
     if (e.target.closest('.' + modalContent.className) === null) {
       this.classList.remove('modal__active');
@@ -674,7 +633,6 @@ regBtn.addEventListener('click', async () => {
     email: document.getElementById("email").value,
     password: document.getElementById("password").value,
   };
-  // console.log(user);
   let result = await fetch("https://nix-module.herokuapp.com/api/auth/registration", {
     method: "POST",
     headers: {
@@ -687,10 +645,6 @@ regBtn.addEventListener('click', async () => {
     alert('Incorrect email or passowrd. Password minimum 3, maximum 8. Email must be true')
     return false;
   }
-  // console.log(result.status === 201);
-  // const resultUser = await result.json({
-  //   user
-  // });
 
   if (result.status === 201) {
     alert('User created')
@@ -703,7 +657,6 @@ const logBtn = document.querySelector('.btn__log.btn__login')
 logBtn.addEventListener('click', async () => {
   const user = {
     username: document.getElementById("username-log").value,
-    // email: document.getElementById("email").value,
     password: document.getElementById("password-log").value
   };
   let result = await fetch("https://nix-module.herokuapp.com/api/auth/login", {
@@ -738,9 +691,7 @@ logBtn.addEventListener('click', async () => {
     });
   }
   if (result.token) {
-    // setTokenData(token);
     document.cookie = `myToken=${token}; max-age=3600`;
-    // console.log(document.cookie);
     loginPopup.classList.remove('modal__active');
     tagBody.classList.remove('hidden');
   }
@@ -772,9 +723,6 @@ function calcCartPrice() {
 }
 
 document.addEventListener('click', function (event) {
-  // const cartInner = document.querySelector('.cart__item');
-  // const btnMore = cartInner.querySelector('.btn__more');
-  // const btnLess = cartInner.querySelector('.btn__less');
   let counter;
   let count;
   if (event.target.className === 'btn__more' || event.target.className === 'btn__less') {
@@ -783,7 +731,6 @@ document.addEventListener('click', function (event) {
   }
 
   if (event.target.className === 'btn__more') {
-    // btnLess.removeAttribute('disabled', '');
     const el = event.target.closest('.cart__item').id;
     let newData = Object.assign(getCartData());
     Object.entries(newData).forEach((n) => {
@@ -795,10 +742,6 @@ document.addEventListener('click', function (event) {
       }
     });
     counter.innerText = ++counter.innerText;
-  } else if (event.target.className === '.cart__items' && parseInt(counter.innerText) === 3) {
-    // event.target.closest('.cart__item').remove();
-    // btnMore.setAttribute('disabled', '')
-    return false;
   }
 
   if (event.target.className === 'btn__less') {
@@ -815,9 +758,6 @@ document.addEventListener('click', function (event) {
       });
       counter.innerText = --counter.innerText;
     } else if (event.target.closest('.cart__items') && parseInt(counter.innerText) === 1) {
-      // event.target.closest('.cart__item').remove();
-      // btnLess.setAttribute('disabled', '')
-      // calcCartPrice();
       return false;
     }
   }
