@@ -10,7 +10,7 @@ const products = document.getElementById('products');
 
 const getProductAll = () => {
   items = [];
-  fetch('https://nix-module.herokuapp.com/products/', {
+  fetch('https://filters-nix.herokuapp.com/products/', {
     method: "GET",
     headers: {
       // 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const searchProducts = () => {
 
 const loadProducts = async (search = '') => {
   let items = [];
-  fetch(`https://nix-module.herokuapp.com/products/${search}`, {
+  fetch(`https://filters-nix.herokuapp.com/products/${search}`, {
     method: "GET",
     headers: {
       // 'Content-Type': 'application/json',
@@ -675,7 +675,7 @@ regBtn.addEventListener('click', async () => {
     password: document.getElementById("password").value,
   };
   // console.log(user);
-  let result = await fetch("https://nix-module.herokuapp.com/api/auth/registration", {
+  let result = await fetch("https://filters-nix.herokuapp.com/api/auth/registration", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -706,7 +706,7 @@ logBtn.addEventListener('click', async () => {
     // email: document.getElementById("email").value,
     password: document.getElementById("password-log").value
   };
-  let result = await fetch("https://nix-module.herokuapp.com/api/auth/login", {
+  let result = await fetch("https://filters-nix.herokuapp.com/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
