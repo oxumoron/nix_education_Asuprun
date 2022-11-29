@@ -276,7 +276,7 @@ const colMemOsFil = () => {
     newCol.classList.add('cat__item');
     newCol.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
-          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}">
+          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}" name="color-${elem}">
       `
 
     colList.appendChild(newCol);
@@ -287,7 +287,7 @@ const colMemOsFil = () => {
     newMem.classList.add('cat__item');
     newMem.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
-          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}">
+          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}" name="storage-${elem}">
       `
     if (elem != null) {
       memList.appendChild(newMem);
@@ -299,7 +299,7 @@ const colMemOsFil = () => {
     newOs.classList.add('cat__item');
     newOs.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
-          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}">
+          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}" name="os-${elem}">
       `
     if (elem != null) {
       osList.appendChild(newOs);
@@ -775,8 +775,8 @@ logBtn.addEventListener('click', async () => {
           console.clear();
 
           const target = e.target;
+          console.log(target.name);
           const [prop, value] = target.name.split('-');
-          console.log([prop, value]);
           filters[prop][target.checked ? 'add' : 'delete']('' + value);
 
           findServices(filters);
