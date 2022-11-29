@@ -776,7 +776,7 @@ logBtn.addEventListener('click', async () => {
 
           const target = e.target;
           const [prop, value] = target.name.split('-');
-
+          console.log([prop, value]);
           filters[prop][target.checked ? 'add' : 'delete']('' + value);
 
           findServices(filters);
