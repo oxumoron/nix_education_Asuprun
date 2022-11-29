@@ -744,8 +744,8 @@ logBtn.addEventListener('click', async () => {
         console.log(answer);
 
         for (const filter in filters) {
+          console.log(filter);
           const filterSet = filters[filter];
-          console.log(filterSet);
           answer = answer.filter(
             item => filterSet.size === 0 || filterSet.has(item[filter])
           );
