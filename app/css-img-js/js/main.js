@@ -733,6 +733,10 @@ logBtn.addEventListener('click', async () => {
     accordBtn.addEventListener('click', (event) => {
       accord.classList.toggle('accord--active');
       event.currentTarget.classList.toggle('active');
+      colMemOsFil();
+      color();
+      memory();
+      osystem();
       //////////////////////////
 
       const findServices = (filters) => {
@@ -782,10 +786,6 @@ logBtn.addEventListener('click', async () => {
       })
       findServices(filters);
       /////////////////////////
-      colMemOsFil();
-      color();
-      memory();
-      osystem();
     });
   }
   if (result.token) {
