@@ -276,7 +276,7 @@ const colMemOsFil = () => {
     newCol.classList.add('cat__item');
     newCol.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
-          <input class="item__check" type="checkbox" id="${elem}">
+          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}">
       `
 
     colList.appendChild(newCol);
@@ -752,8 +752,14 @@ logBtn.addEventListener('click', async () => {
       os: new Set(),
     };
 
-    const checkboxes = document.querySelectorAll('.cat__inner-list [type="checkbox"]');
-    console.log(checkboxes);
+    const checkboxes = document.querySelectorAll('[type="checkbox"]');
+    let arr = [];
+    checkboxes.forEach(el => {
+      if (el.hasAttribute('data-id')) {
+        arr.push(el)
+      }
+    })
+    console.log(arr);
 
     checkboxes.forEach(checkbox => {
       checkbox.addEventListener('change', (e) => {
