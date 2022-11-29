@@ -764,13 +764,11 @@ logBtn.addEventListener('click', async () => {
       const checkboxes = document.querySelectorAll('[type="checkbox"]');
       let arr = [];
       checkboxes.forEach(el => {
-        console.log(el);
         if (el.hasAttribute('data-id')) {
-          console.log(123, el);
           arr.push(el)
         }
       })
-      // console.log(arr);
+      console.log(arr);
 
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
