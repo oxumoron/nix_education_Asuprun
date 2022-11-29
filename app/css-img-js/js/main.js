@@ -287,7 +287,7 @@ const colMemOsFil = () => {
     newMem.classList.add('cat__item');
     newMem.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
-          <input class="item__check" type="checkbox" id="${elem}">
+          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}">
       `
     if (elem != null) {
       memList.appendChild(newMem);
@@ -299,7 +299,7 @@ const colMemOsFil = () => {
     newOs.classList.add('cat__item');
     newOs.innerHTML = `
           <label class="item__label" for="${elem}">${elem}</label>
-          <input class="item__check" type="checkbox" id="${elem}">
+          <input data-id="${elem}" class="item__check" type="checkbox" id="${elem}">
       `
     if (elem != null) {
       osList.appendChild(newOs);
@@ -751,7 +751,7 @@ logBtn.addEventListener('click', async () => {
         }
 
         // document.querySelector('#selected').innerHTML = answer.map(item => `<p>${item.Type} ${item.Size} ${item.Color}</p>`).join('');
-
+        console.log(answer);
         return answer;
       }
 
@@ -770,7 +770,7 @@ logBtn.addEventListener('click', async () => {
       })
       console.log(arr);
 
-      checkboxes.forEach(checkbox => {
+      arr.forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
           console.clear();
 
