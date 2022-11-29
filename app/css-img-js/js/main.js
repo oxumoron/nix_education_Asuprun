@@ -741,6 +741,7 @@ logBtn.addEventListener('click', async () => {
 
       const findServices = (filters) => {
         let answer = [...items];
+        console.log(answer);
 
         for (const filter in filters) {
           const filterSet = filters[filter];
