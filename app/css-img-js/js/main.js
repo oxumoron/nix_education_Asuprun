@@ -755,8 +755,8 @@ logBtn.addEventListener('click', async () => {
     const checkboxes = document.querySelectorAll('[type="checkbox"]');
     let arr = [];
     checkboxes.forEach(el => {
+      console.log(el);
       if (el.hasAttribute('data-id')) {
-        console.log(el);
         arr.push(el)
       }
     })
