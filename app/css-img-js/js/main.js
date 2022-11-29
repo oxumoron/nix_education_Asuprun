@@ -14,7 +14,7 @@ const getProductAll = () => {
     method: "GET",
     headers: {
       // 'Content-Type': 'application/json',
-      "x-access-token": token,
+      // "x-access-token": token,
     }
   }).then(function (response) {
     response.json().then(function (goods) {
@@ -62,7 +62,7 @@ const loadProducts = async (search = '') => {
     method: "GET",
     headers: {
       // 'Content-Type': 'application/json',
-      "x-access-token": token,
+      // "x-access-token": token,
     }
   }).then(function (response) {
     response.json().then(function (goods) {
