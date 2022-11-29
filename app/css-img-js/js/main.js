@@ -377,7 +377,7 @@ function openCart() {
             <img id="item__img" class="item__img" src="${ar[1][2]}" height="100" width="100" alt="">
             <div class="item__desc">
               <h5 id="item__title" class="item__title">${ar[1][0]}</h5>
-              <span id="item__price" class="item__price">$ ${ar[1][1]}</span>
+              <p>$<span id="item__price" class="item__price">${ar[1][1]}</span></p>
             </div>
             <div class="item__buttons">
               <button class="btn__less">
