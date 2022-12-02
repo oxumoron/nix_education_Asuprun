@@ -739,52 +739,52 @@ logBtn.addEventListener('click', async () => {
       osystem();
       //////////////////////////
 
-      const findServices = (filters) => {
-        let answer = [...items];
-        console.log(answer);
+      // const findServices = (filters) => {
+      //   let answer = [...items];
+      //   console.log(answer);
 
-        for (const filter in filters) {
-          console.log(filter);
-          const filterSet = filters[filter];
-          answer = answer.filter(
-            item => filterSet.size === 0 || filterSet.has(item[filter])
-          );
-        }
+      //   for (const filter in filters) {
+      //     console.log(filter);
+      //     const filterSet = filters[filter];
+      //     answer = answer.filter(
+      //       item => filterSet.size === 0 || filterSet.has(item[filter])
+      //     );
+      //   }
 
-        // document.querySelector('#selected').innerHTML = answer.map(item => `<p>${item.Type} ${item.Size} ${item.Color}</p>`).join('');
-        console.log(answer);
-        return answer;
-      }
+      //   // document.querySelector('#selected').innerHTML = answer.map(item => `<p>${item.Type} ${item.Size} ${item.Color}</p>`).join('');
+      //   console.log(answer);
+      //   return answer;
+      // }
 
-      const filters = {
-        // Color: new Set(),
-        storage: new Set(),
-        os: new Set(),
-      };
+      // const filters = {
+      //   // Color: new Set(),
+      //   storage: new Set(),
+      //   os: new Set(),
+      // };
 
-      const checkboxes = document.querySelectorAll('[type="checkbox"]');
-      let arr = [];
-      checkboxes.forEach(el => {
-        if (el.hasAttribute('data-id')) {
-          arr.push(el)
-        }
-      })
-      console.log(arr);
+      // const checkboxes = document.querySelectorAll('[type="checkbox"]');
+      // let arr = [];
+      // checkboxes.forEach(el => {
+      //   if (el.hasAttribute('data-id')) {
+      //     arr.push(el)
+      //   }
+      // })
+      // console.log(arr);
 
-      arr.forEach(checkbox => {
-        checkbox.addEventListener('change', (e) => {
-          console.clear();
+      // arr.forEach(checkbox => {
+      //   checkbox.addEventListener('change', (e) => {
+      //     console.clear();
 
-          const target = e.target;
-          console.log(target.name);
-          const [prop, value] = target.name.split('-');
-          console.log([prop, value]);
-          filters[prop][target.checked ? 'add' : 'delete']('' + value);
+      //     const target = e.target;
+      //     console.log(target.name);
+      //     const [prop, value] = target.name.split('-');
+      //     console.log([prop, value]);
+      //     filters[prop][target.checked ? 'add' : 'delete']('' + value);
 
-          findServices(filters);
-        })
-      })
-      findServices(filters);
+      //     findServices(filters);
+      //   })
+      // })
+      // findServices(filters);
       /////////////////////////
     });
   }
