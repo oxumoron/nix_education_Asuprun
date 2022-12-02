@@ -757,7 +757,7 @@ logBtn.addEventListener('click', async () => {
       }
 
       const filters = {
-        // Color: new Set(),
+        Color: new Set(),
         storage: new Set(),
         os: new Set(),
       };
