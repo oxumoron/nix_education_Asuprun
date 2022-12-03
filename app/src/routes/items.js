@@ -21,6 +21,6 @@ router.get('products/:key', async function (req, res) {
   }
 })
 
-router.get('/', getFirstPage)
+router.get('/example/', getFirstPage)
 
 module.exports = router
