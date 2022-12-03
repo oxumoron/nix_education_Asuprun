@@ -13,7 +13,7 @@ const getProductAll = () => {
   fetch('https://nix-module.herokuapp.com/products/', {
     method: "GET",
     headers: {
-      "x-access-token": token,
+      // "x-access-token": token,
     }
   }).then(function (response) {
     response.json().then(function (goods) {
@@ -45,7 +45,7 @@ const loadProducts = async (search = '') => {
   fetch(`https://nix-module.herokuapp.com/products/${search}`, {
     method: "GET",
     headers: {
-      "x-access-token": token,
+      // "x-access-token": token,
     }
   }).then(function (response) {
     response.json().then(function (goods) {
