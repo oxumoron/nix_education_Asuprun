@@ -7,10 +7,10 @@ const errorHandler = require('../utills/errorHandler.js');
 module.exports.getFirstPage = async function (req, res) {
   try {
     // const items = await products.find();
-    res.status(200).json({
-      alles: true
-    });
-    // res.status(200).sendFile(path.resolve('app/html/index.html'));
+    // res.status(200).json({
+    //   alles: true
+    // });
+    res.status(200).sendFile(path.resolve('app/html/index.html'));
     // res.status(200).sendFile(path.resolve('app/html/index.html')) && res.json(items);
   } catch (e) {
     errorHandler(res, e)
